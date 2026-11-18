@@ -5,8 +5,13 @@
 *.class
 
 # Large simulation output/log files
+*.log
 tb_SRAM_Chip_run.out
 tb_sim_run.log
+
+# Backup files
+*.bak
+*.bak_*
 
 # Reference books (large PDFs)
 RefBooks/
@@ -15,8 +20,6 @@ RefBooks/
 .DS_Store
 **/.DS_Store
 
-# Backup files
-*.bak
-
-# General simulation outputs that are regeneratable
-*.log
+# LaTeX temporary files (except tracked deliverables)
+*.aux
+*.toc
