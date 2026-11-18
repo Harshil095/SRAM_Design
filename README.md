@@ -67,6 +67,3 @@ Developed as the Final VLSI Design Project for B.Tech Electrical Engineering at 
 ```
 
 ---
-
-yderabad (IITH)  
-  GitHub: [@Harshil095](https://github.com/Harshil095)
