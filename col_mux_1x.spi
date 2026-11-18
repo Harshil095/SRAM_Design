@@ -1,0 +1,54 @@
+*** SPICE deck for cell col_mux_1x{sch} from library SRAM
+*** Created on Wed Oct 28, 2026 01:48:37
+*** Last revised on Wed Oct 28, 2026 10:53:20
+*** Written on Mon Nov 16, 2026 23:29:11 by Electric VLSI Design System, version 9.08
+*** Layout tech: mocmos, foundry MOSIS
+*** UC SPICE *** , MIN_RESIST 4.0, MIN_CAPAC 0.1FF
+
+*** SUBCIRCUIT SRAM__tgate FROM CELL SRAM:tgate{sch}
+.SUBCKT SRAM__tgate EN ENB gnd IN OUT vdd
+** GLOBAL gnd
+** GLOBAL vdd
+Mnmos@0 IN EN OUT gnd CMOSN L=0.18U W=0.72U
+Mpmos@0 OUT ENB IN vdd CMOSP L=0.18U W=1.08U
+
+* Spice Code nodes in cell cell 'SRAM:tgate{sch}'
+.include ./tsmc018.lib
+.param VDD = 1.8
+VDD1 vdd 0 DC 1.8
+* Load capacitor on OUT (representing global bitline load)
+Cout OUT 0 50f
+* 1. Input signal (IN): ramps from 0V -> 1.8V -> 0V
+VIN IN 0 PWL(0n 0 5n 1.8 15n 1.8 20n 0 30n 0)
+* 2. Active-high enable (EN):
+VEN EN 0 PWL(0n 1.8 22n 1.8 22.1n 0 30n 0)
+* 3. Active-low enable (ENB): complementary to EN
+VENB ENB 0 PWL(0n 0 22n 0 22.1n 1.8 30n 1.8)
+.tran 0.1n 30n
+.ENDS SRAM__tgate
+
+.global gnd vdd
+
+*** TOP LEVEL CELL: SRAM:col_mux_1x{sch}
+Xtgate@0 COL_SEL COL_SEL_B gnd BL GBL vdd SRAM__tgate
+Xtgate@1 COL_SEL COL_SEL_B gnd BLB GBLB vdd SRAM__tgate
+
+* Spice Code nodes in cell cell 'SRAM:col_mux_1x{sch}'
+.include ./tsmc018.lib
+.param VDD = 1.8
+VDD1 vdd 0 DC 1.8
+* Load capacitors on Global Bitlines
+Cgbl  GBL  0 50f
+Cgblb GBLB 0 50f
+* Column bitlines carry a Read-0 differential:
+* BL = 1.65V (150mV dip) BLB = 1.80V
+VBL  BL  0 DC 1.65
+VBLB BLB 0 DC 1.80
+* Column Select (COL_SEL active-high COL_SEL_B active-low):
+* OFF from 0ns to 5ns (High-Z isolation)
+* ON from 5ns to 25ns (passes the bitlines to GBL and GBLB)
+* OFF from 25ns to 30ns (isolates again)
+VSEL COL_SEL 0 PWL(0n 0 4.9n 0 5n 1.8 25n 1.8 25.1n 0 30n 0)
+VSEL_B COL_SEL_B 0 PWL(0n 1.8 4.9n 1.8 5n 0 25n 0 25.1n 1.8 30n 1.8)
+.tran 0.1n 30n
+.END

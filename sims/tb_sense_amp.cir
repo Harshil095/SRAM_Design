@@ -1,0 +1,57 @@
+* Testbench for Latch-Type Voltage Sense Amplifier
+.include "../tsmc018.lib"
+.include "sense_amp.cir"
+
+* Supply
+Vdd vdd 0 DC 1.8
+
+* Instantiate Sense Amplifier
+Xsa bl blb sae so sob vdd 0 sense_amp
+
+* Output load capacitors (10 fF each for output buffer / mux input)
+Cso  so  0 10f
+Csob sob 0 10f
+
+* Case 1: Read-0 (BL drops to 1.6V, delta V = 200mV below BLB at 1.8V)
+* Case 2: Read-1 (BLB drops to 1.6V, delta V = 200mV below BL at 1.8V)
+Vbl bl 0 PWL(
++ 0ns   1.8V
++ 2ns   1.8V
++ 3ns   1.6V
++ 6ns   1.6V
++ 7ns   1.8V
++ 10ns  1.8V
++ 14ns  1.8V)
+
+Vblb blb 0 PWL(
++ 0ns   1.8V
++ 7ns   1.8V
++ 8ns   1.8V
++ 9ns   1.6V
++ 12ns  1.6V
++ 13ns  1.8V
++ 14ns  1.8V)
+
+* SAE strobe signal:
+* Active HIGH strobe pulses at 3.5ns (for Read-0) and 9.5ns (for Read-1)
+Vsae sae 0 PWL(
++ 0ns   0V
++ 3.4ns 0V
++ 3.5ns 1.8V
++ 5.5ns 1.8V
++ 5.6ns 0V
++ 9.4ns 0V
++ 9.5ns 1.8V
++ 11.5ns 1.8V
++ 11.6ns 0V
++ 14.0ns 0V)
+
+.tran 10p 14n
+
+.control
+run
+set wr_vecnames
+wrdata sa_sim_results.txt v(sae) v(bl) v(blb) v(so) v(sob)
+quit
+.endc
+.end

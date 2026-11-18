@@ -1,0 +1,48 @@
+*** SPICE deck for cell SRAM_6T{sch} from library SRAM_Complete_V1
+*** Created on Thu Oct 15, 2026 11:03:31
+*** Last revised on Sat Oct 24, 2026 17:43:26
+*** Written on Mon Oct 26, 2026 02:41:27 by Electric VLSI Design System, version 9.08
+*** Layout tech: mocmos, foundry MOSIS
+*** UC SPICE *** , MIN_RESIST 4.0, MIN_CAPAC 0.1FF
+
+.global gnd vdd
+
+*** TOP LEVEL CELL: SRAM_6T{sch}
+Mnmos@1 Q_b Q gnd gnd CMOSN L=0.18U W=0.9U
+Mnmos@2 gnd Q_b Q gnd CMOSN L=0.18U W=0.9U
+Mnmos@3 Q WL BL gnd CMOSN L=0.18U W=0.599U
+Mnmos@4 BL_b WL Q_b gnd CMOSN L=0.18U W=0.599U
+Mpmos@1 vdd Q Q_b vdd CMOSP L=0.18U W=0.45U
+Mpmos@3 Q Q_b vdd vdd CMOSP L=0.18U W=0.45U
+
+* Spice Code nodes in cell cell 'SRAM_6T{sch}'
+* Supply
+VDD vdd 0 DC 1.8
+* Word line: write, hold, read, write, hold, read
+VWL WL 0 PWL(
++ 0 0
++ 10n 0 10.1n 1.8
++ 30n 1.8 30.1n 0
++ 40n 0 40.1n 1.8
++ 40.9n 1.8 41n 0
++ 50n 0 50.1n 1.8
++ 70n 1.8 70.1n 0
++ 80n 0 80.1n 1.8
++ 80.9n 1.8 81n 0
++ 100n 0)
+* Bit line: write 1, read 1, write 0, read 0
+VBL BL 0 PWL(
++ 0 1.8
++ 50n 1.8 50.1n 0
++ 70n 0 70.1n 1.8
++ 100n 1.8)
+VBLB BL_b 0 PWL(
++ 0 0
++ 40n 0 40.1n 1.8
++ 50n 1.8
++ 50.1n 1.8
++ 70n 1.8 70.1n 0
++ 80n 0 80.1n 1.8
++ 100n 1.8)
+.tran 0.1n 100n
+.END

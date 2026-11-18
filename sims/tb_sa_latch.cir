@@ -1,0 +1,51 @@
+* Testbench for Latch Sense Amplifier
+.include "../tsmc018.lib"
+.include "sense_amp_latch.cir"
+
+Vdd vdd 0 DC 1.8
+
+Xsa bl blb sae so sob vdd 0 sense_amp
+
+Cso  so  0 10f
+Csob sob 0 10f
+
+* Case 1: Read 0 (BL=1.6V, BLB=1.8V)
+* Case 2: Read 1 (BL=1.8V, BLB=1.6V)
+Vbl bl 0 PWL(
++ 0ns   1.8V
++ 2ns   1.8V
++ 3ns   1.6V
++ 6ns   1.6V
++ 7ns   1.8V
++ 14ns  1.8V)
+
+Vblb blb 0 PWL(
++ 0ns   1.8V
++ 7ns   1.8V
++ 8ns   1.8V
++ 9ns   1.6V
++ 12ns  1.6V
++ 13ns  1.8V
++ 14ns  1.8V)
+
+Vsae sae 0 PWL(
++ 0ns   0V
++ 3.4ns 0V
++ 3.5ns 1.8V
++ 5.5ns 1.8V
++ 5.6ns 0V
++ 9.4ns 0V
++ 9.5ns 1.8V
++ 11.5ns 1.8V
++ 11.6ns 0V
++ 14.0ns 0V)
+
+.tran 10p 14n
+
+.control
+run
+set wr_vecnames
+wrdata sa_latch_sim.txt v(sae) v(bl) v(blb) v(so) v(sob)
+quit
+.endc
+.end

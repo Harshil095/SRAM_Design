@@ -1,0 +1,28 @@
+*** SPICE deck for cell pre_charge{sch} from library SRAM
+*** Created on Thu Oct 15, 2026 15:27:18
+*** Last revised on Tue Oct 27, 2026 01:20:48
+*** Written on Mon Nov 16, 2026 18:40:34 by Electric VLSI Design System, version 9.08
+*** Layout tech: mocmos, foundry MOSIS
+*** UC SPICE *** , MIN_RESIST 4.0, MIN_CAPAC 0.1FF
+
+.global vdd
+
+*** TOP LEVEL CELL: SRAM:pre_charge{sch}
+Mpmos@0 vdd PRE BLB vdd CMOSP L=0.18U W=0.72U
+Mpmos@1 BL PRE vdd vdd CMOSP L=0.18U W=0.72U
+Mpmos@2 BLB PRE BL vdd CMOSP L=0.18U W=0.72U
+
+* Spice Code nodes in cell cell 'SRAM:pre_charge{sch}'
+.include ./tsmc018.lib
+.param VDD=1.8
+VDD vdd 0 DC 1.8
+Cbl  BL   0 200f
+Cblb BLB 0 200f
+VPRE PRE 0 PULSE(0 1.8 10n 0.1n 0.1n 20n 40n)
+.ic V(BL)=0 V(BLB)=0
+.tran 0.1n 80n
+.control
+run
+plot v(PRE) v(BL) v(BLB)
+.endc
+.END

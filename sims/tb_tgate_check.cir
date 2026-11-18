@@ -1,0 +1,27 @@
+* SPICE deck for testing tgate;1{sch}
+.include "../tsmc018.lib"
+
+* Instantiate tgate from user schematic:
+* Left is IN, Right is OUT
+* pmos@0: W=1.08u, L=0.18u
+* nmos@0: W=0.72u, L=0.18u
+Mpmos in sel_b out vdd CMOSP W=1.08u L=0.18u
+Mnmos in sel   out 0   CMOSN W=0.72u L=0.18u
+
+Vdd vdd 0 DC 1.8
+Cout out 0 50f
+
+* Input voltage ramp from 0V to 1.8V to 0V
+Vin in 0 PWL(0n 0 5n 1.8 10n 1.8 15n 0 20n 0)
+
+* Test 1: Enabled (SEL=1.8V, SEL_B=0V) from 0 to 20ns
+Vsel   sel   0 DC 1.8
+Vsel_b sel_b 0 DC 0
+
+.tran 0.1n 20n
+.control
+run
+wrdata tgate_verify.txt v(in) v(out)
+quit
+.endc
+.end

@@ -1,0 +1,16 @@
+* Latch-Type Voltage Sense Amplifier (TSMC 0.18um, Level 49 BSIM3v3.1)
+* Inputs: BL, BLB, SAE (Sense Amp Enable), VDD, GND
+* Outputs: SO, SOB (Sense Output and Sense Output Bar)
+
+.subckt sense_amp BL BLB SAE SO SOB VDD GND
+* Cross-coupled PMOS pull-up load
+Mpu1 SO  SOB VDD VDD CMOSP W=0.72u L=0.18u
+Mpu2 SOB SO  VDD VDD CMOSP W=0.72u L=0.18u
+
+* Input NMOS pair (gates connected to bitlines BL and BLB)
+Mpd1 SO  BL  N1  GND CMOSN W=0.72u L=0.18u
+Mpd2 SOB BLB N1  GND CMOSN W=0.72u L=0.18u
+
+* Tail NMOS foot switch (controlled by Sense Amp Enable SAE)
+Mtail N1 SAE GND GND CMOSN W=1.08u L=0.18u
+.ends sense_amp

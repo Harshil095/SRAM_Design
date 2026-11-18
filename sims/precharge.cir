@@ -1,0 +1,13 @@
+* Precharge and Equalizer Circuit (TSMC 0.18um, Level 49 BSIM3v3.1)
+* Ports: BL BLB PRE_B VDD
+
+.subckt precharge BL BLB PRE_B VDD PARAMS: WPRE=0.54u WEQ=0.36u L=0.18u
+* Pull-up PMOS for BL
+Mpre1 BL  PRE_B VDD VDD CMOSP W={WPRE} L={L}
+
+* Pull-up PMOS for BLB
+Mpre2 BLB PRE_B VDD VDD CMOSP W={WPRE} L={L}
+
+* Equalization PMOS between BL and BLB
+Meq   BL  PRE_B BLB VDD CMOSP W={WEQ}  L={L}
+.ends precharge

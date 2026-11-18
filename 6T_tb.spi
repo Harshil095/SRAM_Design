@@ -1,0 +1,69 @@
+*** SPICE deck for cell 6T_tb{sch} from library SRAM
+*** Created on Sat Oct 24, 2026 13:59:44
+*** Last revised on Sat Oct 24, 2026 14:02:43
+*** Written on Sat Oct 24, 2026 14:03:04 by Electric VLSI Design System, version 9.08
+*** Layout tech: mocmos, foundry MOSIS
+*** UC SPICE *** , MIN_RESIST 4.0, MIN_CAPAC 0.1FF
+
+*** SUBCIRCUIT SRAM__6T FROM CELL 6T{sch}
+.SUBCKT SRAM__6T BL BLB gnd vdd WL
+** GLOBAL gnd
+** GLOBAL vdd
+Mnmos@0 net@4 net@9 gnd gnd N L=0.4U W=0.4U
+Mnmos@1 net@9 net@4 gnd gnd N L=0.4U W=0.4U
+Mnmos@2 BL WL net@9 gnd N L=0.4U W=0.4U
+Mnmos@3 net@4 WL BLB gnd N L=0.4U W=0.4U
+Mpmos@0 vdd net@4 net@9 vdd P L=0.4U W=0.4U
+Mpmos@1 vdd net@9 net@4 vdd P L=0.4U W=0.4U
+.ENDS SRAM__6T
+
+.global gnd vdd
+
+*** TOP LEVEL CELL: 6T_tb{sch}
+X_6T@0 bl blb gnd vdd wl SRAM__6T
+
+* Spice Code nodes in cell cell '6T_tb{sch}'
+* ---- 6T SRAM cell test: write0, read0, write1, read1, write0 ----
+* MODEL LINE: use exactly the same model include/lib line that worked for
+* your full adder (look in that .spi file), for example:
+.include ./tsmc018.lib
+* (or: .lib ./tsmc018.lib tt   <- use whatever section name your file has)
+* Supply
+Vsup vdd 0 1.8
+* Bit-line capacitance (stands in for a column of cells)
+Cbl  bl  0 200f
+Cblb blb 0 200f
+* Switch models: precharge (to VDD) and write pull-down (to GND)
+.model swpc sw(vt=0.9 vh=0.1 ron=500 roff=1e12)
+.model swwr sw(vt=0.9 vh=0.1 ron=1k  roff=1e12)
+* Precharge switches (both bit lines to VDD when pc is high)
+Spcbl  vdd bl  pc 0 swpc
+Spcblb vdd blb pc 0 swpc
+* Write pull-down switches (pull one bit line low when its enable is high)
+Swbl  bl  0 wrbl  0 swwr
+Swblb blb 0 wrblb 0 swwr
+* Control waveforms
+Vpc    pc    0 PWL(0 1.8 1n 1.8 1.1n 0 3.8n 0 3.9n 1.8 7n 1.8 7.1n 0 10.5n 0 10.6n 1.8 13n 1.8 13.1n 0 16.5n 0 16.6n 1.8 19n 1.8 19.1n 0 22.5n 0 22.6n 1.8 25n 1.8 25.1n 0 28.5n 0 28.6n 1.8 32n 1.8)
+Vwl    wl    0 PWL(0 0 1.5n 0 1.6n 1.8 3.5n 1.8 3.6n 0 7.5n 0 7.6n 1.8 10n 1.8 10.1n 0 13.5n 0 13.6n 1.8 15.5n 1.8 15.6n 0 19.5n 0 19.6n 1.8 22n 1.8 22.1n 0 25.5n 0 25.6n 1.8 27.5n 1.8 27.6n 0 32n 0)
+Vwrbl  wrbl  0 PWL(0 0 1.3n 0 1.4n 1.8 3.7n 1.8 3.8n 0 25.3n 0 25.4n 1.8 28n 1.8 28.1n 0 32n 0)
+Vwrblb wrblb 0 PWL(0 0 13.3n 0 13.4n 1.8 16n 1.8 16.1n 0 32n 0)
+* Timeline (ns):
+*  1.3-3.7   initial write 0   (forces the cell to a known state)
+*  7.5-10    read 0            (BL should dip, cell must NOT flip)
+*  13.4-16   write 1           (BLB pulled low)
+*  19.5-22   read 1            (BLB should dip)
+*  25.4-28   write 0           (BL pulled low)
+.tran 10p 32n
+* Measurements: bit-line voltages at the end of each read
+.meas tran bl_read0  find v(bl)  at=9.9n
+.meas tran blb_read0 find v(blb) at=9.9n
+.meas tran bl_read1  find v(bl)  at=21.9n
+.meas tran blb_read1 find v(blb) at=21.9n
+* Charge drawn from the supply during each write (energy = 1.8 * |charge|)
+.meas tran q_write1 integ i(Vsup) from=13.3n to=16n
+.meas tran q_write0 integ i(Vsup) from=25.3n to=28n
+.control
+run
+plot v(bl) v(blb) v(wl)
+.endc
+.END

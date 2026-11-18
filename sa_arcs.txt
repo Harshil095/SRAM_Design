@@ -1,0 +1,24 @@
+SA bounds: ERectangle[x=-36.0,y=-58.0,w=121.0,h=120.0]
+Arc: net@17 layer=Metal-1 head=EPointInt[-13.5, 20.0] tail=EPointInt[-13.5, 0.0] w=4.0
+Arc: net@18 layer=Metal-1 head=EPointInt[-13.5, 0.0] tail=EPointInt[-13.5, -10.0] w=4.0
+Arc: net@19 layer=Metal-1 head=EPointInt[13.5, 20.0] tail=EPointInt[13.5, 5.0] w=4.0
+Arc: net@20 layer=Metal-1 head=EPointInt[13.5, 5.0] tail=EPointInt[13.5, -1.0] w=4.0
+Arc: net@21 layer=Metal-1 head=EPointInt[13.5, -1.0] tail=EPointInt[13.5, -10.0] w=4.0
+Arc: net@22 layer=Metal-1 head=EPointInt[13.5, -1.0] tail=EPointInt[50.0, -1.0] w=4.0
+Arc: net@23 layer=Metal-1 head=EPointInt[50.0, -1.0] tail=EPointInt[50.0, -1.0] w=4.0
+Arc: net@24 layer=Metal-1 head=EPointInt[83.0, -1.5] tail=EPointInt[83.0, -1.5] w=4.0
+Arc: net@25 layer=Metal-1 head=EPointInt[-26.5, -10.0] tail=EPointInt[-26.5, -24.0] w=4.0
+Arc: net@26 layer=Metal-1 head=EPointInt[26.5, -10.0] tail=EPointInt[26.5, -24.0] w=4.0
+Arc: net@27 layer=Metal-1 head=EPointInt[-26.5, -24.0] tail=EPointInt[-6.5, -24.0] w=4.0
+Arc: net@28 layer=Metal-1 head=EPointInt[-6.5, -24.0] tail=EPointInt[26.5, -24.0] w=4.0
+Arc: net@29 layer=Metal-1 head=EPointInt[-6.5, -24.0] tail=EPointInt[-6.5, -32.0] w=4.0
+Arc: net@30 layer=Metal-1 head=EPointInt[-26.5, 20.0] tail=EPointInt[-26.5, 52.0] w=4.0
+Arc: net@31 layer=Metal-1 head=EPointInt[26.5, 20.0] tail=EPointInt[26.5, 52.0] w=4.0
+Arc: net@32 layer=Metal-1 head=EPointInt[65.5, 21.5] tail=EPointInt[65.5, 52.0] w=4.0
+Arc: net@33 layer=Metal-1 head=EPointInt[-26.5, 52.0] tail=EPointInt[0.0, 52.0] w=4.0
+Arc: net@34 layer=Metal-1 head=EPointInt[0.0, 52.0] tail=EPointInt[26.5, 52.0] w=4.0
+Arc: net@35 layer=Metal-1 head=EPointInt[26.5, 52.0] tail=EPointInt[65.5, 52.0] w=4.0
+Arc: net@36 layer=Metal-1 head=EPointInt[6.5, -32.0] tail=EPointInt[6.5, -48.0] w=4.0
+Arc: net@37 layer=Metal-1 head=EPointInt[65.5, -23.0] tail=EPointInt[65.5, -48.0] w=4.0
+Arc: net@38 layer=Metal-1 head=EPointInt[0.0, -48.0] tail=EPointInt[6.5, -48.0] w=4.0
+Arc: net@39 layer=Metal-1 head=EPointInt[6.5, -48.0] tail=EPointInt[65.5, -48.0] w=4.0

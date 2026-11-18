@@ -1,0 +1,32 @@
+* 4-to-16 Decoder using NAND4 + Inverter (TSMC 0.18um CMOS)
+* Inputs: A0, A1, A2, A3, EN (active-high Enable / Clock gate)
+* Outputs: OUT[0..15] (Wordlines WL[0..15] or Column Selects COL_SEL[0..15])
+
+.include "../tsmc018.lib"
+
+* Unit Inverter (Wp=8u*lambda=0.72u, Wn=4u*lambda=0.36u)
+.subckt inverter in out vdd gnd
+Mpu out in vdd vdd CMOSP W=0.72u L=0.18u
+Mpd out in gnd gnd CMOSN W=0.36u L=0.18u
+.ends inverter
+
+* 4-Input NAND with series NMOS stack (Wn=1.44u, Wp=0.72u)
+.subckt nand4 A B C D out vdd gnd
+* 4 parallel PMOS pull-ups
+Mp1 out A vdd vdd CMOSP W=0.72u L=0.18u
+Mp2 out B vdd vdd CMOSP W=0.72u L=0.18u
+Mp3 out C vdd vdd CMOSP W=0.72u L=0.18u
+Mp4 out D vdd vdd CMOSP W=0.72u L=0.18u
+
+* 4 series NMOS pull-downs
+Mn1 out A N1  gnd CMOSN W=1.44u L=0.18u
+Mn2 N1  B N2  gnd CMOSN W=1.44u L=0.18u
+Mn3 N2  C N3  gnd CMOSN W=1.44u L=0.18u
+Mn4 N3  D gnd gnd CMOSN W=1.44u L=0.18u
+.ends nand4
+
+* Decoder Slice (1 of 16): NAND4 + Inverter = AND4
+.subckt dec_slice A B C D out vdd gnd
+Xnand A B C D n_mid vdd gnd nand4
+Xinv  n_mid out vdd gnd inverter
+.ends dec_slice

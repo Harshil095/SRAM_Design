@@ -1,0 +1,49 @@
+*** SPICE deck for cell Precharge_Bank_16{sch} from library SRAM
+*** Created on Tue Nov 17, 2026 00:46:20
+*** Last revised on Tue Nov 17, 2026 00:46:20
+*** Written on Tue Nov 17, 2026 04:43:07 by Electric VLSI Design System, version 9.08
+*** Layout tech: mocmos, foundry MOSIS
+*** UC SPICE *** , MIN_RESIST 4.0, MIN_CAPAC 0.1FF
+
+*** SUBCIRCUIT SRAM__pre_charge FROM CELL SRAM:pre_charge{sch}
+.SUBCKT SRAM__pre_charge BL BLB PRE vdd
+** GLOBAL vdd
+Mpmos@0 vdd PRE BLB vdd CMOSP L=0.4U W=1.6U
+Mpmos@1 BL PRE vdd vdd CMOSP L=0.4U W=1.6U
+Mpmos@2 BLB PRE BL vdd CMOSP L=0.4U W=1.6U
+
+* Spice Code nodes in cell cell 'SRAM:pre_charge{sch}'
+.include ./tsmc018.lib
+.param VDD=1.8
+VDD vdd 0 DC 1.8
+Cbl  BL   0 200f
+Cblb BLB 0 200f
+VPRE PRE 0 PULSE(0 1.8 10n 0.1n 0.1n 20n 40n)
+.ic V(BL)=0 V(BLB)=0
+.tran 0.1n 80n
+.control
+run
+plot v(PRE) v(BL) v(BLB)
+.endc
+.ENDS SRAM__pre_charge
+
+.global gnd vdd
+
+*** TOP LEVEL CELL: SRAM:Precharge_Bank_16{sch}
+Xpre_char@0 BL[0] BLB[0] PRE_B vdd SRAM__pre_charge
+Xpre_char@1 BL[1] BLB[1] PRE_B vdd SRAM__pre_charge
+Xpre_char@2 BL[2] BLB[2] PRE_B vdd SRAM__pre_charge
+Xpre_char@3 BL[3] BLB[3] PRE_B vdd SRAM__pre_charge
+Xpre_char@4 BL[4] BLB[4] PRE_B vdd SRAM__pre_charge
+Xpre_char@5 BL[5] BLB[5] PRE_B vdd SRAM__pre_charge
+Xpre_char@6 BL[6] BLB[6] PRE_B vdd SRAM__pre_charge
+Xpre_char@7 BL[7] BLB[7] PRE_B vdd SRAM__pre_charge
+Xpre_char@8 BL[8] BLB[8] PRE_B vdd SRAM__pre_charge
+Xpre_char@9 BL[9] BLB[9] PRE_B vdd SRAM__pre_charge
+Xpre_char@10 BL[10] BLB[10] PRE_B vdd SRAM__pre_charge
+Xpre_char@11 BL[11] BLB[11] PRE_B vdd SRAM__pre_charge
+Xpre_char@12 BL[12] BLB[12] PRE_B vdd SRAM__pre_charge
+Xpre_char@13 BL[13] BLB[13] PRE_B vdd SRAM__pre_charge
+Xpre_char@14 BL[14] BLB[14] PRE_B vdd SRAM__pre_charge
+Xpre_char@15 BL[15] BLB[15] PRE_B vdd SRAM__pre_charge
+.END

@@ -1,0 +1,73 @@
+* Testbench for Write Driver Circuit
+.include "../tsmc018.lib"
+.include "write_driver.cir"
+.include "precharge.cir"
+
+* Power Supplies
+Vdd vdd 0 DC 1.8
+
+* Instantiate Precharge Unit
+Xpre bl blb pre_b vdd precharge WPRE=0.72u WEQ=0.54u L=0.18u
+
+* Instantiate Write Driver
+Xwr  bl blb din wr_en vdd 0 write_driver
+
+* Column Bitline Capacitances (200 fF)
+Cbl  bl  0 200f
+Cblb blb 0 200f
+
+* Control signals:
+* 0 - 2ns: Precharge active (PRE_B=0V, WR_EN=0V)
+* 2 - 6ns: Write-0 (PRE_B=1.8V, WR_EN=1.8V, DIN=0V) -> BL must pull down to 0V, BLB remains 1.8V
+* 6 - 8ns: Precharge active (PRE_B=0V, WR_EN=0V)
+* 8 - 12ns: Write-1 (PRE_B=1.8V, WR_EN=1.8V, DIN=1.8V) -> BLB must pull down to 0V, BL remains 1.8V
+* 12 - 14ns: Precharge active (PRE_B=0V, WR_EN=0V)
+* 14 - 18ns: Read/Standby (PRE_B=1.8V, WR_EN=0V, DIN=0V) -> Both BL and BLB float at 1.8V (High-Z)
+
+Vpre_b pre_b 0 PWL(
++ 0ns   0V
++ 1.9ns 0V
++ 2.0ns 1.8V
++ 5.9ns 1.8V
++ 6.0ns 0V
++ 7.9ns 0V
++ 8.0ns 1.8V
++ 11.9ns 1.8V
++ 12.0ns 0V
++ 13.9ns 0V
++ 14.0ns 1.8V
++ 18.0ns 1.8V)
+
+Vwr_en wr_en 0 PWL(
++ 0ns   0V
++ 2.0ns 0V
++ 2.1ns 1.8V
++ 5.9ns 1.8V
++ 6.0ns 0V
++ 8.0ns 0V
++ 8.1ns 1.8V
++ 11.9ns 1.8V
++ 12.0ns 0V
++ 18.0ns 0V)
+
+Vdin din 0 PWL(
++ 0ns   0V
++ 7.0ns 0V
++ 7.5ns 1.8V
++ 13.0ns 1.8V
++ 13.5ns 0V
++ 18.0ns 0V)
+
+.tran 10p 18n
+
+* Measurements: discharge delays
+.meas tran t_fall_bl  trig v(wr_en) val=0.9 rise=1 targ v(bl)  val=0.18 fall=1
+.meas tran t_fall_blb trig v(wr_en) val=0.9 rise=2 targ v(blb) val=0.18 fall=1
+
+.control
+run
+set wr_vecnames
+wrdata write_driver_sim.txt v(pre_b) v(wr_en) v(din) v(bl) v(blb)
+quit
+.endc
+.end

@@ -1,0 +1,49 @@
+*** SPICE deck for cell write_driver{sch} from library SRAM
+*** Created on Fri Oct 16, 2026 00:52:35
+*** Last revised on Tue Oct 27, 2026 22:03:38
+*** Written on Mon Nov 16, 2026 23:44:48 by Electric VLSI Design System, version 9.08
+*** Layout tech: mocmos, foundry MOSIS
+*** UC SPICE *** , MIN_RESIST 4.0, MIN_CAPAC 0.1FF
+
+.global gnd vdd
+
+*** TOP LEVEL CELL: SRAM:write_driver{sch}
+Mnmos@0 BL WE net@0 gnd CMOSN L=0.18U W=1.08U
+Mnmos@1 BLB WE net@1 gnd CMOSN L=0.18U W=1.08U
+Mnmos@2 net@1 net@3 gnd gnd CMOSN L=0.18U W=1.08U
+Mnmos@3 gnd WD net@0 gnd CMOSN L=0.18U W=1.08U
+Mnmos@4 net@3 WD gnd gnd CMOSN L=0.18U W=0.36U
+Mpmos@0 vdd WD net@3 vdd CMOSP L=0.18U W=0.72U
+
+* Spice Code nodes in cell cell 'SRAM:write_driver{sch}'
+.include ./tsmc018.lib
+.param VDD = 1.8
+VDD1 vdd 0 DC 1.8
+* Bitline column loading and precharge pull-ups to 1.8V
+Cbl  BL   0 200f
+Cblb BLB 0 200f
+Rpu1 BL   vdd 50k
+Rpu2 BLB vdd 50k
+* Initial condition
+.ic V(BL)=1.8 V(BLB)=1.8
+* Write Enable pulses high during writes
+VWE WE 0 PWL(
++ 0n   0
++ 10n  0
++ 12n  1.8
++ 30n  1.8
++ 32n  0
++ 50n  0
++ 52n  1.8
++ 70n  1.8
++ 72n  0
++ 80n  0)
+* Write Data (first 0, then 1)
+VWD WD 0 PWL(
++ 0n   0
++ 10n  0
++ 50n  0
++ 51n  1.8
++ 80n  1.8)
+.tran 0.1n 80n
+.END

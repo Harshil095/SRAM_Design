@@ -1,0 +1,20 @@
+* Write Driver Circuit (TSMC 0.18um, Level 49 BSIM3v3.1)
+* Inputs: DIN, WR_EN, VDD, GND
+* Outputs: BL, BLB
+
+.subckt write_driver BL BLB DIN WR_EN VDD GND
+* Invert DIN to get DIN_B
+* Unit inverter sized Wp=8u*lambda=0.72u, Wn=4u*lambda=0.36u
+Mpinv din_b din vdd vdd CMOSP W=0.72u L=0.18u
+Mninv din_b din gnd gnd CMOSN W=0.36u L=0.18u
+
+* BL pull-down path: active when WR_EN=1 and DIN=0 (DIN_B=1)
+* Two NMOS in series:
+Mwr_en1 bl      wr_en node_bl gnd CMOSN W=1.08u L=0.18u
+Mwr_d1  node_bl din_b gnd     gnd CMOSN W=1.08u L=0.18u
+
+* BLB pull-down path: active when WR_EN=1 and DIN=1
+* Two NMOS in series:
+Mwr_en2 blb      wr_en node_blb gnd CMOSN W=1.08u L=0.18u
+Mwr_d2  node_blb din   gnd      gnd CMOSN W=1.08u L=0.18u
+.ends write_driver

@@ -1,0 +1,60 @@
+
+Note: No compatibility mode selected!
+
+
+Circuit: * spice testbench: tb_sram_chip.sp
+
+Warning: Model issue on line 9 :
+  .model cmosn nmos ( level=49 version=3.1 tnom=27 tox=4.1e-9 xj=1e-7 nch= ...
+unrecognized parameter (xl) - ignored
+unrecognized parameter (xw) - ignored
+
+Warning: Model issue on line 51 :
+  .model cmosp pmos ( level=49 version=3.1 tnom=27 tox=4.1e-9 xj=1e-7 nch= ...
+unrecognized parameter (xl) - ignored
+unrecognized parameter (xw) - ignored
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+Warning: Pd = 0 is less than W.
+Warning: Ps = 0 is less than W.
+Warning: Pd = 0 is less than W.
+Warning: Ps = 0 is less than W.
+Warning: Pd = 0 is less than W.
+Warning: Ps = 0 is less than W.
+Warning: Pd = 0 is less than W.
+Warning: Ps = 0 is less than W.
+Warning: Pd = 0 is less than W.
+Warning: Ps = 0 is less than W.
+Warning: Pd = 0 is less than W.
+Warning: Ps = 0 is less than W.
+Warning: Pd = 0 is less than W.
+Warning: Ps = 0 is less than W.
+Warning: Pd = 0 is less than W.
+Warning: Ps = 0 is less than W.
+Warning: Pd = 0 is less than W.
+Warning: Ps = 0 is less than W.
+Operating point simulation skipped by 'uic',
+  now using transient initial conditions.
+
+No. of Data Rows : 29813
+
+  Measurements for Transient Analysis
+
+i_write_avg         =  -4.08494e-03 from=  7.00000e-08 to=  8.00009e-08
+i_read_avg          =  -4.25440e-03 from=  8.00000e-08 to=  9.00018e-08
+i_read_steady       =  -8.11975e-04 from=  1.50000e-07 to=  1.60000e-07
+t_rise              =  1.25157e-09 targ=  1.63425e-09 trig=  3.82681e-10
+t_prop              =  -6.84158e-08 targ=  1.63425e-09 trig=  7.00500e-08
+
+
+Total analysis time (seconds) = 102.415
+
+Total elapsed time (seconds) = 102.463 
+
+Total DRAM available = 8192.000 MB.
+DRAM currently available = 1138.719 MB.
+Maximum ngspice program size =   20.719 MB.
+Current ngspice program size =   15.172 MB.
+

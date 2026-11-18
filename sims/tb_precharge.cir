@@ -1,0 +1,34 @@
+* Testbench for Precharge & Equalizer Circuit
+.include "../tsmc018.lib"
+.include "precharge.cir"
+
+* Power Supply
+Vdd vdd 0 DC 1.8
+
+* Instantiate Precharge Unit
+Xpre bl blb pre_b vdd precharge WPRE=0.54u WEQ=0.36u L=0.18u
+
+* 16-cell Column Bitline Capacitance (Cbl = 200fF)
+Cbl  bl  0 200f
+Cblb blb 0 200f
+
+* Initial conditions: simulate bitlines after a full-rail write
+* BL discharged to 0V, BLB remains at 1.8V
+.ic v(bl)=0.0 v(blb)=1.8
+
+* Precharge signal PRE_B:
+* Active LOW: pulses from 1.8V down to 0V at t = 1.0ns with 100ps fall time
+Vpre_b pre_b 0 PWL(0ns 1.8V 1.0ns 1.8V 1.1ns 0V 5.0ns 0V)
+
+* Measure Precharge Rise Time (10% to 90% of VDD, 0.18V to 1.62V)
+.meas tran t_rise trig v(bl) val=0.18 rise=1 targ v(bl) val=1.62 rise=1
+* Measure time when bitline differential |v(bl) - v(blb)| < 10mV
+.meas tran t_eq trig v(pre_b) val=0.9 fall=1 targ v(bl) val=1.75 rise=1
+
+.control
+tran 10p 5n uic
+set wr_vecnames
+wrdata precharge_sim.txt v(pre_b) v(bl) v(blb)
+quit
+.endc
+.end

@@ -1,0 +1,382 @@
+JobQueue:  Init database (waiting)
+JobQueue:  Init database (running)
+JobQueue:  Init database (running) DeepCellDiff (waiting)
+Job com.sun.electric.tool.Job$Key@ffffffff
+JobQueue:  DeepCellDiff (waiting)
+JobQueue:  DeepCellDiff (running)
+Library /Users/harshil_rathan/Documents/BTech%20IITH/SEM5/VLSI/SRAM_Complete_V1_suraj.jelib read, took 0.108 secs
+Library Read found 0 errors, 0 warnings!
+Library /Users/harshil_rathan/Downloads/SRAM_Complete_V1_suraj_antigravity_BACKUP_DRC0_LVS0.jelib read, took 0.05 secs
+
+**************** USER CELL DRC ERRORS ****************
+
+Library Read found 0 errors, 0 warnings!
+JobQueue:  DeepCellDiff (running) Resetting DRC Dates (waiting)
+Running DRC with area bit on, extension bit on, Mosis bit
+Checking again hierarchy .... (0.001 secs)
+Found 17 networks
+Checking cell 'SRAM_Complete_V1_suraj:sense_amplifier{lay}'
+Layer Metal-1 68->68 points, merge=0.0 secs sec, tree=0.0 secs sec
+Layer Metal-2 8->8 points, merge=0.0 secs sec, tree=0.0 secs sec
+Layer N-Active 32->32 points, merge=0.0 secs sec, tree=0.0 secs sec
+Layer N-Select 24->24 points, merge=0.0 secs sec, tree=0.0 secs sec
+Layer N-Well 12->12 points, merge=0.0 secs sec, tree=0.0 secs sec
+Layer P-Active 24->24 points, merge=0.0 secs sec, tree=0.0 secs sec
+Layer P-Active-Well 4->4 points, merge=0.0 secs sec, tree=0.0 secs sec
+Layer P-Select 20->20 points, merge=0.0 secs sec, tree=0.0 secs sec
+Layer Polysilicon-1 56->56 points, merge=0.0 secs sec, tree=0.0 secs sec
+	FOUND 4 ERRORS
+JobQueue:  DeepCellDiff (running) Update DRC data (waiting) Resetting DRC Dates (waiting)
+Layout DRC (full) found 4 errors, 0 warnings!
+>>> ERRORS FOR sense_amplifier (Total: 4):
+  #1 Spacing (layer 'Metal-1'): arc Metal-1['net_se_m1'] LESS (BY 0.5) THAN 3 TO node Metal-1-N-Active-Con['contact@6'] [rule '7.2 Mosis, SUBM']
+  #2 Spacing (layer 'Metal-1'): node Metal-1-Metal-2-Con['via_se_m12'] LESS (BY 2.5) THAN 3 TO node Metal-1-N-Active-Con['contact@6'] [rule '7.2 Mosis, SUBM']
+  #3 Spacing (layer 'Metal-1'): node Metal-1-N-Active-Con['contact@6'] LESS (BY 0.5) THAN 3 TO arc Metal-1['net_se_m1'] [rule '7.2 Mosis, SUBM']
+  #4 Spacing (layer 'Metal-1'): node Metal-1-N-Active-Con['contact@6'] LESS (BY 2.5) THAN 3 TO node Metal-1-Metal-2-Con['via_se_m12'] [rule '7.2 Mosis, SUBM']
+JobQueue:  DeepCellDiff (running) Update DRC data (waiting) Resetting DRC Dates (waiting) Resetting DRC Dates (waiting)
+Running DRC with area bit on, extension bit on, Mosis bit
+Checking again hierarchy .... (0.0 secs)
+Found 8 networks
+Checking cell 'SRAM_Complete_V1_suraj:inverter{lay}'
+	No errors/warnings found
+Checking cell 'SRAM_Complete_V1_suraj:transmissiongate{lay}'
+	No errors/warnings found
+Checking cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}'
+Layer Metal-1 124->104 points, merge=0.0 secs sec, tree=0.0 secs sec
+Layer Metal-2 22->22 points, merge=0.0 secs sec, tree=0.0 secs sec
+Layer N-Active 44->44 points, merge=0.0 secs sec, tree=0.0 secs sec
+Layer N-Select 36->36 points, merge=0.0 secs sec, tree=0.0 secs sec
+Layer N-Well 16->16 points, merge=0.0 secs sec, tree=0.0 secs sec
+Layer P-Active 8->8 points, merge=0.0 secs sec, tree=0.0 secs sec
+Layer P-Active-Well 12->12 points, merge=0.0 secs sec, tree=0.0 secs sec
+Layer P-Select 20->20 points, merge=0.0 secs sec, tree=0.0 secs sec
+Layer Polysilicon-1 40->40 points, merge=0.0 secs sec, tree=0.0 secs sec
+	FOUND 2 ERRORS
+>>> ERRORS FOR wl_driver_gate (Total: 2):
+JobQueue:  DeepCellDiff (running) Update DRC data (waiting) Update DRC data (waiting) Resetting DRC Dates (waiting) Resetting DRC Dates (waiting)  #1 Spacing (layer 'Metal-2'): arc Metal-2['net_enb_m2_0'] OVERLAPS (BY 18) arc Metal-2['net_wlin_m2'] [rule '9.2 Mosis, SUBM']
+  #2 Spacing (layer 'Metal-2'): arc Metal-2['net_wlin_m2'] OVERLAPS (BY 18) arc Metal-2['net_enb_m2_0'] [rule '9.2 Mosis, SUBM']
+
+Layout DRC (full) found 2 errors, 0 warnings!
+JobQueue:  DeepCellDiff (running) Update DRC data (waiting) Update DRC data (waiting) Resetting DRC Dates (waiting) Resetting DRC Dates (waiting) Resetting DRC Dates (waiting)
+Running DRC with area bit on, extension bit on, Mosis bit
+Checking again hierarchy .... (0.0 secs)
+Found 36 networks
+Checking cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}'
+Layer Metal-1 2176->1664 points, merge=0.0 secs sec, tree=0.001 secs sec
+Layer Metal-2 488->542 points, merge=0.0 secs sec, tree=0.0 secs sec
+Layer Metal-3 4->4 points, merge=0.0 secs sec, tree=0.0 secs sec
+Layer N-Active 704->704 points, merge=0.0 secs sec, tree=0.0 secs sec
+Layer N-Select 576->576 points, merge=0.0 secs sec, tree=0.0 secs sec
+Layer N-Well 256->256 points, merge=0.0 secs sec, tree=0.0 secs sec
+Layer P-Active 128->128 points, merge=0.0 secs sec, tree=0.0 secs sec
+Layer P-Active-Well 192->192 points, merge=0.0 secs sec, tree=0.0 secs sec
+Layer P-Select 320->320 points, merge=0.001 secs sec, tree=0.0 secs sec
+Layer Polysilicon-1 640->640 points, merge=0.0 secs sec, tree=0.0 secs sec
+	FOUND 90 ERRORS
+>>> ERRORS FOR wl_driver_x16 (Total: 90):
+JobQueue:  DeepCellDiff (running) Update DRC data (waiting) Update DRC data (waiting)  #1 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_gnd_seg_0'] OVERLAPS (BY 16) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_enb_m2_2'] [rule '9.2 Mosis, SUBM']
+  #2 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_gnd_seg_1'] OVERLAPS (BY 16) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_enb_m2_2'] [rule '9.2 Mosis, SUBM']
+  #3 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_gnd_seg_10'] OVERLAPS (BY 16) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_enb_m2_2'] [rule '9.2 Mosis, SUBM']
+  #4 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_gnd_seg_11'] OVERLAPS (BY 16) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_enb_m2_2'] [rule '9.2 Mosis, SUBM']
+  #5 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_gnd_seg_12'] OVERLAPS (BY 16) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_enb_m2_2'] [rule '9.2 Mosis, SUBM']
+  #6 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_gnd_seg_13'] OVERLAPS (BY 16) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_enb_m2_2'] [rule '9.2 Mosis, SUBM']
+  #7 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_gnd_seg_14'] OVERLAPS (BY 16) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_enb_m2_2'] [rule '9.2 Mosis, SUBM']
+  #8 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_gnd_seg_2'] OVERLAPS (BY 16) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_enb_m2_2'] [rule '9.2 Mosis, SUBM']
+  #9 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_gnd_seg_3'] OVERLAPS (BY 16) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_enb_m2_2'] [rule '9.2 Mosis, SUBM']
+  #10 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_gnd_seg_4'] OVERLAPS (BY 16) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_enb_m2_2'] [rule '9.2 Mosis, SUBM']
+  #11 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_gnd_seg_5'] OVERLAPS (BY 16) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_enb_m2_2'] [rule '9.2 Mosis, SUBM']
+  #12 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_gnd_seg_6'] OVERLAPS (BY 16) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_enb_m2_2'] [rule '9.2 Mosis, SUBM']
+  #13 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_gnd_seg_7'] OVERLAPS (BY 16) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_enb_m2_2'] [rule '9.2 Mosis, SUBM']
+  #14 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_gnd_seg_8'] OVERLAPS (BY 16) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_enb_m2_2'] [rule '9.2 Mosis, SUBM']
+  #15 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_gnd_seg_9'] OVERLAPS (BY 16) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_enb_m2_2'] [rule '9.2 Mosis, SUBM']
+ Update DRC data (waiting) Resetting DRC Dates (waiting)  #16 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_0'] OVERLAPS (BY 11) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_enb_m2_1'] [rule '9.2 Mosis, SUBM']
+  #17 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_0'] OVERLAPS (BY 18) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_wlin_m2'] [rule '9.2 Mosis, SUBM']
+  #18 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_0'] OVERLAPS (BY 27) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_en_m2_1'] [rule '9.2 Mosis, SUBM']
+  #19 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_0'] OVERLAPS (BY 5) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_enb_m2_0'] [rule '9.2 Mosis, SUBM']
+  #20 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_0'] OVERLAPS (BY 5) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', node Metal-1-Metal-2-Con['via_inv_out'] [rule '9.2 Mosis, SUBM']
+  #21 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_1'] OVERLAPS (BY 11) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_enb_m2_1'] [rule '9.2 Mosis, SUBM']
+  #22 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_1'] OVERLAPS (BY 18) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_wlin_m2'] [rule '9.2 Mosis, SUBM']
+  #23 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_1'] OVERLAPS (BY 27) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_en_m2_1'] [rule '9.2 Mosis, SUBM']
+  #24 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_1'] OVERLAPS (BY 5) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_enb_m2_0'] [rule '9.2 Mosis, SUBM']
+  #25 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_1'] OVERLAPS (BY 5) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', node Metal-1-Metal-2-Con['via_inv_out'] [rule '9.2 Mosis, SUBM']
+  #26 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_10'] OVERLAPS (BY 11) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_enb_m2_1'] [rule '9.2 Mosis, SUBM']
+  #27 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_10'] OVERLAPS (BY 18) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_wlin_m2'] [rule '9.2 Mosis, SUBM']
+ Resetting DRC Dates (waiting) Resetting DRC Dates (waiting)  #28 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_10'] OVERLAPS (BY 27) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_en_m2_1'] [rule '9.2 Mosis, SUBM']
+  #29 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_10'] OVERLAPS (BY 5) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_enb_m2_0'] [rule '9.2 Mosis, SUBM']
+  #30 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_10'] OVERLAPS (BY 5) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', node Metal-1-Metal-2-Con['via_inv_out'] [rule '9.2 Mosis, SUBM']
+  #31 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_11'] OVERLAPS (BY 11) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_enb_m2_1'] [rule '9.2 Mosis, SUBM']
+  #32 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_11'] OVERLAPS (BY 18) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_wlin_m2'] [rule '9.2 Mosis, SUBM']
+
+  #33 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_11'] OVERLAPS (BY 27) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_en_m2_1'] [rule '9.2 Mosis, SUBM']
+  #34 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_11'] OVERLAPS (BY 5) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_enb_m2_0'] [rule '9.2 Mosis, SUBM']
+Layout DRC (full) found 90 errors, 0 warnings!
+  #35 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_11'] OVERLAPS (BY 5) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', node Metal-1-Metal-2-Con['via_inv_out'] [rule '9.2 Mosis, SUBM']
+  #36 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_12'] OVERLAPS (BY 11) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_enb_m2_1'] [rule '9.2 Mosis, SUBM']
+  #37 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_12'] OVERLAPS (BY 18) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_wlin_m2'] [rule '9.2 Mosis, SUBM']
+  #38 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_12'] OVERLAPS (BY 27) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_en_m2_1'] [rule '9.2 Mosis, SUBM']
+  #39 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_12'] OVERLAPS (BY 5) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_enb_m2_0'] [rule '9.2 Mosis, SUBM']
+  #40 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_12'] OVERLAPS (BY 5) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', node Metal-1-Metal-2-Con['via_inv_out'] [rule '9.2 Mosis, SUBM']
+  #41 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_13'] OVERLAPS (BY 11) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_enb_m2_1'] [rule '9.2 Mosis, SUBM']
+  #42 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_13'] OVERLAPS (BY 18) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_wlin_m2'] [rule '9.2 Mosis, SUBM']
+  #43 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_13'] OVERLAPS (BY 27) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_en_m2_1'] [rule '9.2 Mosis, SUBM']
+  #44 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_13'] OVERLAPS (BY 5) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_enb_m2_0'] [rule '9.2 Mosis, SUBM']
+  #45 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_13'] OVERLAPS (BY 5) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', node Metal-1-Metal-2-Con['via_inv_out'] [rule '9.2 Mosis, SUBM']
+  #46 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_14'] OVERLAPS (BY 11) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_enb_m2_1'] [rule '9.2 Mosis, SUBM']
+  #47 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_14'] OVERLAPS (BY 18) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_wlin_m2'] [rule '9.2 Mosis, SUBM']
+  #48 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_14'] OVERLAPS (BY 27) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_en_m2_1'] [rule '9.2 Mosis, SUBM']
+  #49 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_14'] OVERLAPS (BY 5) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_enb_m2_0'] [rule '9.2 Mosis, SUBM']
+  #50 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_14'] OVERLAPS (BY 5) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', node Metal-1-Metal-2-Con['via_inv_out'] [rule '9.2 Mosis, SUBM']
+  #51 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_2'] OVERLAPS (BY 11) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_enb_m2_1'] [rule '9.2 Mosis, SUBM']
+  #52 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_2'] OVERLAPS (BY 18) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_wlin_m2'] [rule '9.2 Mosis, SUBM']
+  #53 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_2'] OVERLAPS (BY 27) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_en_m2_1'] [rule '9.2 Mosis, SUBM']
+  #54 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_2'] OVERLAPS (BY 5) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_enb_m2_0'] [rule '9.2 Mosis, SUBM']
+  #55 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_2'] OVERLAPS (BY 5) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', node Metal-1-Metal-2-Con['via_inv_out'] [rule '9.2 Mosis, SUBM']
+  #56 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_3'] OVERLAPS (BY 11) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_enb_m2_1'] [rule '9.2 Mosis, SUBM']
+  #57 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_3'] OVERLAPS (BY 18) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_wlin_m2'] [rule '9.2 Mosis, SUBM']
+  #58 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_3'] OVERLAPS (BY 27) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_en_m2_1'] [rule '9.2 Mosis, SUBM']
+  #59 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_3'] OVERLAPS (BY 5) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_enb_m2_0'] [rule '9.2 Mosis, SUBM']
+  #60 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_3'] OVERLAPS (BY 5) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', node Metal-1-Metal-2-Con['via_inv_out'] [rule '9.2 Mosis, SUBM']
+  #61 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_4'] OVERLAPS (BY 11) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_enb_m2_1'] [rule '9.2 Mosis, SUBM']
+  #62 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_4'] OVERLAPS (BY 18) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_wlin_m2'] [rule '9.2 Mosis, SUBM']
+  #63 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_4'] OVERLAPS (BY 27) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_en_m2_1'] [rule '9.2 Mosis, SUBM']
+  #64 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_4'] OVERLAPS (BY 5) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_enb_m2_0'] [rule '9.2 Mosis, SUBM']
+  #65 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_4'] OVERLAPS (BY 5) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', node Metal-1-Metal-2-Con['via_inv_out'] [rule '9.2 Mosis, SUBM']
+  #66 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_5'] OVERLAPS (BY 11) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_enb_m2_1'] [rule '9.2 Mosis, SUBM']
+  #67 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_5'] OVERLAPS (BY 18) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_wlin_m2'] [rule '9.2 Mosis, SUBM']
+  #68 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_5'] OVERLAPS (BY 27) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_en_m2_1'] [rule '9.2 Mosis, SUBM']
+  #69 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_5'] OVERLAPS (BY 5) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_enb_m2_0'] [rule '9.2 Mosis, SUBM']
+  #70 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_5'] OVERLAPS (BY 5) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', node Metal-1-Metal-2-Con['via_inv_out'] [rule '9.2 Mosis, SUBM']
+  #71 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_6'] OVERLAPS (BY 11) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_enb_m2_1'] [rule '9.2 Mosis, SUBM']
+  #72 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_6'] OVERLAPS (BY 18) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_wlin_m2'] [rule '9.2 Mosis, SUBM']
+  #73 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_6'] OVERLAPS (BY 27) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_en_m2_1'] [rule '9.2 Mosis, SUBM']
+  #74 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_6'] OVERLAPS (BY 5) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_enb_m2_0'] [rule '9.2 Mosis, SUBM']
+  #75 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_6'] OVERLAPS (BY 5) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', node Metal-1-Metal-2-Con['via_inv_out'] [rule '9.2 Mosis, SUBM']
+  #76 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_7'] OVERLAPS (BY 11) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_enb_m2_1'] [rule '9.2 Mosis, SUBM']
+  #77 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_7'] OVERLAPS (BY 18) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_wlin_m2'] [rule '9.2 Mosis, SUBM']
+  #78 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_7'] OVERLAPS (BY 27) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_en_m2_1'] [rule '9.2 Mosis, SUBM']
+  #79 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_7'] OVERLAPS (BY 5) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_enb_m2_0'] [rule '9.2 Mosis, SUBM']
+  #80 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_7'] OVERLAPS (BY 5) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', node Metal-1-Metal-2-Con['via_inv_out'] [rule '9.2 Mosis, SUBM']
+  #81 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_8'] OVERLAPS (BY 11) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_enb_m2_1'] [rule '9.2 Mosis, SUBM']
+  #82 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_8'] OVERLAPS (BY 18) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_wlin_m2'] [rule '9.2 Mosis, SUBM']
+  #83 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_8'] OVERLAPS (BY 27) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_en_m2_1'] [rule '9.2 Mosis, SUBM']
+  #84 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_8'] OVERLAPS (BY 5) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_enb_m2_0'] [rule '9.2 Mosis, SUBM']
+  #85 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_8'] OVERLAPS (BY 5) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', node Metal-1-Metal-2-Con['via_inv_out'] [rule '9.2 Mosis, SUBM']
+  #86 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_9'] OVERLAPS (BY 11) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_enb_m2_1'] [rule '9.2 Mosis, SUBM']
+  #87 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_9'] OVERLAPS (BY 18) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_wlin_m2'] [rule '9.2 Mosis, SUBM']
+  #88 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_9'] OVERLAPS (BY 27) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_en_m2_1'] [rule '9.2 Mosis, SUBM']
+  #89 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_9'] OVERLAPS (BY 5) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', arc Metal-2['net_enb_m2_0'] [rule '9.2 Mosis, SUBM']
+  #90 Spacing (layer 'Metal-2'): cell 'SRAM_Complete_V1_suraj:wl_driver_x16{lay}', arc Metal-2['net_vdd_seg_9'] OVERLAPS (BY 5) cell 'SRAM_Complete_V1_suraj:wl_driver_gate{lay}', node Metal-1-Metal-2-Con['via_inv_out'] [rule '9.2 Mosis, SUBM']
+JobQueue:  DeepCellDiff (running) Update DRC data (waiting) Update DRC data (waiting) Update DRC data (waiting) Resetting DRC Dates (waiting) Resetting DRC Dates (waiting) Resetting DRC Dates (waiting) Resetting DRC Dates (waiting)
+Running DRC with area bit on, extension bit on, Mosis bit
+Checking again hierarchy .... (0.002 secs)
+Found 136 networks
+Checking cell 'SRAM_Complete_V1_suraj:SRAM_6T{lay}'
+	No errors/warnings found
+Checking cell 'SRAM_Complete_V1_suraj:SRAM_Row{lay}'
+	No errors/warnings found
+Checking cell 'SRAM_Complete_V1_suraj:latch_neg{lay}'
+	No errors/warnings found
+Checking cell 'SRAM_Complete_V1_suraj:latch_pos{lay}'
+	No errors/warnings found
+Checking cell 'SRAM_Complete_V1_suraj:flipflop{lay}'
+	No errors/warnings found
+Checking cell 'SRAM_Complete_V1_suraj:nand_2{lay}'
+	No errors/warnings found
+Checking cell 'SRAM_Complete_V1_suraj:xor_2{lay}'
+	No errors/warnings found
+Checking cell 'SRAM_Complete_V1_suraj:clk_div8{lay}'
+	No errors/warnings found
+Checking cell 'SRAM_Complete_V1_suraj:pre_charge{lay}'
+	No errors/warnings found
+Checking cell 'SRAM_Complete_V1_suraj:pre_charge_x16{lay}'
+	No errors/warnings found
+Checking cell 'SRAM_Complete_V1_suraj:pulse_generator{lay}'
+	No errors/warnings found
+Checking cell 'SRAM_Complete_V1_suraj:nand_4{lay}'
+	No errors/warnings found
+Checking cell 'SRAM_Complete_V1_suraj:row_decoder{lay}'
+	No errors/warnings found
+Checking cell 'SRAM_Complete_V1_suraj:sipo_8bit{lay}'
+	No errors/warnings found
+Checking cell 'SRAM_Complete_V1_suraj:writing_driver{lay}'
+	No errors/warnings found
+Checking cell 'SRAM_Complete_V1_suraj:sram_edgetriggered{lay}'
+Layer Metal-1 26806->20754 points, merge=0.0 secs sec, tree=0.004 secs sec
+Layer Metal-2 IS NOT MANHATTAN !!
+Layer Metal-3 792->788 points, merge=0.0 secs sec, tree=0.0 secs sec
+Layer Metal-4 550->534 points, merge=0.0 secs sec, tree=0.0 secs sec
+Layer Metal-5 228->228 points, merge=0.0 secs sec, tree=0.0 secs sec
+Layer Metal-6 84->84 points, merge=0.0 secs sec, tree=0.0 secs sec
+Layer N-Active 14888->14800 points, merge=0.0 secs sec, tree=0.002 secs sec
+Layer N-Select 10580->10492 points, merge=0.0 secs sec, tree=0.001 secs sec
+Layer N-Well 4492->4404 points, merge=0.0 secs sec, tree=0.001 secs sec
+Layer P-Active 3504->3504 points, merge=0.0 secs sec, tree=0.001 secs sec
+Layer P-Active-Well 1972->1884 points, merge=0.0 secs sec, tree=0.0 secs sec
+Layer P-Select 4636->4548 points, merge=0.0 secs sec, tree=0.0 secs sec
+Layer Polysilicon-1 18250->18250 points, merge=0.0 secs sec, tree=0.001 secs sec
+	FOUND 59 ERRORS
+>>> ERRORS FOR sram_edgetriggered (Total: 59):
+JobQueue:  DeepCellDiff (running) Update DRC data (waiting)  #1 Crooked error: cell 'SRAM_Complete_V1_suraj:sram_edgetriggered{lay}' arc Metal-2['PULSE_b'] is not horizontal nor vertical
+  #2 Notch (layer 'Metal-1'): cell 'SRAM_Complete_V1_suraj:sram_edgetriggered{lay}', arc Metal-1['R_data'] LESS (BY 0.5) THAN 3 TO cell 'SRAM_Complete_V1_suraj:sense_amplifier{lay}', arc Metal-1['net@36'] [rule '7.2 Mosis, SUBM']
+  #3 Notch (layer 'Metal-1'): cell 'SRAM_Complete_V1_suraj:sram_edgetriggered{lay}', arc Metal-1['R_data'] LESS (BY 0.5) THAN 3 TO cell 'SRAM_Complete_V1_suraj:sense_amplifier{lay}', node Metal-1-N-Active-Con['contact@17'] [rule '7.2 Mosis, SUBM']
+ Update DRC data (waiting) Update DRC data (waiting) Update DRC data (waiting) Resetting DRC Dates (waiting) Resetting DRC Dates (waiting) Resetting DRC Dates (waiting) Resetting DRC Dates (waiting)
+  #4 Resolution error: cell 'SRAM_Complete_V1_suraj:sram_edgetriggered{lay}' arc Metal-2['PULSE_b'] resolution of 0.002(X=-222.18241290330886) less than 0.01 on layer Metal-2 [rule 'Resolution']
+  #5 Spacing (layer 'Metal-1'): arc Metal-1['GND'] LESS (BY 2) THAN 3 TO node Metal-1-Metal-2-Con['via_p_exit_m12'] [rule '7.2 Mosis, SUBM']
+  #6 Spacing (layer 'Metal-1'): arc Metal-1['GND'] OVERLAPS (BY 36.5) arc Metal-1['R_data'] [rule '7.2 Mosis, SUBM']
+  #7 Spacing (layer 'Metal-1'): arc Metal-1['GND'] OVERLAPS (BY 47.5) arc Metal-1['WD'] [rule '7.2 Mosis, SUBM']
+Layout DRC (full) found 59 errors, 0 warnings!
+  #8 Spacing (layer 'Metal-1'): arc Metal-1['GND'] OVERLAPS (BY 47.5) arc Metal-1['WE'] [rule '7.2 Mosis, SUBM']
+  #9 Spacing (layer 'Metal-1'): arc Metal-1['R_data'] OVERLAPS (BY 36.5) arc Metal-1['GND'] [rule '7.2 Mosis, SUBM']
+  #10 Spacing (layer 'Metal-1'): arc Metal-1['WD'] OVERLAPS (BY 47.5) arc Metal-1['GND'] [rule '7.2 Mosis, SUBM']
+  #11 Spacing (layer 'Metal-1'): arc Metal-1['WD'] OVERLAPS (BY 7) arc Metal-1['WE'] [rule '7.2 Mosis, SUBM']
+  #12 Spacing (layer 'Metal-1'): arc Metal-1['WE'] OVERLAPS (BY 47.5) arc Metal-1['GND'] [rule '7.2 Mosis, SUBM']
+  #13 Spacing (layer 'Metal-1'): arc Metal-1['WE'] OVERLAPS (BY 7) arc Metal-1['WD'] [rule '7.2 Mosis, SUBM']
+  #14 Spacing (layer 'Metal-1'): cell 'SRAM_Complete_V1_suraj:sram_edgetriggered{lay}', arc Metal-1['GBL'] LESS (BY 1) THAN 3 TO cell 'SRAM_Complete_V1_suraj:sense_amplifier{lay}', node Metal-1-N-Well-Con['well@0'] [rule '7.2 Mosis, SUBM']
+  #15 Spacing (layer 'Metal-1'): cell 'SRAM_Complete_V1_suraj:sram_edgetriggered{lay}', arc Metal-1['GND'] LESS (BY 1) THAN 3 TO cell 'SRAM_Complete_V1_suraj:nand_4{lay}', arc Metal-1['net@111'] [rule '7.2 Mosis, SUBM']
+  #16 Spacing (layer 'Metal-1'): cell 'SRAM_Complete_V1_suraj:sram_edgetriggered{lay}', arc Metal-1['GND'] LESS (BY 1.5) THAN 3 TO cell 'SRAM_Complete_V1_suraj:nand_4{lay}', arc Metal-1['net@114'] [rule '7.2 Mosis, SUBM']
+  #17 Spacing (layer 'Metal-1'): cell 'SRAM_Complete_V1_suraj:sram_edgetriggered{lay}', arc Metal-1['GND'] OVERLAPS (BY 15.5) cell 'SRAM_Complete_V1_suraj:row_decoder{lay}', arc Metal-1['net@1137'] [rule '7.2 Mosis, SUBM']
+  #18 Spacing (layer 'Metal-1'): cell 'SRAM_Complete_V1_suraj:sram_edgetriggered{lay}', arc Metal-1['GND'] OVERLAPS (BY 30.25) cell 'SRAM_Complete_V1_suraj:row_decoder{lay}', arc Metal-1['net@40'] [rule '7.2 Mosis, SUBM']
+  #19 Spacing (layer 'Metal-1'): cell 'SRAM_Complete_V1_suraj:sram_edgetriggered{lay}', arc Metal-1['GND'] OVERLAPS (BY 36) cell 'SRAM_Complete_V1_suraj:row_decoder{lay}', arc Metal-1['net@1152'] [rule '7.2 Mosis, SUBM']
+  #20 Spacing (layer 'Metal-1'): cell 'SRAM_Complete_V1_suraj:sram_edgetriggered{lay}', arc Metal-1['GND'] OVERLAPS (BY 40.5) cell 'SRAM_Complete_V1_suraj:row_decoder{lay}', arc Metal-1['net@759'] [rule '7.2 Mosis, SUBM']
+  #21 Spacing (layer 'Metal-1'): cell 'SRAM_Complete_V1_suraj:sram_edgetriggered{lay}', arc Metal-1['GND'] OVERLAPS (BY 6) cell 'SRAM_Complete_V1_suraj:inverter{lay}', node Metal-1-N-Active-Con['contact@3'] [rule '7.2 Mosis, SUBM']
+  #22 Spacing (layer 'Metal-1'): cell 'SRAM_Complete_V1_suraj:sram_edgetriggered{lay}', arc Metal-1['GND'] OVERLAPS (BY 7) cell 'SRAM_Complete_V1_suraj:inverter{lay}', arc Metal-1['net@17'] [rule '7.2 Mosis, SUBM']
+  #23 Spacing (layer 'Metal-1'): cell 'SRAM_Complete_V1_suraj:sram_edgetriggered{lay}', arc Metal-1['R_data'] LESS (BY 0.5) THAN 3 TO cell 'SRAM_Complete_V1_suraj:sense_amplifier{lay}', arc Metal-1['net@21'] [rule '7.2 Mosis, SUBM']
+  #24 Spacing (layer 'Metal-1'): cell 'SRAM_Complete_V1_suraj:sram_edgetriggered{lay}', arc Metal-1['R_data'] LESS (BY 0.5) THAN 3 TO cell 'SRAM_Complete_V1_suraj:sense_amplifier{lay}', node Metal-1-N-Active-Con['contact@16'] [rule '7.2 Mosis, SUBM']
+  #25 Spacing (layer 'Metal-1'): cell 'SRAM_Complete_V1_suraj:sram_edgetriggered{lay}', arc Metal-1['R_data'] LESS (BY 0.5) THAN 3 TO cell 'SRAM_Complete_V1_suraj:sense_amplifier{lay}', node Metal-1-Polysilicon-1-Con['contact@18'] [rule '7.2 Mosis, SUBM']
+  #26 Spacing (layer 'Metal-1'): cell 'SRAM_Complete_V1_suraj:sram_edgetriggered{lay}', arc Metal-1['R_data'] LESS (BY 0.5) THAN 3 TO cell 'SRAM_Complete_V1_suraj:sense_amplifier{lay}', node Metal-1-Polysilicon-1-Con['contact@18'] [rule '7.2 Mosis, SUBM']
+  #27 Spacing (layer 'Metal-1'): cell 'SRAM_Complete_V1_suraj:sram_edgetriggered{lay}', arc Metal-1['R_data'] OVERLAPS (BY 18) cell 'SRAM_Complete_V1_suraj:sense_amplifier{lay}', node Metal-1-P-Well-Con['substr@0'] [rule '7.2 Mosis, SUBM']
+  #28 Spacing (layer 'Metal-1'): cell 'SRAM_Complete_V1_suraj:sram_edgetriggered{lay}', arc Metal-1['WD'] OVERLAPS (BY 23.5) cell 'SRAM_Complete_V1_suraj:writing_driver{lay}', node Metal-1-P-Well-Con['substr@0'] [rule '7.2 Mosis, SUBM']
+  #29 Spacing (layer 'Metal-1'): cell 'SRAM_Complete_V1_suraj:sram_edgetriggered{lay}', arc Metal-1['WE'] OVERLAPS (BY 5) cell 'SRAM_Complete_V1_suraj:writing_driver{lay}', node Metal-1-P-Well-Con['substr@0'] [rule '7.2 Mosis, SUBM']
+  #30 Spacing (layer 'Metal-1'): cell 'SRAM_Complete_V1_suraj:sram_edgetriggered{lay}', arc Metal-1['WE'] OVERLAPS (BY 7) cell 'SRAM_Complete_V1_suraj:writing_driver{lay}', arc Metal-1['net_wd_ext'] [rule '7.2 Mosis, SUBM']
+  #31 Spacing (layer 'Metal-1'): node Metal-1-Metal-2-Con['via_p_exit_m12'] LESS (BY 2) THAN 3 TO arc Metal-1['GND'] [rule '7.2 Mosis, SUBM']
+  #32 Spacing (layer 'Metal-2'): arc Metal-2['ADDR_0'] OVERLAPS (BY 87) arc Metal-2['ADDR_IN'] [rule '9.2 Mosis, SUBM']
+  #33 Spacing (layer 'Metal-2'): arc Metal-2['ADDR_1'] OVERLAPS (BY 77) arc Metal-2['ADDR_IN'] [rule '9.2 Mosis, SUBM']
+  #34 Spacing (layer 'Metal-2'): arc Metal-2['ADDR_2'] OVERLAPS (BY 67) arc Metal-2['ADDR_IN'] [rule '9.2 Mosis, SUBM']
+  #35 Spacing (layer 'Metal-2'): arc Metal-2['ADDR_3'] OVERLAPS (BY 57) arc Metal-2['ADDR_IN'] [rule '9.2 Mosis, SUBM']
+  #36 Spacing (layer 'Metal-2'): arc Metal-2['ADDR_IN'] OVERLAPS (BY 50.5) arc Metal-2['GND'] [rule '9.2 Mosis, SUBM']
+  #37 Spacing (layer 'Metal-2'): arc Metal-2['ADDR_IN'] OVERLAPS (BY 57) arc Metal-2['ADDR_3'] [rule '9.2 Mosis, SUBM']
+  #38 Spacing (layer 'Metal-2'): arc Metal-2['ADDR_IN'] OVERLAPS (BY 62.5) arc Metal-2['VDD'] [rule '9.2 Mosis, SUBM']
+  #39 Spacing (layer 'Metal-2'): arc Metal-2['ADDR_IN'] OVERLAPS (BY 67) arc Metal-2['ADDR_2'] [rule '9.2 Mosis, SUBM']
+  #40 Spacing (layer 'Metal-2'): arc Metal-2['ADDR_IN'] OVERLAPS (BY 77) arc Metal-2['ADDR_1'] [rule '9.2 Mosis, SUBM']
+  #41 Spacing (layer 'Metal-2'): arc Metal-2['ADDR_IN'] OVERLAPS (BY 87) arc Metal-2['ADDR_0'] [rule '9.2 Mosis, SUBM']
+  #42 Spacing (layer 'Metal-2'): arc Metal-2['CLK'] OVERLAPS (BY 25) arc Metal-2['VDD'] [rule '9.2 Mosis, SUBM']
+  #43 Spacing (layer 'Metal-2'): arc Metal-2['CLK'] OVERLAPS (BY 35) arc Metal-2['GND'] [rule '9.2 Mosis, SUBM']
+  #44 Spacing (layer 'Metal-2'): arc Metal-2['CLK'] OVERLAPS (BY 35) arc Metal-2['GND'] [rule '9.2 Mosis, SUBM']
+  #45 Spacing (layer 'Metal-2'): arc Metal-2['CLK'] OVERLAPS (BY 45) arc Metal-2['VDD'] [rule '9.2 Mosis, SUBM']
+  #46 Spacing (layer 'Metal-2'): arc Metal-2['GND'] OVERLAPS (BY 15.5) arc Metal-2['VDD'] [rule '9.2 Mosis, SUBM']
+  #47 Spacing (layer 'Metal-2'): arc Metal-2['GND'] OVERLAPS (BY 17) arc Metal-2['VDD'] [rule '9.2 Mosis, SUBM']
+  #48 Spacing (layer 'Metal-2'): arc Metal-2['GND'] OVERLAPS (BY 17.5) arc Metal-2['VDD'] [rule '9.2 Mosis, SUBM']
+  #49 Spacing (layer 'Metal-2'): arc Metal-2['GND'] OVERLAPS (BY 35) arc Metal-2['CLK'] [rule '9.2 Mosis, SUBM']
+  #50 Spacing (layer 'Metal-2'): arc Metal-2['GND'] OVERLAPS (BY 35) arc Metal-2['CLK'] [rule '9.2 Mosis, SUBM']
+  #51 Spacing (layer 'Metal-2'): arc Metal-2['GND'] OVERLAPS (BY 50.5) arc Metal-2['ADDR_IN'] [rule '9.2 Mosis, SUBM']
+  #52 Spacing (layer 'Metal-2'): arc Metal-2['VDD'] OVERLAPS (BY 15.5) arc Metal-2['GND'] [rule '9.2 Mosis, SUBM']
+  #53 Spacing (layer 'Metal-2'): arc Metal-2['VDD'] OVERLAPS (BY 17) arc Metal-2['GND'] [rule '9.2 Mosis, SUBM']
+  #54 Spacing (layer 'Metal-2'): arc Metal-2['VDD'] OVERLAPS (BY 17.5) arc Metal-2['GND'] [rule '9.2 Mosis, SUBM']
+  #55 Spacing (layer 'Metal-2'): arc Metal-2['VDD'] OVERLAPS (BY 25) arc Metal-2['CLK'] [rule '9.2 Mosis, SUBM']
+  #56 Spacing (layer 'Metal-2'): arc Metal-2['VDD'] OVERLAPS (BY 45) arc Metal-2['CLK'] [rule '9.2 Mosis, SUBM']
+  #57 Spacing (layer 'Metal-2'): arc Metal-2['VDD'] OVERLAPS (BY 62.5) arc Metal-2['ADDR_IN'] [rule '9.2 Mosis, SUBM']
+  #58 Spacing (layer 'Via2'): node Metal-2-Metal-3-Con['via_gblb_m23_2'] LESS (BY 2) THAN 3 TO node Metal-2-Metal-3-Con['via_gblb_sa_m32'] [rule '14.2 Mosis']
+  #59 Spacing (layer 'Via2'): node Metal-2-Metal-3-Con['via_gblb_sa_m32'] LESS (BY 2) THAN 3 TO node Metal-2-Metal-3-Con['via_gblb_m23_2'] [rule '14.2 Mosis']
+
+**************** DETAILED CELL COMPARISON ****************
+
+=== COMPARING CELL: sense_amplifier ===
+User Node Count: 42 | Friend Node Count: 42
+User Arc Count:  46 | Friend Arc Count:  46
+User Export Count: 6 | Friend Export Count: 6
+User BBox:   ERectangle[x=-62.5,y=-44.0,w=97.0,h=106.0]
+Friend BBox: ERectangle[x=-62.5,y=-44.0,w=97.0,h=106.0]
+------------------------------------------------------------
+
+=== COMPARING CELL: wl_driver_gate ===
+User Node Count: 29 | Friend Node Count: 29
+User Arc Count:  32 | Friend Arc Count:  32
+User Export Count: 5 | Friend Export Count: 5
+User BBox:   ERectangle[x=-80.5,y=-62.0,w=199.5,h=110.0]
+Friend BBox: ERectangle[x=-80.5,y=-62.0,w=199.5,h=110.0]
+Subcell Instances:
+  Subcell inverter: User has 1, Friend has 1
+    User locs:   [EPointInt[-43.0, 0.0]]
+    Friend locs: [EPointInt[-43.0, 0.0]]
+  Subcell transmissiongate: User has 1, Friend has 1
+    User locs:   [EPointInt[117.0, 16.0]]
+    Friend locs: [EPointInt[117.0, 16.0]]
+------------------------------------------------------------
+
+=== COMPARING CELL: wl_driver_x16 ===
+User Node Count: 98 | Friend Node Count: 98
+User Arc Count:  126 | Friend Arc Count:  126
+User Export Count: 35 | Friend Export Count: 35
+User BBox:   ERectangle[x=-102.0,y=-63.0,w=221.0,h=1686.0]
+Friend BBox: ERectangle[x=-102.0,y=-63.0,w=221.0,h=1688.0]
+Subcell Instances:
+  Subcell wl_driver_gate: User has 16, Friend has 16
+    User locs:   [EPointInt[0.0, 0.0], EPointInt[0.0, 105.0], EPointInt[0.0, 210.0], EPointInt[0.0, 315.0], EPointInt[0.0, 420.0], EPointInt[0.0, 525.0], EPointInt[0.0, 630.0], EPointInt[0.0, 735.0], EPointInt[0.0, 840.0], EPointInt[0.0, 945.0], EPointInt[0.0, 1050.0], EPointInt[0.0, 1155.0], EPointInt[0.0, 1260.0], EPointInt[0.0, 1365.0], EPointInt[0.0, 1470.0], EPointInt[0.0, 1575.0]]
+    Friend locs: [EPointInt[0.0, 0.0], EPointInt[0.0, 105.0], EPointInt[0.0, 210.0], EPointInt[0.0, 315.0], EPointInt[0.0, 420.0], EPointInt[0.0, 525.0], EPointInt[0.0, 630.0], EPointInt[0.0, 735.0], EPointInt[0.0, 840.0], EPointInt[0.0, 945.0], EPointInt[0.0, 1050.0], EPointInt[0.0, 1155.0], EPointInt[0.0, 1260.0], EPointInt[0.0, 1365.0], EPointInt[0.0, 1470.0], EPointInt[0.0, 1575.0]]
+------------------------------------------------------------
+
+=== COMPARING CELL: sram_edgetriggered ===
+User Node Count: 524 | Friend Node Count: 558
+User Arc Count:  1168 | Friend Arc Count:  1205
+User Export Count: 8 | Friend Export Count: 7
+User BBox:   ERectangle[x=-1802.0,y=-1685.0,w=4755.0,h=3927.5]
+Friend BBox: ERectangle[x=-1803.0,y=-1685.0,w=4756.0,h=3927.5]
+Subcell Instances:
+  Subcell SRAM_Row: User has 16, Friend has 16
+    User locs:   [EPointInt[0.0, 0.0], EPointInt[0.0, 105.0], EPointInt[0.0, 210.0], EPointInt[0.0, 315.0], EPointInt[0.0, 420.0], EPointInt[0.0, 525.0], EPointInt[0.0, 630.0], EPointInt[0.0, 735.0], EPointInt[0.0, 840.0], EPointInt[0.0, 945.0], EPointInt[0.0, 1050.0], EPointInt[0.0, 1155.0], EPointInt[0.0, 1260.0], EPointInt[0.0, 1365.0], EPointInt[0.0, 1470.0], EPointInt[0.0, 1575.0]]
+    Friend locs: [EPointInt[0.0, 0.0], EPointInt[0.0, 105.0], EPointInt[0.0, 210.0], EPointInt[0.0, 315.0], EPointInt[0.0, 420.0], EPointInt[0.0, 525.0], EPointInt[0.0, 630.0], EPointInt[0.0, 735.0], EPointInt[0.0, 840.0], EPointInt[0.0, 945.0], EPointInt[0.0, 1050.0], EPointInt[0.0, 1155.0], EPointInt[0.0, 1260.0], EPointInt[0.0, 1365.0], EPointInt[0.0, 1470.0], EPointInt[0.0, 1575.0]]
+  Subcell clk_div8: User has 1, Friend has 1
+    User locs:   [EPointInt[-500.0, 2100.0]]
+    Friend locs: [EPointInt[-500.0, 2100.0]]
+  Subcell inverter: User has 0, Friend has 1
+    User locs:   []
+    Friend locs: [EPointInt[130.0, -243.0]]
+  Subcell pre_charge_x16: User has 1, Friend has 1
+    User locs:   [EPointInt[-170.5, 1780.0]]
+    Friend locs: [EPointInt[-170.5, 1780.0]]
+  Subcell pulse_generator: User has 1, Friend has 1
+    User locs:   [EPointInt[2000.0, 2075.0]]
+    Friend locs: [EPointInt[2000.0, 2075.0]]
+  Subcell row_decoder: User has 2, Friend has 2
+    User locs:   [EPointInt[-1200.0, 266.5], EPointInt[-1200.0, -400.0]]
+    Friend locs: [EPointInt[-1200.0, 266.5], EPointInt[-1200.0, -400.0]]
+  Subcell sense_amplifier: User has 1, Friend has 1
+    User locs:   [EPointInt[0.0, -250.0]]
+    Friend locs: [EPointInt[0.0, -250.0]]
+  Subcell sipo_8bit: User has 1, Friend has 1
+    User locs:   [EPointInt[-1460.0, 1900.0]]
+    Friend locs: [EPointInt[-1460.0, 1900.0]]
+  Subcell wl_driver_x16: User has 1, Friend has 1
+    User locs:   [EPointInt[-380.0, -34.0]]
+    Friend locs: [EPointInt[-380.0, -34.0]]
+  Subcell writing_driver: User has 1, Friend has 1
+    User locs:   [EPointInt[350.0, -250.0]]
+    Friend locs: [EPointInt[350.0, -250.0]]
+------------------------------------------------------------
+
+Job com.sun.electric.tool.Job$Key@fffffffe
+JobQueue:  Update DRC data (waiting) Update DRC data (waiting) Update DRC data (waiting) Update DRC data (waiting) Resetting DRC Dates (waiting) Resetting DRC Dates (waiting) Resetting DRC Dates (waiting) Resetting DRC Dates (waiting)
+JobQueue:  Update DRC data (running) Update DRC data (waiting) Update DRC data (waiting) Update DRC data (waiting) Resetting DRC Dates (waiting) Resetting DRC Dates (waiting) Resetting DRC Dates (waiting) Resetting DRC Dates (waiting)
+Job com.sun.electric.tool.Job$Key@8
+JobQueue:  Update DRC data (waiting) Update DRC data (waiting) Update DRC data (waiting) Resetting DRC Dates (waiting) Resetting DRC Dates (waiting) Resetting DRC Dates (waiting) Resetting DRC Dates (waiting)
+JobQueue:  Update DRC data (running) Update DRC data (waiting) Update DRC data (waiting) Resetting DRC Dates (waiting) Resetting DRC Dates (waiting) Resetting DRC Dates (waiting) Resetting DRC Dates (waiting)
+Job com.sun.electric.tool.Job$Key@6
+JobQueue:  Update DRC data (waiting) Update DRC data (waiting) Resetting DRC Dates (waiting) Resetting DRC Dates (waiting) Resetting DRC Dates (waiting) Resetting DRC Dates (waiting)
+JobQueue:  Update DRC data (running) Update DRC data (waiting) Resetting DRC Dates (waiting) Resetting DRC Dates (waiting) Resetting DRC Dates (waiting) Resetting DRC Dates (waiting)
+Job com.sun.electric.tool.Job$Key@4
+JobQueue:  Update DRC data (waiting) Resetting DRC Dates (waiting) Resetting DRC Dates (waiting) Resetting DRC Dates (waiting) Resetting DRC Dates (waiting)
+JobQueue:  Update DRC data (running) Resetting DRC Dates (waiting) Resetting DRC Dates (waiting) Resetting DRC Dates (waiting) Resetting DRC Dates (waiting)
+Job com.sun.electric.tool.Job$Key@2
+JobQueue:  Resetting DRC Dates (waiting) Resetting DRC Dates (waiting) Resetting DRC Dates (waiting) Resetting DRC Dates (waiting)
+JobQueue:  Resetting DRC Dates (running) Resetting DRC Dates (waiting) Resetting DRC Dates (waiting) Resetting DRC Dates (waiting)
+Job com.sun.electric.tool.Job$Key@1
+JobQueue:  Resetting DRC Dates (waiting) Resetting DRC Dates (waiting) Resetting DRC Dates (waiting)
+JobQueue:  Resetting DRC Dates (running) Resetting DRC Dates (waiting) Resetting DRC Dates (waiting)
+Job com.sun.electric.tool.Job$Key@3
+JobQueue:  Resetting DRC Dates (waiting) Resetting DRC Dates (waiting)
+JobQueue:  Resetting DRC Dates (running) Resetting DRC Dates (waiting)
+Job com.sun.electric.tool.Job$Key@5
+JobQueue:  Resetting DRC Dates (waiting)
+JobQueue:  Resetting DRC Dates (running)
+Job com.sun.electric.tool.Job$Key@7
+JobQueue: 

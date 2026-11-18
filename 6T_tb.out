@@ -1,0 +1,23 @@
+
+Note: No compatibility mode selected!
+
+warning, can't find model 'n' from line
+    mnmos@0 net@4 net@9 gnd gnd n l=0.4u w=0.4u
+warning, can't find model 'n' from line
+    mnmos@1 net@9 net@4 gnd gnd n l=0.4u w=0.4u
+warning, can't find model 'n' from line
+    mnmos@2 bl wl net@9 gnd n l=0.4u w=0.4u
+warning, can't find model 'n' from line
+    mnmos@3 net@4 wl blb gnd n l=0.4u w=0.4u
+warning, can't find model 'p' from line
+    mpmos@0 vdd net@4 net@9 vdd p l=0.4u w=0.4u
+warning, can't find model 'p' from line
+    mpmos@1 vdd net@9 net@4 vdd p l=0.4u w=0.4u
+
+Circuit: *** spice deck for cell 6t_tb{sch} from library sram
+
+Error on line 12 or its substitute:
+  m.x_6t@0.mnmos@0 x_6t@0.net@4 x_6t@0.net@9 0 0 n l=0.4u w=0.4u
+could not find a valid modelname
+    Simulation interrupted due to error!
+

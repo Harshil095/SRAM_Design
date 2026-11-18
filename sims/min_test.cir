@@ -1,0 +1,32 @@
+* Min size test
+.include "../tsmc018.lib"
+.subckt cell_min bl blb gnd vdd wl
+Mpd1 q  qb gnd gnd CMOSN W=0.28u L=0.18u
+Mpu1 q  qb vdd vdd CMOSP W=0.28u L=0.18u
+Mpd2 qb q  gnd gnd CMOSN W=0.28u L=0.18u
+Mpu2 qb q  vdd vdd CMOSP W=0.28u L=0.18u
+Mpg1 bl  wl q  gnd CMOSN W=0.28u L=0.18u
+Mpg2 blb wl qb gnd CMOSN W=0.28u L=0.18u
+.ends cell_min
+
+Vsup vdd 0 DC 1.8
+X1 bl blb 0 vdd wl cell_min
+Cbl  bl  0 200f
+Cblb blb 0 200f
+.model swpc sw(vt=0.9 vh=0.1 ron=500 roff=1e12)
+.model swwr sw(vt=0.9 vh=0.1 ron=1k  roff=1e12)
+Spcbl  vdd bl  pc 0 swpc
+Spcblb vdd blb pc 0 swpc
+Swbl  bl  0 wrbl  0 swwr
+Swblb blb 0 wrblb 0 swwr
+Vpc    pc    0 PWL(0 1.8 1n 1.8 1.1n 0 3.8n 0 3.9n 1.8 7n 1.8 7.1n 0 10.5n 0 10.6n 1.8 13n 1.8 13.1n 0 16.5n 0 16.6n 1.8 19n 1.8 19.1n 0 22.5n 0 22.6n 1.8 25n 1.8 25.1n 0 28.5n 0 28.6n 1.8 32n 1.8)
+Vwl    wl    0 PWL(0 0 1.5n 0 1.6n 1.8 3.5n 1.8 3.6n 0 7.5n 0 7.6n 1.8 10n 1.8 10.1n 0 13.5n 0 13.6n 1.8 15.5n 1.8 15.6n 0 19.5n 0 19.6n 1.8 22n 1.8 22.1n 0 25.5n 0 25.6n 1.8 27.5n 1.8 27.6n 0 32n 0)
+Vwrbl  wrbl  0 PWL(0 0 1.3n 0 1.4n 1.8 3.7n 1.8 3.8n 0 25.3n 0 25.4n 1.8 28n 1.8 28.1n 0 32n 0)
+Vwrblb wrblb 0 PWL(0 0 13.3n 0 13.4n 1.8 16n 1.8 16.1n 0 32n 0)
+.tran 10p 32n
+.control
+run
+wrdata min_test.txt v(wl) v(pc) v(bl) v(blb) v(x1.q) v(x1.qb)
+quit
+.endc
+.end

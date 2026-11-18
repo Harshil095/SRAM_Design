@@ -1,0 +1,72 @@
+*** SPICE deck for cell Div8_Counter{sch} from library SRAM
+*** Created on Tue Nov 17, 2026 04:17:58
+*** Last revised on Tue Nov 17, 2026 04:17:58
+*** Written on Tue Nov 17, 2026 04:17:58 by Electric VLSI Design System, version 9.08
+*** Layout tech: mocmos, foundry MOSIS
+*** UC SPICE *** , MIN_RESIST 4.0, MIN_CAPAC 0.1FF
+
+*** SUBCIRCUIT SRAM__inverter FROM CELL SRAM:inverter{sch}
+.SUBCKT SRAM__inverter in out
+** GLOBAL gnd
+** GLOBAL vdd
+Mnmos@0 out in gnd gnd CMOSN L=0.4U W=0.8U
+Mpmos@0 vdd in out vdd CMOSP L=0.4U W=1.6U
+.ENDS SRAM__inverter
+
+*** SUBCIRCUIT SRAM__tgate FROM CELL SRAM:tgate{sch}
+.SUBCKT SRAM__tgate EN ENB gnd IN OUT vdd
+** GLOBAL gnd
+** GLOBAL vdd
+Mnmos@0 IN EN OUT gnd CMOSN L=0.4U W=1.6U
+Mpmos@0 OUT ENB IN vdd CMOSP L=0.4U W=2.4U
+.ENDS SRAM__tgate
+
+*** SUBCIRCUIT SRAM__DFF FROM CELL SRAM:DFF{sch}
+.SUBCKT SRAM__DFF CLK D gnd Q vdd
+** GLOBAL gnd
+** GLOBAL vdd
+XINV1 CLK net@20 SRAM__inverter
+XINV2 net@20 net@22 SRAM__inverter
+XINV3 net@1 net@3 SRAM__inverter
+XINV4 net@3 net@12 SRAM__inverter
+XINV5 net@5 net@7 SRAM__inverter
+XINV6 net@7 Q SRAM__inverter
+XTG1 net@20 net@22 gnd D net@1 vdd SRAM__tgate
+XTG2 net@22 net@20 gnd net@12 net@1 vdd SRAM__tgate
+XTG3 net@22 net@20 gnd net@3 net@5 vdd SRAM__tgate
+XTG4 net@20 net@22 gnd net@7 net@5 vdd SRAM__tgate
+
+.ENDS SRAM__DFF
+
+*** SUBCIRCUIT SRAM__nand4 FROM CELL SRAM:nand4{sch}
+.SUBCKT SRAM__nand4 A B C D out
+** GLOBAL gnd
+** GLOBAL vdd
+Mnmos@4 out A net@62 gnd CMOSN L=0.4U W=3.2U
+Mnmos@5 net@62 B net@63 gnd CMOSN L=0.4U W=3.2U
+Mnmos@6 net@63 C net@64 gnd CMOSN L=0.4U W=3.2U
+Mnmos@7 net@64 D gnd gnd CMOSN L=0.4U W=3.2U
+Mpmos@4 vdd A out vdd CMOSP L=0.4U W=1.6U
+Mpmos@5 vdd B out vdd CMOSP L=0.4U W=1.6U
+Mpmos@7 vdd C out vdd CMOSP L=0.4U W=1.6U
+Mpmos@8 vdd D out vdd CMOSP L=0.4U W=1.6U
+.ENDS SRAM__nand4
+
+.global gnd vdd
+
+*** TOP LEVEL CELL: SRAM:Div8_Counter{sch}
+XDFF@0 CLK net@7 gnd net@24 vdd SRAM__DFF
+XDFF@1 net@7 net@9 gnd net@31 vdd SRAM__DFF
+XDFF@2 net@9 net@11 gnd net@38 vdd SRAM__DFF
+Xinverter@0 net@24 net@7 SRAM__inverter
+Xinverter@1 net@31 net@9 SRAM__inverter
+Xinverter@2 net@38 net@11 SRAM__inverter
+Xinverter@3 net@49 EXECUTE SRAM__inverter
+Xnand4@0 net@24 net@31 net@38 vdd net@49 SRAM__nand4
+.include ./tsmc018.lib
+V_vdd vdd 0 DC 1.8
+.ic v(net@24)=0 v(net@31)=0 v(net@38)=0
+V_clk CLK 0 PULSE(0 1.8 0 100ps 100ps 4.9ns 10ns)
+.tran 50ps 100ns
+.print tran v(CLK) v(EXECUTE)
+.END

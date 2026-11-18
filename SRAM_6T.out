@@ -1,0 +1,23 @@
+
+Note: No compatibility mode selected!
+
+warning, can't find model 'cmosn' from line
+    mnmos@1 q_b q gnd gnd cmosn l=0.18u w=0.9u
+warning, can't find model 'cmosn' from line
+    mnmos@2 gnd q_b q gnd cmosn l=0.18u w=0.9u
+warning, can't find model 'cmosn' from line
+    mnmos@3 q wl bl gnd cmosn l=0.18u w=0.599u
+warning, can't find model 'cmosn' from line
+    mnmos@4 bl_b wl q_b gnd cmosn l=0.18u w=0.599u
+warning, can't find model 'cmosp' from line
+    mpmos@1 vdd q q_b vdd cmosp l=0.18u w=0.45u
+warning, can't find model 'cmosp' from line
+    mpmos@3 q q_b vdd vdd cmosp l=0.18u w=0.45u
+
+Circuit: *** spice deck for cell sram_6t{sch} from library sram_complete_v1
+
+Error on line 11 or its substitute:
+  mnmos@1 q_b q 0 0 cmosn l=0.18u w=0.9u
+could not find a valid modelname
+    Simulation interrupted due to error!
+

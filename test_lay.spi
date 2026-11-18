@@ -1,0 +1,383 @@
+*** SPICE deck for cell SRAM_Chip_Final{lay} from library SRAM
+*** Created on Tue Nov 17, 2026 13:05:31
+*** Last revised on Tue Nov 17, 2026 13:05:31
+*** Written on Tue Nov 17, 2026 13:15:50 by Electric VLSI Design System, version 9.08
+*** Layout tech: mocmos, foundry MOSIS
+*** UC SPICE *** , MIN_RESIST 4.0, MIN_CAPAC 0.1FF
+
+*** SUBCIRCUIT SRAM__inverter FROM CELL SRAM:inverter{lay}
+.SUBCKT SRAM__inverter gnd in out vdd
+Mnmos@0 out in gnd gnd CMOSN L=0.4U W=0.8U AS=5.48P AD=1.72P PS=15.2U PD=5.8U
+Mpmos@0 out in vdd vdd CMOSP L=0.4U W=1.6U AS=5.96P AD=1.72P PS=16.4U PD=5.8U
+.ENDS SRAM__inverter
+
+*** SUBCIRCUIT SRAM__inv_3x FROM CELL SRAM:inv_3x{lay}
+.SUBCKT SRAM__inv_3x gnd in out vdd
+Xinverter@0 gnd in out vdd SRAM__inverter
+Xinverter@1 gnd in out vdd SRAM__inverter
+Xinverter@2 gnd in out vdd SRAM__inverter
+.ENDS SRAM__inv_3x
+
+*** SUBCIRCUIT SRAM__Input_Pad FROM CELL SRAM:Input_Pad{lay}
+.SUBCKT SRAM__Input_Pad CHIP_OUT gnd PAD_IN vdd
+Xinv_3x@0 gnd net@3 CHIP_OUT vdd SRAM__inv_3x
+Xinverter@0 gnd PAD_IN net@3 vdd SRAM__inverter
+.ENDS SRAM__Input_Pad
+
+*** SUBCIRCUIT SRAM__inv_9x FROM CELL SRAM:inv_9x{lay}
+.SUBCKT SRAM__inv_9x gnd in out vdd
+Xinverter@0 gnd in out vdd SRAM__inverter
+Xinverter@1 gnd in out vdd SRAM__inverter
+Xinverter@2 gnd in out vdd SRAM__inverter
+Xinverter@3 gnd in out vdd SRAM__inverter
+Xinverter@4 gnd in out vdd SRAM__inverter
+Xinverter@5 gnd in out vdd SRAM__inverter
+Xinverter@6 gnd in out vdd SRAM__inverter
+Xinverter@7 gnd in out vdd SRAM__inverter
+Xinverter@8 gnd in out vdd SRAM__inverter
+.ENDS SRAM__inv_9x
+
+*** SUBCIRCUIT SRAM__inv_27x FROM CELL SRAM:inv_27x{lay}
+.SUBCKT SRAM__inv_27x gnd in out vdd
+Xinverter@0 gnd in out vdd SRAM__inverter
+Xinverter@1 gnd in out vdd SRAM__inverter
+Xinverter@2 gnd in out vdd SRAM__inverter
+Xinverter@3 gnd in out vdd SRAM__inverter
+Xinverter@4 gnd in out vdd SRAM__inverter
+Xinverter@5 gnd in out vdd SRAM__inverter
+Xinverter@6 gnd in out vdd SRAM__inverter
+Xinverter@7 gnd in out vdd SRAM__inverter
+Xinverter@8 gnd in out vdd SRAM__inverter
+Xinverter@9 gnd in out vdd SRAM__inverter
+Xinverter@10 gnd in out vdd SRAM__inverter
+Xinverter@11 gnd in out vdd SRAM__inverter
+Xinverter@12 gnd in out vdd SRAM__inverter
+Xinverter@13 gnd in out vdd SRAM__inverter
+Xinverter@14 gnd in out vdd SRAM__inverter
+Xinverter@15 gnd in out vdd SRAM__inverter
+Xinverter@16 gnd in out vdd SRAM__inverter
+Xinverter@17 gnd in out vdd SRAM__inverter
+Xinverter@18 gnd in out vdd SRAM__inverter
+Xinverter@19 gnd in out vdd SRAM__inverter
+Xinverter@20 gnd in out vdd SRAM__inverter
+Xinverter@21 gnd in out vdd SRAM__inverter
+Xinverter@22 gnd in out vdd SRAM__inverter
+Xinverter@23 gnd in out vdd SRAM__inverter
+Xinverter@24 gnd in out vdd SRAM__inverter
+Xinverter@25 gnd in out vdd SRAM__inverter
+Xinverter@26 gnd in out vdd SRAM__inverter
+.ENDS SRAM__inv_27x
+
+*** SUBCIRCUIT SRAM__Output_Pad FROM CELL SRAM:Output_Pad{lay}
+.SUBCKT SRAM__Output_Pad CHIP_IN gnd PAD_OUT vdd
+Xinv_3x@0 gnd net@1 net@4 vdd SRAM__inv_3x
+Xinv_9x@0 gnd net@4 net@7 vdd SRAM__inv_9x
+Xinv_27x@0 gnd net@7 PAD_OUT vdd SRAM__inv_27x
+Xinverter@0 gnd CHIP_IN net@1 vdd SRAM__inverter
+.ENDS SRAM__Output_Pad
+
+*** SUBCIRCUIT SRAM__nand4 FROM CELL SRAM:nand4{lay}
+.SUBCKT SRAM__nand4 A B C D gnd out vdd
+Mnmos@0 net@16 A out gnd CMOSN L=0.4U W=0.8U AS=1.384P AD=0.48P PS=4.4U PD=2U
+Mnmos@1 net@17 B net@16 gnd CMOSN L=0.4U W=0.8U AS=0.48P AD=0.48P PS=2U PD=2U
+Mnmos@2 net@25 C net@17 gnd CMOSN L=0.4U W=0.8U AS=0.48P AD=0.48P PS=2U PD=2U
+Mnmos@3 gnd D net@25 gnd CMOSN L=0.4U W=0.8U AS=0.48P AD=20.68P PS=2U PD=32.4U
+Mpmos@0 out A vdd vdd CMOSP L=0.4U W=1.6U AS=6.36P AD=1.384P PS=11.9U PD=4.4U
+Mpmos@1 vdd B out vdd CMOSP L=0.4U W=1.6U AS=1.384P AD=6.36P PS=4.4U PD=11.9U
+Mpmos@2 out C vdd vdd CMOSP L=0.4U W=1.6U AS=6.36P AD=1.384P PS=11.9U PD=4.4U
+Mpmos@3 vdd D out vdd CMOSP L=0.4U W=1.6U AS=1.384P AD=6.36P PS=4.4U PD=11.9U
+.ENDS SRAM__nand4
+
+*** SUBCIRCUIT SRAM__Decoder_4x16 FROM CELL SRAM:Decoder_4x16{lay}
+.SUBCKT SRAM__Decoder_4x16 A[3] A[2] A[1] A[0] gnd OUT[15] OUT[14] OUT[13] OUT[12] OUT[11] OUT[10] OUT[9] OUT[8] OUT[7] OUT[6] OUT[5] OUT[4] OUT[3] OUT[2] OUT[1] OUT[0] vdd
+Xinverter@0 gnd A[0] net@5 vdd SRAM__inverter
+Xinverter@1 gnd A[1] net@12 vdd SRAM__inverter
+Xinverter@2 gnd A[2] net@19 vdd SRAM__inverter
+Xinverter@3 gnd A[3] net@26 vdd SRAM__inverter
+Xinverter@4 gnd net@28 OUT[0] vdd SRAM__inverter
+Xinverter@5 gnd net@39 OUT[1] vdd SRAM__inverter
+Xinverter@6 gnd net@46 OUT[2] vdd SRAM__inverter
+Xinverter@7 gnd net@57 OUT[3] vdd SRAM__inverter
+Xinverter@8 gnd net@64 OUT[4] vdd SRAM__inverter
+Xinverter@9 gnd net@75 OUT[5] vdd SRAM__inverter
+Xinverter@10 gnd net@82 OUT[6] vdd SRAM__inverter
+Xinverter@11 gnd net@93 OUT[7] vdd SRAM__inverter
+Xinverter@12 gnd net@100 OUT[8] vdd SRAM__inverter
+Xinverter@13 gnd net@111 OUT[9] vdd SRAM__inverter
+Xinverter@14 gnd net@118 OUT[10] vdd SRAM__inverter
+Xinverter@15 gnd net@129 OUT[11] vdd SRAM__inverter
+Xinverter@16 gnd net@136 OUT[12] vdd SRAM__inverter
+Xinverter@17 gnd net@147 OUT[13] vdd SRAM__inverter
+Xinverter@18 gnd net@154 OUT[14] vdd SRAM__inverter
+Xinverter@19 gnd net@165 OUT[15] vdd SRAM__inverter
+Xnand4@0 net@26 net@19 net@12 net@5 gnd net@28 vdd SRAM__nand4
+Xnand4@1 net@26 net@19 net@12 A[0] gnd net@39 vdd SRAM__nand4
+Xnand4@2 net@26 net@19 A[1] net@5 gnd net@46 vdd SRAM__nand4
+Xnand4@3 net@26 net@19 A[1] A[0] gnd net@57 vdd SRAM__nand4
+Xnand4@4 net@26 A[2] net@12 net@5 gnd net@64 vdd SRAM__nand4
+Xnand4@5 net@26 A[2] net@12 A[0] gnd net@75 vdd SRAM__nand4
+Xnand4@6 net@26 A[2] A[1] net@5 gnd net@82 vdd SRAM__nand4
+Xnand4@7 net@26 A[2] A[1] A[0] gnd net@93 vdd SRAM__nand4
+Xnand4@8 A[3] net@19 net@12 net@5 gnd net@100 vdd SRAM__nand4
+Xnand4@9 A[3] net@19 net@12 A[0] gnd net@111 vdd SRAM__nand4
+Xnand4@10 A[3] net@19 A[1] net@5 gnd net@118 vdd SRAM__nand4
+Xnand4@11 A[3] net@19 A[1] A[0] gnd net@129 vdd SRAM__nand4
+Xnand4@12 A[3] A[2] net@12 net@5 gnd net@136 vdd SRAM__nand4
+Xnand4@13 A[3] A[2] net@12 A[0] gnd net@147 vdd SRAM__nand4
+Xnand4@14 A[3] A[2] A[1] net@5 gnd net@154 vdd SRAM__nand4
+Xnand4@15 A[3] A[2] A[1] A[0] gnd net@165 vdd SRAM__nand4
+.ENDS SRAM__Decoder_4x16
+
+*** SUBCIRCUIT SRAM__tgate FROM CELL SRAM:tgate{lay}
+.SUBCKT SRAM__tgate EN ENB gnd IN OUT vdd
+Mnmos@0 OUT EN IN gnd CMOSN L=0.4U W=1.6U AS=2.2P AD=2.2P PS=7.2U PD=7.2U
+Mpmos@0 OUT ENB IN vdd CMOSP L=0.4U W=2.4U AS=2.2P AD=2.2P PS=7.2U PD=7.2U
+.ENDS SRAM__tgate
+
+*** SUBCIRCUIT SRAM__DFF FROM CELL SRAM:DFF{lay}
+.SUBCKT SRAM__DFF CLK D gnd Q vdd
+XINV1 gnd CLK net@38 vdd SRAM__inverter
+XINV2 gnd net@38 net@39 vdd SRAM__inverter
+XINV3 gnd net@84 net@94 vdd SRAM__inverter
+XINV4 gnd net@94 net@102 vdd SRAM__inverter
+XINV5 gnd net@105 net@115 vdd SRAM__inverter
+XINV6 gnd net@115 Q vdd SRAM__inverter
+XTG1 net@38 net@39 gnd D net@84 vdd SRAM__tgate
+XTG2 net@39 net@38 gnd net@102 net@84 vdd SRAM__tgate
+XTG3 net@39 net@38 gnd net@94 net@105 vdd SRAM__tgate
+XTG4 net@38 net@39 gnd net@115 net@105 vdd SRAM__tgate
+.ENDS SRAM__DFF
+
+*** SUBCIRCUIT SRAM__Div8_Counter FROM CELL SRAM:Div8_Counter{lay}
+.SUBCKT SRAM__Div8_Counter CLK EXECUTE gnd vdd
+XDFF@0 CLK net@53 gnd net@44 vdd SRAM__DFF
+XDFF@1 net@53 net@70 gnd net@61 vdd SRAM__DFF
+XDFF@2 net@70 net@87 gnd net@78 vdd SRAM__DFF
+Xinverter@0 gnd net@44 net@53 vdd SRAM__inverter
+Xinverter@1 gnd net@61 net@70 vdd SRAM__inverter
+Xinverter@2 gnd net@78 net@87 vdd SRAM__inverter
+Xinverter@3 gnd net@92 EXECUTE vdd SRAM__inverter
+Xnand4@0 net@44 net@61 net@78 vdd gnd net@92 vdd SRAM__nand4
+.ENDS SRAM__Div8_Counter
+
+*** SUBCIRCUIT SRAM__col_mux_1x FROM CELL SRAM:col_mux_1x{lay}
+.SUBCKT SRAM__col_mux_1x BL BLB COL_SEL COL_SEL_B GBL GBLB gnd vdd
+Xtgate_L COL_SEL COL_SEL_B gnd BL GBL vdd SRAM__tgate
+Xtgate_R COL_SEL COL_SEL_B gnd BLB GBLB vdd SRAM__tgate
+.ENDS SRAM__col_mux_1x
+
+*** SUBCIRCUIT SRAM__Col_Mux_Bank_16 FROM CELL SRAM:Col_Mux_Bank_16{lay}
+.SUBCKT SRAM__Col_Mux_Bank_16 BL[15] BL[14] BL[13] BL[12] BL[11] BL[10] BL[9] BL[8] BL[7] BL[6] BL[5] BL[4] BL[3] BL[2] BL[1] BL[0] BLB[15] BLB[14] BLB[13] BLB[12] BLB[11] BLB[10] BLB[9] BLB[8] BLB[7] BLB[6] BLB[5] BLB[4] BLB[3] BLB[2] BLB[1] BLB[0] COL_SEL[15] COL_SEL[14] COL_SEL[13] COL_SEL[12] COL_SEL[11] COL_SEL[10] COL_SEL[9] COL_SEL[8] COL_SEL[7] COL_SEL[6] COL_SEL[5] COL_SEL[4] COL_SEL[3] COL_SEL[2] COL_SEL[1] COL_SEL[0] COL_SEL_B[15] COL_SEL_B[14] COL_SEL_B[13] COL_SEL_B[12] COL_SEL_B[11] 
++COL_SEL_B[10] COL_SEL_B[9] COL_SEL_B[8] COL_SEL_B[7] COL_SEL_B[6] COL_SEL_B[5] COL_SEL_B[4] COL_SEL_B[3] COL_SEL_B[2] COL_SEL_B[1] COL_SEL_B[0] GBL GBLB gnd vdd
+Xcol_mux_@0 BL[0] BLB[0] COL_SEL[0] COL_SEL_B[0] GBL GBLB gnd vdd SRAM__col_mux_1x
+Xcol_mux_@1 BL[1] BLB[1] COL_SEL[1] COL_SEL_B[1] GBL GBLB gnd vdd SRAM__col_mux_1x
+Xcol_mux_@2 BL[2] BLB[2] COL_SEL[2] COL_SEL_B[2] GBL GBLB gnd vdd SRAM__col_mux_1x
+Xcol_mux_@3 BL[3] BLB[3] COL_SEL[3] COL_SEL_B[3] GBL GBLB gnd vdd SRAM__col_mux_1x
+Xcol_mux_@4 BL[4] BLB[4] COL_SEL[4] COL_SEL_B[4] GBL GBLB gnd vdd SRAM__col_mux_1x
+Xcol_mux_@5 BL[5] BLB[5] COL_SEL[5] COL_SEL_B[5] GBL GBLB gnd vdd SRAM__col_mux_1x
+Xcol_mux_@6 BL[6] BLB[6] COL_SEL[6] COL_SEL_B[6] GBL GBLB gnd vdd SRAM__col_mux_1x
+Xcol_mux_@7 BL[7] BLB[7] COL_SEL[7] COL_SEL_B[7] GBL GBLB gnd vdd SRAM__col_mux_1x
+Xcol_mux_@8 BL[8] BLB[8] COL_SEL[8] COL_SEL_B[8] GBL GBLB gnd vdd SRAM__col_mux_1x
+Xcol_mux_@9 BL[9] BLB[9] COL_SEL[9] COL_SEL_B[9] GBL GBLB gnd vdd SRAM__col_mux_1x
+Xcol_mux_@10 BL[10] BLB[10] COL_SEL[10] COL_SEL_B[10] GBL GBLB gnd vdd SRAM__col_mux_1x
+Xcol_mux_@11 BL[11] BLB[11] COL_SEL[11] COL_SEL_B[11] GBL GBLB gnd vdd SRAM__col_mux_1x
+Xcol_mux_@12 BL[12] BLB[12] COL_SEL[12] COL_SEL_B[12] GBL GBLB gnd vdd SRAM__col_mux_1x
+Xcol_mux_@13 BL[13] BLB[13] COL_SEL[13] COL_SEL_B[13] GBL GBLB gnd vdd SRAM__col_mux_1x
+Xcol_mux_@14 BL[14] BLB[14] COL_SEL[14] COL_SEL_B[14] GBL GBLB gnd vdd SRAM__col_mux_1x
+Xcol_mux_@15 BL[15] BLB[15] COL_SEL[15] COL_SEL_B[15] GBL GBLB gnd vdd SRAM__col_mux_1x
+.ENDS SRAM__Col_Mux_Bank_16
+
+*** SUBCIRCUIT SRAM__pre_charge FROM CELL SRAM:pre_charge{lay}
+.SUBCKT SRAM__pre_charge BL BLB PRE vdd
+Mpmos@0 vdd PRE BL vdd CMOSP L=0.4U W=1.6U AS=1.96P AD=3.76P PS=6.4U PD=10U
+Mpmos@1 BLB PRE vdd vdd CMOSP L=0.4U W=1.6U AS=3.76P AD=1.96P PS=10U PD=6.4U
+Mpmos@2 BLB PRE BL vdd CMOSP L=0.4U W=1.6U AS=1.96P AD=1.96P PS=6.4U PD=6.4U
+
+* Spice Code nodes in cell cell 'SRAM:pre_charge{lay}'
+.include ./tsmc018.lib
+.param VDD=1.8
+VDD vdd 0 DC 1.8
+Cbl  BL   0 200f
+Cblb BLB 0 200f
+VPRE PRE 0 PULSE(0 1.8 10n 0.1n 0.1n 20n 40n)
+.ic V(BL)=0 V(BLB)=0
+.tran 0.1n 80n
+.control
+run
+plot v(PRE) v(BL) v(BLB)
+.endc
+.ENDS SRAM__pre_charge
+
+*** SUBCIRCUIT SRAM__Precharge_Bank_16 FROM CELL SRAM:Precharge_Bank_16{lay}
+.SUBCKT SRAM__Precharge_Bank_16 BL[15] BL[14] BL[13] BL[12] BL[11] BL[10] BL[9] BL[8] BL[7] BL[6] BL[5] BL[4] BL[3] BL[2] BL[1] BL[0] BLB[15] BLB[14] BLB[13] BLB[12] BLB[11] BLB[10] BLB[9] BLB[8] BLB[7] BLB[6] BLB[5] BLB[4] BLB[3] BLB[2] BLB[1] BLB[0] gnd PRE_B vdd
+Xpre_char@0 BL[0] BLB[0] PRE_B vdd SRAM__pre_charge
+Xpre_char@1 BL[1] BLB[1] PRE_B vdd SRAM__pre_charge
+Xpre_char@2 BL[2] BLB[2] PRE_B vdd SRAM__pre_charge
+Xpre_char@3 BL[3] BLB[3] PRE_B vdd SRAM__pre_charge
+Xpre_char@4 BL[4] BLB[4] PRE_B vdd SRAM__pre_charge
+Xpre_char@5 BL[5] BLB[5] PRE_B vdd SRAM__pre_charge
+Xpre_char@6 BL[6] BLB[6] PRE_B vdd SRAM__pre_charge
+Xpre_char@7 BL[7] BLB[7] PRE_B vdd SRAM__pre_charge
+Xpre_char@8 BL[8] BLB[8] PRE_B vdd SRAM__pre_charge
+Xpre_char@9 BL[9] BLB[9] PRE_B vdd SRAM__pre_charge
+Xpre_char@10 BL[10] BLB[10] PRE_B vdd SRAM__pre_charge
+Xpre_char@11 BL[11] BLB[11] PRE_B vdd SRAM__pre_charge
+Xpre_char@12 BL[12] BLB[12] PRE_B vdd SRAM__pre_charge
+Xpre_char@13 BL[13] BLB[13] PRE_B vdd SRAM__pre_charge
+Xpre_char@14 BL[14] BLB[14] PRE_B vdd SRAM__pre_charge
+Xpre_char@15 BL[15] BLB[15] PRE_B vdd SRAM__pre_charge
+.ENDS SRAM__Precharge_Bank_16
+
+*** SUBCIRCUIT SRAM__6T FROM CELL SRAM:6T{lay}
+.SUBCKT SRAM__6T BL BLB gnd vdd WL
+Mnmos@1 net@4 net@3 gnd gnd cmosn L=0.4U W=1.2U AS=3.61P AD=1.207P PS=10.7U PD=4.067U
+Mnmos@2 gnd net@4 net@3 gnd cmosn L=0.4U W=1.2U AS=1.187P AD=3.61P PS=4U PD=10.7U
+Mnmos@3 net@3 WL BL gnd cmosn L=0.4U W=0.8U AS=1.48P AD=1.187P PS=5.2U PD=4U
+Mnmos@5 BLB WL net@4 gnd cmosn L=0.4U W=0.8U AS=1.207P AD=1.4P PS=4.067U PD=5U
+Mpmos@0 vdd net@4 net@3 vdd cmosp L=0.4U W=0.6U AS=1.187P AD=3.22P PS=4U PD=9.4U
+Mpmos@1 net@4 net@3 vdd vdd cmosp L=0.4U W=0.6U AS=3.22P AD=1.207P PS=9.4U PD=4.067U
+
+* Spice Code nodes in cell cell 'SRAM:6T{lay}'
+.include ./tsmc018.lib
+Vsup vdd 0 1.8
+Cbl bl 0 200f
+Cblb blb 0 200f
+.model swm sw(vt=0.9 vh=0.1 ron=200 roff=1e12)
+Sbl dbl bl en 0 swm
+Sblb dblb blb en 0 swm
+Ven en 0 PWL(0 1.8 10n 1.8 10.1n 0 14.9n 0 15n 1.8 27n 1.8 27.1n 0 31.9n 0 32n 1.8 38n 1.8)
+Vdbl dbl 0 PWL(0 0 6.5n 0 7n 1.8 38n 1.8)
+Vdblb dblb 0 PWL(0 1.8 18n 1.8 18.5n 0 23.5n 0 24n 1.8 38n 1.8)
+Vwl wl 0 PWL(0 0 2n 0 2.1n 1.8 6n 1.8 6.1n 0 11n 0 11.1n 1.8 14n 1.8 14.1n 0 19n 0 19.1n 1.8 23n 1.8 23.1n 0 28n 0 28.1n 1.8 31n 1.8 31.1n 0 38n 0)
+.tran 10p 38n
+.control
+run
+plot v(bl) v(blb) v(wl)
+plot v(net@3) v(net@4)
+.endc
+.ENDS SRAM__6T
+
+*** SUBCIRCUIT SRAM__SRAM_Row_16 FROM CELL SRAM:SRAM_Row_16{lay}
+.SUBCKT SRAM__SRAM_Row_16 BL[15] BL[14] BL[13] BL[12] BL[11] BL[10] BL[9] BL[8] BL[7] BL[6] BL[5] BL[4] BL[3] BL[2] BL[1] BL[0] BLB[15] BLB[14] BLB[13] BLB[12] BLB[11] BLB[10] BLB[9] BLB[8] BLB[7] BLB[6] BLB[5] BLB[4] BLB[3] BLB[2] BLB[1] BLB[0] gnd vdd WL
+X_6T@0 BL[0] BLB[0] gnd vdd WL SRAM__6T
+X_6T@1 BL[1] BLB[1] gnd vdd WL SRAM__6T
+X_6T@2 BL[2] BLB[2] gnd vdd WL SRAM__6T
+X_6T@3 BL[3] BLB[3] gnd vdd WL SRAM__6T
+X_6T@4 BL[4] BLB[4] gnd vdd WL SRAM__6T
+X_6T@5 BL[5] BLB[5] gnd vdd WL SRAM__6T
+X_6T@6 BL[6] BLB[6] gnd vdd WL SRAM__6T
+X_6T@7 BL[7] BLB[7] gnd vdd WL SRAM__6T
+X_6T@8 BL[8] BLB[8] gnd vdd WL SRAM__6T
+X_6T@9 BL[9] BLB[9] gnd vdd WL SRAM__6T
+X_6T@10 BL[10] BLB[10] gnd vdd WL SRAM__6T
+X_6T@11 BL[11] BLB[11] gnd vdd WL SRAM__6T
+X_6T@12 BL[12] BLB[12] gnd vdd WL SRAM__6T
+X_6T@13 BL[13] BLB[13] gnd vdd WL SRAM__6T
+X_6T@14 BL[14] BLB[14] gnd vdd WL SRAM__6T
+X_6T@15 BL[15] BLB[15] gnd vdd WL SRAM__6T
+.ENDS SRAM__SRAM_Row_16
+
+*** SUBCIRCUIT SRAM__SRAM_Array_16x16 FROM CELL SRAM:SRAM_Array_16x16{lay}
+.SUBCKT SRAM__SRAM_Array_16x16 BL[15] BL[14] BL[13] BL[12] BL[11] BL[10] BL[9] BL[8] BL[7] BL[6] BL[5] BL[4] BL[3] BL[2] BL[1] BL[0] BLB[15] BLB[14] BLB[13] BLB[12] BLB[11] BLB[10] BLB[9] BLB[8] BLB[7] BLB[6] BLB[5] BLB[4] BLB[3] BLB[2] BLB[1] BLB[0] gnd vdd WL[15] WL[14] WL[13] WL[12] WL[11] WL[10] WL[9] WL[8] WL[7] WL[6] WL[5] WL[4] WL[3] WL[2] WL[1] WL[0]
+Xrow@0 BL[15] BL[14] BL[13] BL[12] BL[11] BL[10] BL[9] BL[8] BL[7] BL[6] BL[5] BL[4] BL[3] BL[2] BL[1] BL[0] BLB[15] BLB[14] BLB[13] BLB[12] BLB[11] BLB[10] BLB[9] BLB[8] BLB[7] BLB[6] BLB[5] BLB[4] BLB[3] BLB[2] BLB[1] BLB[0] gnd vdd WL[0] SRAM__SRAM_Row_16
+Xrow@1 BL[15] BL[14] BL[13] BL[12] BL[11] BL[10] BL[9] BL[8] BL[7] BL[6] BL[5] BL[4] BL[3] BL[2] BL[1] BL[0] BLB[15] BLB[14] BLB[13] BLB[12] BLB[11] BLB[10] BLB[9] BLB[8] BLB[7] BLB[6] BLB[5] BLB[4] BLB[3] BLB[2] BLB[1] BLB[0] gnd vdd WL[1] SRAM__SRAM_Row_16
+Xrow@2 BL[15] BL[14] BL[13] BL[12] BL[11] BL[10] BL[9] BL[8] BL[7] BL[6] BL[5] BL[4] BL[3] BL[2] BL[1] BL[0] BLB[15] BLB[14] BLB[13] BLB[12] BLB[11] BLB[10] BLB[9] BLB[8] BLB[7] BLB[6] BLB[5] BLB[4] BLB[3] BLB[2] BLB[1] BLB[0] gnd vdd WL[2] SRAM__SRAM_Row_16
+Xrow@3 BL[15] BL[14] BL[13] BL[12] BL[11] BL[10] BL[9] BL[8] BL[7] BL[6] BL[5] BL[4] BL[3] BL[2] BL[1] BL[0] BLB[15] BLB[14] BLB[13] BLB[12] BLB[11] BLB[10] BLB[9] BLB[8] BLB[7] BLB[6] BLB[5] BLB[4] BLB[3] BLB[2] BLB[1] BLB[0] gnd vdd WL[3] SRAM__SRAM_Row_16
+Xrow@4 BL[15] BL[14] BL[13] BL[12] BL[11] BL[10] BL[9] BL[8] BL[7] BL[6] BL[5] BL[4] BL[3] BL[2] BL[1] BL[0] BLB[15] BLB[14] BLB[13] BLB[12] BLB[11] BLB[10] BLB[9] BLB[8] BLB[7] BLB[6] BLB[5] BLB[4] BLB[3] BLB[2] BLB[1] BLB[0] gnd vdd WL[4] SRAM__SRAM_Row_16
+Xrow@5 BL[15] BL[14] BL[13] BL[12] BL[11] BL[10] BL[9] BL[8] BL[7] BL[6] BL[5] BL[4] BL[3] BL[2] BL[1] BL[0] BLB[15] BLB[14] BLB[13] BLB[12] BLB[11] BLB[10] BLB[9] BLB[8] BLB[7] BLB[6] BLB[5] BLB[4] BLB[3] BLB[2] BLB[1] BLB[0] gnd vdd WL[5] SRAM__SRAM_Row_16
+Xrow@6 BL[15] BL[14] BL[13] BL[12] BL[11] BL[10] BL[9] BL[8] BL[7] BL[6] BL[5] BL[4] BL[3] BL[2] BL[1] BL[0] BLB[15] BLB[14] BLB[13] BLB[12] BLB[11] BLB[10] BLB[9] BLB[8] BLB[7] BLB[6] BLB[5] BLB[4] BLB[3] BLB[2] BLB[1] BLB[0] gnd vdd WL[6] SRAM__SRAM_Row_16
+Xrow@7 BL[15] BL[14] BL[13] BL[12] BL[11] BL[10] BL[9] BL[8] BL[7] BL[6] BL[5] BL[4] BL[3] BL[2] BL[1] BL[0] BLB[15] BLB[14] BLB[13] BLB[12] BLB[11] BLB[10] BLB[9] BLB[8] BLB[7] BLB[6] BLB[5] BLB[4] BLB[3] BLB[2] BLB[1] BLB[0] gnd vdd WL[7] SRAM__SRAM_Row_16
+Xrow@8 BL[15] BL[14] BL[13] BL[12] BL[11] BL[10] BL[9] BL[8] BL[7] BL[6] BL[5] BL[4] BL[3] BL[2] BL[1] BL[0] BLB[15] BLB[14] BLB[13] BLB[12] BLB[11] BLB[10] BLB[9] BLB[8] BLB[7] BLB[6] BLB[5] BLB[4] BLB[3] BLB[2] BLB[1] BLB[0] gnd vdd WL[8] SRAM__SRAM_Row_16
+Xrow@9 BL[15] BL[14] BL[13] BL[12] BL[11] BL[10] BL[9] BL[8] BL[7] BL[6] BL[5] BL[4] BL[3] BL[2] BL[1] BL[0] BLB[15] BLB[14] BLB[13] BLB[12] BLB[11] BLB[10] BLB[9] BLB[8] BLB[7] BLB[6] BLB[5] BLB[4] BLB[3] BLB[2] BLB[1] BLB[0] gnd vdd WL[9] SRAM__SRAM_Row_16
+Xrow@10 BL[15] BL[14] BL[13] BL[12] BL[11] BL[10] BL[9] BL[8] BL[7] BL[6] BL[5] BL[4] BL[3] BL[2] BL[1] BL[0] BLB[15] BLB[14] BLB[13] BLB[12] BLB[11] BLB[10] BLB[9] BLB[8] BLB[7] BLB[6] BLB[5] BLB[4] BLB[3] BLB[2] BLB[1] BLB[0] gnd vdd WL[10] SRAM__SRAM_Row_16
+Xrow@11 BL[15] BL[14] BL[13] BL[12] BL[11] BL[10] BL[9] BL[8] BL[7] BL[6] BL[5] BL[4] BL[3] BL[2] BL[1] BL[0] BLB[15] BLB[14] BLB[13] BLB[12] BLB[11] BLB[10] BLB[9] BLB[8] BLB[7] BLB[6] BLB[5] BLB[4] BLB[3] BLB[2] BLB[1] BLB[0] gnd vdd WL[11] SRAM__SRAM_Row_16
+Xrow@12 BL[15] BL[14] BL[13] BL[12] BL[11] BL[10] BL[9] BL[8] BL[7] BL[6] BL[5] BL[4] BL[3] BL[2] BL[1] BL[0] BLB[15] BLB[14] BLB[13] BLB[12] BLB[11] BLB[10] BLB[9] BLB[8] BLB[7] BLB[6] BLB[5] BLB[4] BLB[3] BLB[2] BLB[1] BLB[0] gnd vdd WL[12] SRAM__SRAM_Row_16
+Xrow@13 BL[15] BL[14] BL[13] BL[12] BL[11] BL[10] BL[9] BL[8] BL[7] BL[6] BL[5] BL[4] BL[3] BL[2] BL[1] BL[0] BLB[15] BLB[14] BLB[13] BLB[12] BLB[11] BLB[10] BLB[9] BLB[8] BLB[7] BLB[6] BLB[5] BLB[4] BLB[3] BLB[2] BLB[1] BLB[0] gnd vdd WL[13] SRAM__SRAM_Row_16
+Xrow@14 BL[15] BL[14] BL[13] BL[12] BL[11] BL[10] BL[9] BL[8] BL[7] BL[6] BL[5] BL[4] BL[3] BL[2] BL[1] BL[0] BLB[15] BLB[14] BLB[13] BLB[12] BLB[11] BLB[10] BLB[9] BLB[8] BLB[7] BLB[6] BLB[5] BLB[4] BLB[3] BLB[2] BLB[1] BLB[0] gnd vdd WL[14] SRAM__SRAM_Row_16
+Xrow@15 BL[15] BL[14] BL[13] BL[12] BL[11] BL[10] BL[9] BL[8] BL[7] BL[6] BL[5] BL[4] BL[3] BL[2] BL[1] BL[0] BLB[15] BLB[14] BLB[13] BLB[12] BLB[11] BLB[10] BLB[9] BLB[8] BLB[7] BLB[6] BLB[5] BLB[4] BLB[3] BLB[2] BLB[1] BLB[0] gnd vdd WL[15] SRAM__SRAM_Row_16
+.ENDS SRAM__SRAM_Array_16x16
+
+*** SUBCIRCUIT SRAM__SRAM_Core_Datapath FROM CELL SRAM:SRAM_Core_Datapath{lay}
+.SUBCKT SRAM__SRAM_Core_Datapath COL_SEL[15] COL_SEL[14] COL_SEL[13] COL_SEL[12] COL_SEL[11] COL_SEL[10] COL_SEL[9] COL_SEL[8] COL_SEL[7] COL_SEL[6] COL_SEL[5] COL_SEL[4] COL_SEL[3] COL_SEL[2] COL_SEL[1] COL_SEL[0] COL_SEL_B[15] COL_SEL_B[14] COL_SEL_B[13] COL_SEL_B[12] COL_SEL_B[11] COL_SEL_B[10] COL_SEL_B[9] COL_SEL_B[8] COL_SEL_B[7] COL_SEL_B[6] COL_SEL_B[5] COL_SEL_B[4] COL_SEL_B[3] COL_SEL_B[2] COL_SEL_B[1] COL_SEL_B[0] GBL GBLB gnd PRE_B vdd WL[15] WL[14] WL[13] WL[12] WL[11] WL[10] WL[9] WL[8] WL[7] 
++WL[6] WL[5] WL[4] WL[3] WL[2] WL[1] WL[0]
+XCol_Mux_@0 net@60 net@56 net@52 net@48 net@44 net@40 net@36 net@32 net@28 net@24 net@20 net@16 net@12 net@8 net@4 net@0 net@62 net@58 net@54 net@50 net@46 net@42 net@38 net@34 net@30 net@26 net@22 net@18 net@14 net@10 net@6 net@2 COL_SEL[15] COL_SEL[14] COL_SEL[13] COL_SEL[12] COL_SEL[11] COL_SEL[10] COL_SEL[9] COL_SEL[8] COL_SEL[7] COL_SEL[6] COL_SEL[5] COL_SEL[4] COL_SEL[3] COL_SEL[2] COL_SEL[1] COL_SEL[0] COL_SEL_B[15] COL_SEL_B[14] COL_SEL_B[13] COL_SEL_B[12] COL_SEL_B[11] COL_SEL_B[10] COL_SEL_B[9] 
++COL_SEL_B[8] COL_SEL_B[7] COL_SEL_B[6] COL_SEL_B[5] COL_SEL_B[4] COL_SEL_B[3] COL_SEL_B[2] COL_SEL_B[1] COL_SEL_B[0] GBL GBLB gnd vdd SRAM__Col_Mux_Bank_16
+XPrecharg@0 net@60 net@56 net@52 net@48 net@44 net@40 net@36 net@32 net@28 net@24 net@20 net@16 net@12 net@8 net@4 net@0 net@62 net@58 net@54 net@50 net@46 net@42 net@38 net@34 net@30 net@26 net@22 net@18 net@14 net@10 net@6 net@2 gnd PRE_B vdd SRAM__Precharge_Bank_16
+XSRAM_Arr@0 net@60 net@56 net@52 net@48 net@44 net@40 net@36 net@32 net@28 net@24 net@20 net@16 net@12 net@8 net@4 net@0 net@62 net@58 net@54 net@50 net@46 net@42 net@38 net@34 net@30 net@26 net@22 net@18 net@14 net@10 net@6 net@2 gnd vdd WL[15] WL[14] WL[13] WL[12] WL[11] WL[10] WL[9] WL[8] WL[7] WL[6] WL[5] WL[4] WL[3] WL[2] WL[1] WL[0] SRAM__SRAM_Array_16x16
+.ENDS SRAM__SRAM_Core_Datapath
+
+*** SUBCIRCUIT SRAM__ShiftReg_8bit FROM CELL SRAM:ShiftReg_8bit{lay}
+.SUBCKT SRAM__ShiftReg_8bit ADDR_IN CLK gnd Q[7] Q[6] Q[5] Q[4] Q[3] Q[2] Q[1] Q[0] vdd
+XDFF@0 CLK ADDR_IN gnd Q[0] vdd SRAM__DFF
+XDFF@1 CLK Q[0] gnd Q[1] vdd SRAM__DFF
+XDFF@2 CLK Q[1] gnd Q[2] vdd SRAM__DFF
+XDFF@3 CLK Q[2] gnd Q[3] vdd SRAM__DFF
+XDFF@4 CLK Q[3] gnd Q[4] vdd SRAM__DFF
+XDFF@5 CLK Q[4] gnd Q[5] vdd SRAM__DFF
+XDFF@6 CLK Q[5] gnd Q[6] vdd SRAM__DFF
+XDFF@7 CLK Q[6] gnd Q[7] vdd SRAM__DFF
+.ENDS SRAM__ShiftReg_8bit
+
+*** SUBCIRCUIT SRAM__sense_amplifier FROM CELL SRAM:sense_amplifier{lay}
+.SUBCKT SRAM__sense_amplifier BL BLB gnd SAE SO SOB vdd
+Xinverter@1 gnd SO SOB vdd SRAM__inverter
+Mnmos@0 net@1 BL net@4 gnd CMOSN L=0.4U W=0.8U AS=1.64P AD=2.2P PS=5.6U PD=7.4U
+Mnmos@1 net@4 BLB SO gnd CMOSN L=0.4U W=0.8U AS=2.2P AD=1.64P PS=7.4U PD=5.6U
+Mnmos@2 gnd SAE net@4 gnd CMOSN L=0.4U W=1.6U AS=1.64P AD=21.16P PS=5.6U PD=33.6U
+Mpmos@0 net@1 net@1 vdd vdd CMOSP L=0.4U W=3.2U AS=12.52P AD=2.2P PS=23.2U PD=7.4U
+Mpmos@1 vdd net@1 SO vdd CMOSP L=0.4U W=3.2U AS=2.2P AD=12.52P PS=7.4U PD=23.2U
+.ENDS SRAM__sense_amplifier
+
+*** SUBCIRCUIT SRAM__write_driver FROM CELL SRAM:write_driver{lay}
+.SUBCKT SRAM__write_driver BL BLB gnd vdd WD WE
+Mnmos@0 BL WE net@5 gnd CMOSN L=0.4U W=2.4U AS=2.44P AD=2.44P PS=8U PD=8U
+Mnmos@1 net@9 WE BLB gnd CMOSN L=0.4U W=2.4U AS=2.44P AD=2.44P PS=8U PD=8U
+Mnmos@2 gnd net@1 net@9 gnd CMOSN L=0.4U W=2.4U AS=2.44P AD=3.787P PS=8U PD=11.067U
+Mnmos@3 net@5 WD gnd gnd CMOSN L=0.4U W=2.4U AS=3.787P AD=2.44P PS=11.067U PD=8U
+Mnmos@4 net@1 WD gnd gnd CMOSN L=0.4U W=0.8U AS=3.787P AD=1.72P PS=11.067U PD=5.8U
+Mpmos@0 net@1 WD vdd vdd CMOSP L=0.4U W=1.6U AS=7.56P AD=1.72P PS=17.2U PD=5.8U
+.ENDS SRAM__write_driver
+
+*** SUBCIRCUIT SRAM__SRAM_256_Macro FROM CELL SRAM:SRAM_256_Macro{lay}
+.SUBCKT SRAM__SRAM_256_Macro ADDR_IN CLK DIN DOUT gnd R_W vdd
+XDecoder_@0 net@375 net@369 net@363 net@357 gnd net@75 net@70 net@65 net@60 net@55 net@50 net@45 net@40 net@35 net@30 net@25 net@20 net@15 net@10 net@5 net@0 vdd SRAM__Decoder_4x16
+XDecoder_@1 net@399 net@393 net@387 net@381 gnd net@322 net@306 net@290 net@274 net@258 net@242 net@226 net@210 net@194 net@178 net@162 net@146 net@130 net@114 net@98 net@80 vdd SRAM__Decoder_4x16
+XDiv8_Cou@0 CLK net@405 gnd vdd SRAM__Div8_Counter
+XSRAM_Cor@0 net@322 net@306 net@290 net@274 net@258 net@242 net@226 net@210 net@194 net@178 net@162 net@146 net@130 net@114 net@98 net@80 net@331 net@315 net@299 net@283 net@267 net@251 net@235 net@219 net@203 net@187 net@171 net@155 net@139 net@123 net@107 net@90 net@338 net@347 gnd net@405 vdd net@75 net@70 net@65 net@60 net@55 net@50 net@45 net@40 net@35 net@30 net@25 net@20 net@15 net@10 net@5 net@0 SRAM__SRAM_Core_Datapath
+XShiftReg@0 ADDR_IN CLK gnd net@399 net@393 net@387 net@381 net@375 net@369 net@363 net@357 vdd SRAM__ShiftReg_8bit
+Xinverter@0 gnd net@80 net@90 vdd SRAM__inverter
+Xinverter@1 gnd net@98 net@107 vdd SRAM__inverter
+Xinverter@2 gnd net@114 net@123 vdd SRAM__inverter
+Xinverter@3 gnd net@130 net@139 vdd SRAM__inverter
+Xinverter@4 gnd net@146 net@155 vdd SRAM__inverter
+Xinverter@5 gnd net@162 net@171 vdd SRAM__inverter
+Xinverter@6 gnd net@178 net@187 vdd SRAM__inverter
+Xinverter@7 gnd net@194 net@203 vdd SRAM__inverter
+Xinverter@8 gnd net@210 net@219 vdd SRAM__inverter
+Xinverter@9 gnd net@226 net@235 vdd SRAM__inverter
+Xinverter@10 gnd net@242 net@251 vdd SRAM__inverter
+Xinverter@11 gnd net@258 net@267 vdd SRAM__inverter
+Xinverter@12 gnd net@274 net@283 vdd SRAM__inverter
+Xinverter@13 gnd net@290 net@299 vdd SRAM__inverter
+Xinverter@14 gnd net@306 net@315 vdd SRAM__inverter
+Xinverter@15 gnd net@322 net@331 vdd SRAM__inverter
+Xinverter@16 gnd net@405 net@414 vdd SRAM__inverter
+Xinverter@17 gnd net@414 net@417 vdd SRAM__inverter
+Xinverter@18 gnd net@417 net@426 vdd SRAM__inverter
+Xinverter@19 gnd R_W net@438 vdd SRAM__inverter
+Xinverter@20 gnd net@454 net@460 vdd SRAM__inverter
+Xinverter@21 gnd net@457 net@468 vdd SRAM__inverter
+Xnand4@0 net@417 R_W vdd vdd gnd net@454 vdd SRAM__nand4
+Xnand4@1 net@426 net@438 vdd vdd gnd net@457 vdd SRAM__nand4
+Xsense_am@0 net@338 net@347 gnd net@468 DOUT sense_am@0_SOB vdd SRAM__sense_amplifier
+Xwrite_dr@0 net@338 net@347 gnd vdd DIN net@460 SRAM__write_driver
+.ENDS SRAM__SRAM_256_Macro
+
+*** TOP LEVEL CELL: SRAM:SRAM_Chip_Final{lay}
+XInput_Pa@0 net@0 gnd pad_CLK vdd SRAM__Input_Pad
+XInput_Pa@1 net@4 gnd pad_ADDR_IN vdd SRAM__Input_Pad
+XInput_Pa@2 net@10 gnd pad_R_W vdd SRAM__Input_Pad
+XInput_Pa@3 net@13 gnd pad_DIN vdd SRAM__Input_Pad
+XOutput_P@0 net@19 gnd pad_DOUT vdd SRAM__Output_Pad
+XSRAM_256@0 net@4 net@0 net@13 net@19 gnd net@10 vdd SRAM__SRAM_256_Macro
+.END

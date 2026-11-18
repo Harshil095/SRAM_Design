@@ -1,0 +1,27 @@
+* Differential Latch Voltage Sense Amplifier (Standard industrial topology)
+* Inputs: BL, BLB, SAE, VDD, GND
+* Outputs: SO, SOB
+
+.subckt sense_amp BL BLB SAE SO SOB VDD GND
+* Cross-coupled Inverter Pair (Latch core):
+* Inverter 1 (Left): drives SO, input SOB
+Mpu1 SO  SOB VDD VDD CMOSP W=0.72u L=0.18u
+Mpd1 SO  SOB N_L GND CMOSN W=0.72u L=0.18u
+
+* Inverter 2 (Right): drives SOB, input SO
+Mpu2 SOB SO  VDD VDD CMOSP W=0.72u L=0.18u
+Mpd2 SOB SO  N_R GND CMOSN W=0.72u L=0.18u
+
+* Input NMOS evaluation pair (sensing BL and BLB):
+Min1 N_L BL  N_tail GND CMOSN W=0.72u L=0.18u
+Min2 N_R BLB N_tail GND CMOSN W=0.72u L=0.18u
+
+* Common Tail NMOS enable switch:
+Mtail N_tail SAE GND GND CMOSN W=1.08u L=0.18u
+
+* Equalization & Precharge for SO and SOB:
+* When SAE=0, precharge SO and SOB to VDD
+Mpre1 SO  SAE VDD VDD CMOSP W=0.36u L=0.18u
+Mpre2 SOB SAE VDD VDD CMOSP W=0.36u L=0.18u
+Meq   SO  SAE SOB VDD CMOSP W=0.36u L=0.18u
+.ends sense_amp

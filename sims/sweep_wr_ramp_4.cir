@@ -1,0 +1,20 @@
+* Transient Write Trip for WPD=0.65u
+.include "../tsmc018.lib"
+.include "sram_6t.cir"
+
+Vdd vdd 0 DC 1.8
+Vwl wl 0 DC 1.8
+Vblb blb 0 DC 1.8
+
+Xcell wl bl blb vdd 0 q qb sram_6t WPD=0.65u WPG=0.36u WPU=0.28u L=0.18u
+.ic v(q)=1.8 v(qb)=0
+
+Vbl bl 0 PWL(0ns 1.8V 10ns 0V)
+
+.control
+tran 0.01ns 10ns uic
+set wr_vecnames
+wrdata write_ramp_4.txt v(bl) v(q) v(qb)
+quit
+.endc
+.end

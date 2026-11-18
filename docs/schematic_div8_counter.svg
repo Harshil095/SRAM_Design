@@ -1,0 +1,267 @@
+<svg width="1150" height="560" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
+  <defs>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="2" dy="3" stdDeviation="3" flood-opacity="0.10"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#0284c7"/>
+    </marker>
+    <marker id="arrow-emerald" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#059669"/>
+    </marker>
+    <marker id="arrow-purple" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#7c3aed"/>
+    </marker>
+    <marker id="arrow-amber" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#d97706"/>
+    </marker>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="100%" height="100%" fill="#ffffff" rx="12"/>
+  <rect x="15" y="15" width="1120" height="530" fill="#fcfcfd" stroke="#e2e8f0" stroke-width="2" rx="10"/>
+
+  <!-- Header Title -->
+  <rect x="35" y="28" width="370" height="34" rx="6" fill="#1e293b"/>
+  <text x="45" y="51" fill="#ffffff" font-size="16" font-weight="bold">Div8_Counter{sch} (Clean Architecture)</text>
+  <text x="420" y="51" fill="#64748b" font-size="14">3-Bit Asynchronous Ripple Counter + State-7 EXECUTE Strobe</text>
+
+  <!-- Status Badges -->
+  <g transform="translate(860, 30)">
+    <rect x="0" y="0" width="115" height="28" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+    <text x="14" y="19" fill="#15803d" font-size="12" font-weight="bold">✓ NCC PASS</text>
+    <rect x="125" y="0" width="115" height="28" rx="6" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5"/>
+    <text x="140" y="19" fill="#0369a1" font-size="12" font-weight="bold">✓ DRC 0 ERR</text>
+  </g>
+
+  <!-- Region Labels -->
+  <!-- Top Region: Ripple Clocks and Feedback -->
+  <rect x="35" y="78" width="220" height="20" rx="4" fill="#fef3c7"/>
+  <text x="43" y="93" fill="#b45309" font-size="11" font-weight="bold">TOP: TOGGLE FEEDBACK (Y=+14λ)</text>
+
+  <!-- Middle Region: Ripple Axis -->
+  <rect x="35" y="185" width="220" height="20" rx="4" fill="#e0f2fe"/>
+  <text x="43" y="200" fill="#0369a1" font-size="11" font-weight="bold">MIDDLE: RIPPLE CLOCK AXIS (Y=+2λ)</text>
+
+  <!-- Bottom Region: Parallel Decode Bus -->
+  <rect x="35" y="375" width="250" height="20" rx="4" fill="#ede9fe"/>
+  <text x="43" y="390" fill="#6d28d9" font-size="11" font-weight="bold">BOTTOM: PARALLEL DECODE BUS (Q0..Q2)</text>
+
+
+  <!-- Main Clock Input -->
+  <g transform="translate(35, 230)">
+    <circle cx="10" cy="0" r="6" fill="#0284c7"/>
+    <text x="-5" y="-12" font-size="13" font-weight="bold" fill="#0369a1">CLK</text>
+    <line x1="10" y1="0" x2="65" y2="0" stroke="#0284c7" stroke-width="3" marker-end="url(#arrow)"/>
+  </g>
+
+
+  <!-- Stage 0: DFF@0 -->
+  <g filter="url(#shadow)">
+    <rect x="100" y="200" width="130" height="95" rx="8" fill="#ffffff" stroke="#0284c7" stroke-width="2.5"/>
+    <text x="135" y="225" font-size="14" font-weight="bold" fill="#0f172a">DFF@0</text>
+    <text x="145" y="242" font-size="11" fill="#64748b">DFF Cell</text>
+    
+    <!-- Port Pin Labels -->
+    <text x="108" y="234" font-size="10" font-weight="bold" fill="#475569">CLK</text>
+    <text x="108" y="254" font-size="10" font-weight="bold" fill="#475569">D</text>
+    <text x="108" y="274" font-size="10" font-weight="bold" fill="#475569">Q</text>
+    <circle cx="100" cy="230" r="4" fill="#0284c7"/>
+    <circle cx="100" cy="250" r="4" fill="#b45309"/>
+    <circle cx="100" cy="270" r="4" fill="#0284c7"/>
+
+    <!-- Local VDD / GND Stubs -->
+    <text x="138" y="286" font-size="9" fill="#16a34a" font-weight="bold">VDD</text>
+    <text x="175" y="286" font-size="9" fill="#64748b" font-weight="bold">GND</text>
+  </g>
+
+
+  <!-- Toggle Inverter inverter@0 -->
+  <g filter="url(#shadow)">
+    <rect x="275" y="210" width="55" height="40" rx="6" fill="#f8fafc" stroke="#475569" stroke-width="2"/>
+    <text x="283" y="235" font-size="11" font-weight="bold" fill="#1e293b">INV0</text>
+    <circle cx="275" cy="230" r="3.5" fill="#475569"/>
+    <circle cx="330" cy="230" r="3.5" fill="#b45309"/>
+  </g>
+
+
+  <!-- Q0 Trace: Exits DFF Q -> runs under DFF -> INV input & Decode Bus -->
+  <path d="M 100 270 L 82 270 L 82 340 L 255 340 L 255 230 L 275 230" 
+        fill="none" stroke="#0284c7" stroke-width="2.5"/>
+  <circle cx="255" cy="340" r="4" fill="#0284c7"/>
+  <text x="68" y="295" font-size="11" font-weight="bold" fill="#0284c7">Q0</text>
+
+  <!-- Drop to dedicated parallel decode rail at Y=420 -->
+  <path d="M 255 340 L 255 420 L 850 420" 
+        fill="none" stroke="#0284c7" stroke-width="2.5"/>
+  <circle cx="255" cy="420" r="3.5" fill="#0284c7"/>
+  <text x="265" y="414" font-size="10" font-weight="bold" fill="#0284c7">Rail Q0 (Y=420)</text>
+
+
+  <!-- Toggle Feedback: INV0:out -> DFF0:D (via Top Y=120) -->
+  <path d="M 330 230 L 343 230 L 343 120 L 88 120 L 88 250 L 100 250" 
+        fill="none" stroke="#d97706" stroke-width="2" stroke-dasharray="none"/>
+  <circle cx="343" cy="230" r="3.5" fill="#d97706"/>
+  <text x="150" y="112" font-size="10" font-weight="bold" fill="#b45309">DFF0 Toggle Loop</text>
+
+
+  <!-- Ripple Clock to Stage 1: INV0:out -> DFF1:CLK -->
+  <line x1="343" y1="230" x2="360" y2="230" stroke="#0284c7" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="350" y="222" font-size="10" font-weight="bold" fill="#0369a1">Ripple CLK1</text>
+
+
+  <!-- Stage 1: DFF@1 -->
+  <g filter="url(#shadow)">
+    <rect x="360" y="200" width="130" height="95" rx="8" fill="#ffffff" stroke="#059669" stroke-width="2.5"/>
+    <text x="395" y="225" font-size="14" font-weight="bold" fill="#0f172a">DFF@1</text>
+    <text x="405" y="242" font-size="11" fill="#64748b">DFF Cell</text>
+    
+    <!-- Port Pin Labels -->
+    <text x="368" y="234" font-size="10" font-weight="bold" fill="#475569">CLK</text>
+    <text x="368" y="254" font-size="10" font-weight="bold" fill="#475569">D</text>
+    <text x="368" y="274" font-size="10" font-weight="bold" fill="#475569">Q</text>
+    <circle cx="360" cy="230" r="4" fill="#0284c7"/>
+    <circle cx="360" cy="250" r="4" fill="#b45309"/>
+    <circle cx="360" cy="270" r="4" fill="#059669"/>
+
+    <!-- Local VDD / GND Stubs -->
+    <text x="398" y="286" font-size="9" fill="#16a34a" font-weight="bold">VDD</text>
+    <text x="435" y="286" font-size="9" fill="#64748b" font-weight="bold">GND</text>
+  </g>
+
+
+  <!-- Toggle Inverter inverter@1 -->
+  <g filter="url(#shadow)">
+    <rect x="535" y="210" width="55" height="40" rx="6" fill="#f8fafc" stroke="#475569" stroke-width="2"/>
+    <text x="543" y="235" font-size="11" font-weight="bold" fill="#1e293b">INV1</text>
+    <circle cx="535" cy="230" r="3.5" fill="#475569"/>
+    <circle cx="590" cy="230" r="3.5" fill="#b45309"/>
+  </g>
+
+
+  <!-- Q1 Trace: Exits DFF Q -> runs under DFF -> INV input & Decode Bus -->
+  <path d="M 360 270 L 342 270 L 342 340 L 515 340 L 515 230 L 535 230" 
+        fill="none" stroke="#059669" stroke-width="2.5"/>
+  <circle cx="515" cy="340" r="4" fill="#059669"/>
+  <text x="328" y="295" font-size="11" font-weight="bold" fill="#059669">Q1</text>
+
+  <!-- Drop to dedicated parallel decode rail at Y=450 -->
+  <path d="M 515 340 L 515 450 L 850 450" 
+        fill="none" stroke="#059669" stroke-width="2.5"/>
+  <circle cx="515" cy="450" r="3.5" fill="#059669"/>
+  <text x="525" y="444" font-size="10" font-weight="bold" fill="#059669">Rail Q1 (Y=450)</text>
+
+
+  <!-- Toggle Feedback: INV1:out -> DFF1:D (via Top Y=120) -->
+  <path d="M 590 230 L 603 230 L 603 120 L 348 120 L 348 250 L 360 250" 
+        fill="none" stroke="#d97706" stroke-width="2" stroke-dasharray="none"/>
+  <circle cx="603" cy="230" r="3.5" fill="#d97706"/>
+  <text x="410" y="112" font-size="10" font-weight="bold" fill="#b45309">DFF1 Toggle Loop</text>
+
+
+  <!-- Ripple Clock to Stage 2: INV1:out -> DFF2:CLK -->
+  <line x1="603" y1="230" x2="620" y2="230" stroke="#0284c7" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="610" y="222" font-size="10" font-weight="bold" fill="#0369a1">Ripple CLK2</text>
+
+
+  <!-- Stage 2: DFF@2 -->
+  <g filter="url(#shadow)">
+    <rect x="620" y="200" width="130" height="95" rx="8" fill="#ffffff" stroke="#7c3aed" stroke-width="2.5"/>
+    <text x="655" y="225" font-size="14" font-weight="bold" fill="#0f172a">DFF@2</text>
+    <text x="665" y="242" font-size="11" fill="#64748b">DFF Cell</text>
+    
+    <!-- Port Pin Labels -->
+    <text x="628" y="234" font-size="10" font-weight="bold" fill="#475569">CLK</text>
+    <text x="628" y="254" font-size="10" font-weight="bold" fill="#475569">D</text>
+    <text x="628" y="274" font-size="10" font-weight="bold" fill="#475569">Q</text>
+    <circle cx="620" cy="230" r="4" fill="#0284c7"/>
+    <circle cx="620" cy="250" r="4" fill="#b45309"/>
+    <circle cx="620" cy="270" r="4" fill="#7c3aed"/>
+
+    <!-- Local VDD / GND Stubs -->
+    <text x="658" y="286" font-size="9" fill="#16a34a" font-weight="bold">VDD</text>
+    <text x="695" y="286" font-size="9" fill="#64748b" font-weight="bold">GND</text>
+  </g>
+
+
+  <!-- Toggle Inverter inverter@2 -->
+  <g filter="url(#shadow)">
+    <rect x="795" y="210" width="55" height="40" rx="6" fill="#f8fafc" stroke="#475569" stroke-width="2"/>
+    <text x="803" y="235" font-size="11" font-weight="bold" fill="#1e293b">INV2</text>
+    <circle cx="795" cy="230" r="3.5" fill="#475569"/>
+    <circle cx="850" cy="230" r="3.5" fill="#b45309"/>
+  </g>
+
+
+  <!-- Q2 Trace: Exits DFF Q -> runs under DFF -> INV input & Decode Bus -->
+  <path d="M 620 270 L 602 270 L 602 340 L 775 340 L 775 230 L 795 230" 
+        fill="none" stroke="#7c3aed" stroke-width="2.5"/>
+  <circle cx="775" cy="340" r="4" fill="#7c3aed"/>
+  <text x="588" y="295" font-size="11" font-weight="bold" fill="#7c3aed">Q2</text>
+
+  <!-- Drop to dedicated parallel decode rail at Y=480 -->
+  <path d="M 775 340 L 775 480 L 850 480" 
+        fill="none" stroke="#7c3aed" stroke-width="2.5"/>
+  <circle cx="775" cy="480" r="3.5" fill="#7c3aed"/>
+  <text x="785" y="474" font-size="10" font-weight="bold" fill="#7c3aed">Rail Q2 (Y=480)</text>
+
+
+  <!-- Toggle Feedback: INV2:out -> DFF2:D (via Top Y=120) -->
+  <path d="M 850 230 L 863 230 L 863 120 L 608 120 L 608 250 L 620 250" 
+        fill="none" stroke="#d97706" stroke-width="2" stroke-dasharray="none"/>
+  <circle cx="863" cy="230" r="3.5" fill="#d97706"/>
+  <text x="670" y="112" font-size="10" font-weight="bold" fill="#b45309">DFF2 Toggle Loop</text>
+
+
+  <!-- Tied VDD Rail to NAND4:D -->
+  <path d="M 810 510 L 850 510" fill="none" stroke="#dc2626" stroke-width="2.5"/>
+  <circle cx="810" cy="510" r="4" fill="#dc2626"/>
+  <text x="770" y="514" font-size="11" font-weight="bold" fill="#dc2626">VDD (1)</text>
+
+  <!-- NAND4 Gate (nand4@0) -->
+  <g filter="url(#shadow)">
+    <rect x="850" y="400" width="85" height="120" rx="8" fill="#f8fafc" stroke="#0f172a" stroke-width="2.5"/>
+    <text x="865" y="445" font-size="13" font-weight="bold" fill="#0f172a">nand4@0</text>
+    <text x="868" y="465" font-size="11" fill="#64748b">NAND-4</text>
+    
+    <!-- Input Port Pins -->
+    <circle cx="850" cy="420" r="3.5" fill="#0284c7"/>
+    <circle cx="850" cy="450" r="3.5" fill="#059669"/>
+    <circle cx="850" cy="480" r="3.5" fill="#7c3aed"/>
+    <circle cx="850" cy="510" r="3.5" fill="#dc2626"/>
+    <text x="856" y="424" font-size="10" fill="#475569">A</text>
+    <text x="856" y="454" font-size="10" fill="#475569">B</text>
+    <text x="856" y="484" font-size="10" fill="#475569">C</text>
+    <text x="856" y="514" font-size="10" fill="#475569">D</text>
+
+    <!-- Output Bubble & Pin -->
+    <circle cx="935" cy="460" r="3.5" fill="#0f172a"/>
+  </g>
+
+  <!-- Trace from NAND4 to INV3 (Output Inverter) -->
+  <line x1="935" y1="460" x2="975" y2="460" stroke="#0f172a" stroke-width="2.5"/>
+
+  <!-- Output Inverter (inverter@3) -->
+  <g filter="url(#shadow)">
+    <rect x="975" y="438" width="60" height="44" rx="6" fill="#f8fafc" stroke="#0f172a" stroke-width="2"/>
+    <text x="985" y="465" font-size="11" font-weight="bold" fill="#0f172a">inverter@3</text>
+    <circle cx="975" cy="460" r="3.5" fill="#0f172a"/>
+    <circle cx="1035" cy="460" r="3.5" fill="#15803d"/>
+  </g>
+
+  <!-- Output Port EXECUTE -->
+  <line x1="1035" y1="460" x2="1085" y2="460" stroke="#15803d" stroke-width="3" marker-end="url(#arrow-emerald)"/>
+  <circle cx="1090" cy="460" r="6" fill="#15803d"/>
+  <text x="1055" y="445" font-size="14" font-weight="bold" fill="#15803d">EXECUTE</text>
+  <text x="1050" y="490" font-size="10" fill="#64748b">1-Cycle Strobe</text>
+  <text x="1050" y="502" font-size="10" fill="#64748b">(Q2·Q1·Q0 = 111)</text>
+
+  <!-- Architecture Summary Footer Box -->
+  <g transform="translate(35, 520)">
+    <text x="0" y="14" font-size="11" fill="#64748b">
+      <tspan font-weight="bold" fill="#1e293b">Routing Rules:</tspan> 100% Orthogonal Manhattan (0 non-manhattan arcs)  |  
+      <tspan font-weight="bold" fill="#1e293b">Separation of Concerns:</tspan> Top (+14λ): Toggle Loops  |  Mid (+2λ): Ripple Clocks  |  Bottom (-22λ..-26λ): Decode Rails
+    </text>
+  </g>
+
+</svg>

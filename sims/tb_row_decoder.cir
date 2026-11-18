@@ -1,0 +1,52 @@
+* Testbench for 4-to-16 Decoder Slice & Address Decoding
+.include "../tsmc018.lib"
+.include "row_decoder.cir"
+
+Vdd vdd 0 DC 1.8
+
+* 4 Address inputs: A0, A1, A2, A3
+* Inverters to generate complementary addresses A0_B, A1_B, A2_B, A3_B
+Xinv0 a0 a0_b vdd 0 inverter
+Xinv1 a1 a1_b vdd 0 inverter
+Xinv2 a2 a2_b vdd 0 inverter
+Xinv3 a3 a3_b vdd 0 inverter
+
+* Test 3 Representative Decoder Outputs:
+* Slice 0: Wordline 0 (Address 0000) -> inputs: A3_B, A2_B, A1_B, A0_B
+Xdec0 a3_b a2_b a1_b a0_b wl0 vdd 0 dec_slice
+
+* Slice 5: Wordline 5 (Address 0101) -> inputs: A3_B, A2, A1_B, A0
+Xdec5 a3_b a2 a1_b a0 wl5 vdd 0 dec_slice
+
+* Slice 15: Wordline 15 (Address 1111) -> inputs: A3, A2, A1, A0
+Xdec15 a3 a2 a1 a0 wl15 vdd 0 dec_slice
+
+* Wordline capacitive load (16 SRAM cells access gates: ~40 fF)
+Cwl0  wl0  0 40f
+Cwl5  wl5  0 40f
+Cwl15 wl15 0 40f
+
+* Apply Address Sequence:
+* 0 - 5ns:   Address = 0000 (0) -> WL0 = 1.8V, others = 0V
+* 5 - 10ns:  Address = 0101 (5) -> WL5 = 1.8V, others = 0V
+* 10 - 15ns: Address = 1111 (15) -> WL15 = 1.8V, others = 0V
+* 15 - 20ns: Address = 0000 (0) -> WL0 = 1.8V, others = 0V
+
+* A0: toggles every 5ns
+Va0 a0 0 PWL(0n 0 4.9n 0 5n 1.8 9.9n 1.8 10n 1.8 14.9n 1.8 15n 0 20n 0)
+* A1: 0 for 0000, 0 for 0101, 1 for 1111
+Va1 a1 0 PWL(0n 0 9.9n 0 10n 1.8 14.9n 1.8 15n 0 20n 0)
+* A2: 0 for 0000, 1 for 0101, 1 for 1111
+Va2 a2 0 PWL(0n 0 4.9n 0 5n 1.8 14.9n 1.8 15n 0 20n 0)
+* A3: 0 for 0000, 0 for 0101, 1 for 1111
+Va3 a3 0 PWL(0n 0 9.9n 0 10n 1.8 14.9n 1.8 15n 0 20n 0)
+
+.tran 10p 20n
+
+.control
+run
+set wr_vecnames
+wrdata decoder_sim.txt v(a0) v(a1) v(a2) v(a3) v(wl0) v(wl5) v(wl15)
+quit
+.endc
+.end

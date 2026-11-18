@@ -1,0 +1,10 @@
+# header information:
+HSRAM|9.08
+
+# Views:
+Vschematic|sch
+
+# Cell SRAM;1{sch}
+CSRAM;1{sch}||schematic|1792703232689|1792703232690|
+Ngeneric:Facet-Center|art@0||0|0||||AV
+X

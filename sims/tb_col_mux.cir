@@ -1,0 +1,51 @@
+* Testbench for Column Mux Bitline Transmission Gate
+.include "../tsmc018.lib"
+.include "col_mux.cir"
+
+Vdd vdd 0 DC 1.8
+
+* Test a column mux channel:
+* Column 0 (BL0, BLB0) -> Global Bitlines (GBL, GBLB)
+Xt_bl  bl0  gbl  cs0 cs0_b vdd 0 tgate
+Xt_blb blb0 gblb cs0 cs0_b vdd 0 tgate
+
+* Column 1 (BL1, BLB1) -> Global Bitlines (GBL, GBLB)
+Xt1_bl  bl1  gbl  cs1 cs1_b vdd 0 tgate
+Xt1_blb blb1 gblb cs1 cs1_b vdd 0 tgate
+
+* Capacitances:
+* Column bitlines (200 fF)
+Cbl0  bl0  0 200f
+Cblb0 blb0 0 200f
+Cbl1  bl1  0 200f
+Cblb1 blb1 0 200f
+
+* Global bitline load (50 fF leading to Sense Amp and Write Driver)
+Cgbl  gbl  0 50f
+Cgblb gblb 0 50f
+
+* Case 1: Select Column 0 (CS0=1.8V, CS0_B=0V) from 0 to 10ns
+* Case 2: Select Column 1 (CS1=1.8V, CS1_B=0V) from 10 to 20ns
+Vcs0   cs0   0 PWL(0ns 1.8V 9.9ns 1.8V 10ns 0V 20ns 0V)
+Vcs0_b cs0_b 0 PWL(0ns 0V   9.9ns 0V   10ns 1.8V 20ns 1.8V)
+
+Vcs1   cs1   0 PWL(0ns 0V   9.9ns 0V   10ns 1.8V 20ns 1.8V)
+Vcs1_b cs1_b 0 PWL(0ns 1.8V 9.9ns 1.8V 10ns 0V   20ns 0V)
+
+* Col 0 carries Read-0 signal: BL0=1.65V, BLB0=1.8V
+Vbl0  bl0  0 DC 1.65
+Vblb0 blb0 0 DC 1.8
+
+* Col 1 carries Read-1 signal: BL1=1.8V, BLB1=1.65V
+Vbl1  bl1  0 DC 1.8
+Vblb1 blb1 0 DC 1.65
+
+.tran 10p 20n
+
+.control
+run
+set wr_vecnames
+wrdata col_mux_sim.txt v(cs0) v(cs1) v(gbl) v(gblb)
+quit
+.endc
+.end

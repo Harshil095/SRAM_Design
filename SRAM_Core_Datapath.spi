@@ -1,0 +1,187 @@
+*** SPICE deck for cell SRAM_Core_Datapath{sch} from library SRAM
+*** Created on Tue Nov 17, 2026 22:47:03
+*** Last revised on Tue Nov 17, 2026 22:47:03
+*** Written on Tue Nov 17, 2026 22:47:03 by Electric VLSI Design System, version 9.08
+*** Layout tech: mocmos, foundry MOSIS
+*** UC SPICE *** , MIN_RESIST 4.0, MIN_CAPAC 0.1FF
+
+*** SUBCIRCUIT SRAM__tgate FROM CELL SRAM:tgate{sch}
+.SUBCKT SRAM__tgate EN ENB gnd IN OUT vdd
+** GLOBAL gnd
+** GLOBAL vdd
+Mnmos@0 IN EN OUT gnd CMOSN L=0.4U W=1.6U
+Mpmos@0 OUT ENB IN vdd CMOSP L=0.4U W=2.4U
+.ENDS SRAM__tgate
+
+*** SUBCIRCUIT SRAM__col_mux_1x FROM CELL SRAM:col_mux_1x{sch}
+.SUBCKT SRAM__col_mux_1x BL BLB COL_SEL COL_SEL_B GBL GBLB gnd vdd
+** GLOBAL gnd
+** GLOBAL vdd
+Xtgate@0 COL_SEL COL_SEL_B gnd BL GBL vdd SRAM__tgate
+Xtgate@1 COL_SEL COL_SEL_B gnd BLB GBLB vdd SRAM__tgate
+
+* Spice Code nodes in cell cell 'SRAM:col_mux_1x{sch}'
+.include ./tsmc018.lib
+.param VDD = 1.8
+VDD1 vdd 0 DC 1.8
+* Load capacitors on Global Bitlines
+Cgbl  GBL  0 50f
+Cgblb GBLB 0 50f
+* Column bitlines carry a Read-0 differential:
+* BL = 1.65V (150mV dip) BLB = 1.80V
+VBL  BL  0 DC 1.65
+VBLB BLB 0 DC 1.80
+* Column Select (COL_SEL active-high COL_SEL_B active-low):
+* OFF from 0ns to 5ns (High-Z isolation)
+* ON from 5ns to 25ns (passes the bitlines to GBL and GBLB)
+* OFF from 25ns to 30ns (isolates again)
+VSEL COL_SEL 0 PWL(0n 0 4.9n 0 5n 1.8 25n 1.8 25.1n 0 30n 0)
+VSEL_B COL_SEL_B 0 PWL(0n 1.8 4.9n 1.8 5n 0 25n 0 25.1n 1.8 30n 1.8)
+.tran 0.1n 30n
+.ENDS SRAM__col_mux_1x
+
+*** SUBCIRCUIT SRAM__Col_Mux_Bank_16 FROM CELL SRAM:Col_Mux_Bank_16{sch}
+.SUBCKT SRAM__Col_Mux_Bank_16 BL[15] BL[14] BL[13] BL[12] BL[11] BL[10] BL[9] BL[8] BL[7] BL[6] BL[5] BL[4] BL[3] BL[2] BL[1] BL[0] BLB[15] BLB[14] BLB[13] BLB[12] BLB[11] BLB[10] BLB[9] BLB[8] BLB[7] BLB[6] BLB[5] BLB[4] BLB[3] BLB[2] BLB[1] BLB[0] COL_SEL[15] COL_SEL[14] COL_SEL[13] COL_SEL[12] COL_SEL[11] COL_SEL[10] COL_SEL[9] COL_SEL[8] COL_SEL[7] COL_SEL[6] COL_SEL[5] COL_SEL[4] COL_SEL[3] COL_SEL[2] COL_SEL[1] COL_SEL[0] COL_SEL_B[15] COL_SEL_B[14] COL_SEL_B[13] COL_SEL_B[12] COL_SEL_B[11] 
++COL_SEL_B[10] COL_SEL_B[9] COL_SEL_B[8] COL_SEL_B[7] COL_SEL_B[6] COL_SEL_B[5] COL_SEL_B[4] COL_SEL_B[3] COL_SEL_B[2] COL_SEL_B[1] COL_SEL_B[0] GBL GBLB gnd vdd
+** GLOBAL gnd
+** GLOBAL vdd
+Xcol_mux_@0 BL[0] BLB[0] COL_SEL[0] COL_SEL_B[0] GBL GBLB gnd vdd SRAM__col_mux_1x
+Xcol_mux_@1 BL[1] BLB[1] COL_SEL[1] COL_SEL_B[1] GBL GBLB gnd vdd SRAM__col_mux_1x
+Xcol_mux_@2 BL[2] BLB[2] COL_SEL[2] COL_SEL_B[2] GBL GBLB gnd vdd SRAM__col_mux_1x
+Xcol_mux_@3 BL[3] BLB[3] COL_SEL[3] COL_SEL_B[3] GBL GBLB gnd vdd SRAM__col_mux_1x
+Xcol_mux_@4 BL[4] BLB[4] COL_SEL[4] COL_SEL_B[4] GBL GBLB gnd vdd SRAM__col_mux_1x
+Xcol_mux_@5 BL[5] BLB[5] COL_SEL[5] COL_SEL_B[5] GBL GBLB gnd vdd SRAM__col_mux_1x
+Xcol_mux_@6 BL[6] BLB[6] COL_SEL[6] COL_SEL_B[6] GBL GBLB gnd vdd SRAM__col_mux_1x
+Xcol_mux_@7 BL[7] BLB[7] COL_SEL[7] COL_SEL_B[7] GBL GBLB gnd vdd SRAM__col_mux_1x
+Xcol_mux_@8 BL[8] BLB[8] COL_SEL[8] COL_SEL_B[8] GBL GBLB gnd vdd SRAM__col_mux_1x
+Xcol_mux_@9 BL[9] BLB[9] COL_SEL[9] COL_SEL_B[9] GBL GBLB gnd vdd SRAM__col_mux_1x
+Xcol_mux_@10 BL[10] BLB[10] COL_SEL[10] COL_SEL_B[10] GBL GBLB gnd vdd SRAM__col_mux_1x
+Xcol_mux_@11 BL[11] BLB[11] COL_SEL[11] COL_SEL_B[11] GBL GBLB gnd vdd SRAM__col_mux_1x
+Xcol_mux_@12 BL[12] BLB[12] COL_SEL[12] COL_SEL_B[12] GBL GBLB gnd vdd SRAM__col_mux_1x
+Xcol_mux_@13 BL[13] BLB[13] COL_SEL[13] COL_SEL_B[13] GBL GBLB gnd vdd SRAM__col_mux_1x
+Xcol_mux_@14 BL[14] BLB[14] COL_SEL[14] COL_SEL_B[14] GBL GBLB gnd vdd SRAM__col_mux_1x
+Xcol_mux_@15 BL[15] BLB[15] COL_SEL[15] COL_SEL_B[15] GBL GBLB gnd vdd SRAM__col_mux_1x
+.ENDS SRAM__Col_Mux_Bank_16
+
+*** SUBCIRCUIT SRAM__pre_charge FROM CELL SRAM:pre_charge{sch}
+.SUBCKT SRAM__pre_charge BL BLB PRE vdd
+** GLOBAL vdd
+Mpmos@0 vdd PRE BLB vdd CMOSP L=0.4U W=1.6U
+Mpmos@1 BL PRE vdd vdd CMOSP L=0.4U W=1.6U
+Mpmos@2 BLB PRE BL vdd CMOSP L=0.4U W=1.6U
+
+* Spice Code nodes in cell cell 'SRAM:pre_charge{sch}'
+.include ./tsmc018.lib
+.param VDD=1.8
+VDD vdd 0 DC 1.8
+Cbl  BL   0 200f
+Cblb BLB 0 200f
+VPRE PRE 0 PULSE(0 1.8 10n 0.1n 0.1n 20n 40n)
+.ic V(BL)=0 V(BLB)=0
+.tran 0.1n 80n
+.control
+run
+plot v(PRE) v(BL) v(BLB)
+.endc
+.ENDS SRAM__pre_charge
+
+*** SUBCIRCUIT SRAM__Precharge_Bank_16 FROM CELL SRAM:Precharge_Bank_16{sch}
+.SUBCKT SRAM__Precharge_Bank_16 BL[15] BL[14] BL[13] BL[12] BL[11] BL[10] BL[9] BL[8] BL[7] BL[6] BL[5] BL[4] BL[3] BL[2] BL[1] BL[0] BLB[15] BLB[14] BLB[13] BLB[12] BLB[11] BLB[10] BLB[9] BLB[8] BLB[7] BLB[6] BLB[5] BLB[4] BLB[3] BLB[2] BLB[1] BLB[0] gnd PRE_B vdd
+** GLOBAL gnd
+** GLOBAL vdd
+Xpre_char@0 BL[0] BLB[0] PRE_B vdd SRAM__pre_charge
+Xpre_char@1 BL[1] BLB[1] PRE_B vdd SRAM__pre_charge
+Xpre_char@2 BL[2] BLB[2] PRE_B vdd SRAM__pre_charge
+Xpre_char@3 BL[3] BLB[3] PRE_B vdd SRAM__pre_charge
+Xpre_char@4 BL[4] BLB[4] PRE_B vdd SRAM__pre_charge
+Xpre_char@5 BL[5] BLB[5] PRE_B vdd SRAM__pre_charge
+Xpre_char@6 BL[6] BLB[6] PRE_B vdd SRAM__pre_charge
+Xpre_char@7 BL[7] BLB[7] PRE_B vdd SRAM__pre_charge
+Xpre_char@8 BL[8] BLB[8] PRE_B vdd SRAM__pre_charge
+Xpre_char@9 BL[9] BLB[9] PRE_B vdd SRAM__pre_charge
+Xpre_char@10 BL[10] BLB[10] PRE_B vdd SRAM__pre_charge
+Xpre_char@11 BL[11] BLB[11] PRE_B vdd SRAM__pre_charge
+Xpre_char@12 BL[12] BLB[12] PRE_B vdd SRAM__pre_charge
+Xpre_char@13 BL[13] BLB[13] PRE_B vdd SRAM__pre_charge
+Xpre_char@14 BL[14] BLB[14] PRE_B vdd SRAM__pre_charge
+Xpre_char@15 BL[15] BLB[15] PRE_B vdd SRAM__pre_charge
+.ENDS SRAM__Precharge_Bank_16
+
+*** SUBCIRCUIT SRAM__6T FROM CELL SRAM:6T{sch}
+.SUBCKT SRAM__6T BL BLB gnd vdd WL
+** GLOBAL gnd
+** GLOBAL vdd
+Mnmos@0 net@4 net@9 gnd gnd cmosn L=0.4U W=1.2U
+Mnmos@1 net@9 net@4 gnd gnd cmosn L=0.4U W=1.2U
+Mnmos@2 BL WL net@9 gnd cmosn L=0.4U W=0.8U
+Mnmos@3 net@4 WL BLB gnd cmosn L=0.4U W=0.8U
+Mpmos@0 vdd net@4 net@9 vdd cmosp L=0.4U W=0.6U
+Mpmos@1 vdd net@9 net@4 vdd cmosp L=0.4U W=0.6U
+
+* Spice Code nodes in cell cell 'SRAM:6T{sch}'
+.include ./tsmc018.lib
+Vsup vdd 0 1.8
+Cbl bl 0 200f
+Cblb blb 0 200f
+.model swm sw(vt=0.9 vh=0.1 ron=200 roff=1e12)
+Sbl dbl bl en 0 swm
+Sblb dblb blb en 0 swm
+Ven en 0 PWL(0 1.8 10n 1.8 10.1n 0 14.9n 0 15n 1.8 27n 1.8 27.1n 0 31.9n 0 32n 1.8 38n 1.8)
+Vdbl dbl 0 PWL(0 0 6.5n 0 7n 1.8 38n 1.8)
+Vdblb dblb 0 PWL(0 1.8 18n 1.8 18.5n 0 23.5n 0 24n 1.8 38n 1.8)
+Vwl wl 0 PWL(0 0 2n 0 2.1n 1.8 6n 1.8 6.1n 0 11n 0 11.1n 1.8 14n 1.8 14.1n 0 19n 0 19.1n 1.8 23n 1.8 23.1n 0 28n 0 28.1n 1.8 31n 1.8 31.1n 0 38n 0)
+.tran 10p 38n
+.ENDS SRAM__6T
+
+*** SUBCIRCUIT SRAM__SRAM_Row_16 FROM CELL SRAM:SRAM_Row_16{sch}
+.SUBCKT SRAM__SRAM_Row_16 BL[15] BL[14] BL[13] BL[12] BL[11] BL[10] BL[9] BL[8] BL[7] BL[6] BL[5] BL[4] BL[3] BL[2] BL[1] BL[0] BLB[15] BLB[14] BLB[13] BLB[12] BLB[11] BLB[10] BLB[9] BLB[8] BLB[7] BLB[6] BLB[5] BLB[4] BLB[3] BLB[2] BLB[1] BLB[0] gnd vdd WL
+** GLOBAL gnd
+** GLOBAL vdd
+X_6T@0 BL[0] BLB[0] gnd vdd WL SRAM__6T
+X_6T@1 BL[1] BLB[1] gnd vdd WL SRAM__6T
+X_6T@2 BL[2] BLB[2] gnd vdd WL SRAM__6T
+X_6T@3 BL[3] BLB[3] gnd vdd WL SRAM__6T
+X_6T@4 BL[4] BLB[4] gnd vdd WL SRAM__6T
+X_6T@5 BL[5] BLB[5] gnd vdd WL SRAM__6T
+X_6T@6 BL[6] BLB[6] gnd vdd WL SRAM__6T
+X_6T@7 BL[7] BLB[7] gnd vdd WL SRAM__6T
+X_6T@8 BL[8] BLB[8] gnd vdd WL SRAM__6T
+X_6T@9 BL[9] BLB[9] gnd vdd WL SRAM__6T
+X_6T@10 BL[10] BLB[10] gnd vdd WL SRAM__6T
+X_6T@11 BL[11] BLB[11] gnd vdd WL SRAM__6T
+X_6T@12 BL[12] BLB[12] gnd vdd WL SRAM__6T
+X_6T@13 BL[13] BLB[13] gnd vdd WL SRAM__6T
+X_6T@14 BL[14] BLB[14] gnd vdd WL SRAM__6T
+X_6T@15 BL[15] BLB[15] gnd vdd WL SRAM__6T
+.ENDS SRAM__SRAM_Row_16
+
+*** SUBCIRCUIT SRAM__SRAM_Array_16x16 FROM CELL SRAM:SRAM_Array_16x16{sch}
+.SUBCKT SRAM__SRAM_Array_16x16 BL[15] BL[14] BL[13] BL[12] BL[11] BL[10] BL[9] BL[8] BL[7] BL[6] BL[5] BL[4] BL[3] BL[2] BL[1] BL[0] BLB[15] BLB[14] BLB[13] BLB[12] BLB[11] BLB[10] BLB[9] BLB[8] BLB[7] BLB[6] BLB[5] BLB[4] BLB[3] BLB[2] BLB[1] BLB[0] gnd vdd WL[15] WL[14] WL[13] WL[12] WL[11] WL[10] WL[9] WL[8] WL[7] WL[6] WL[5] WL[4] WL[3] WL[2] WL[1] WL[0]
+** GLOBAL gnd
+** GLOBAL vdd
+XSRAM_Row@0 BL[15] BL[14] BL[13] BL[12] BL[11] BL[10] BL[9] BL[8] BL[7] BL[6] BL[5] BL[4] BL[3] BL[2] BL[1] BL[0] BLB[15] BLB[14] BLB[13] BLB[12] BLB[11] BLB[10] BLB[9] BLB[8] BLB[7] BLB[6] BLB[5] BLB[4] BLB[3] BLB[2] BLB[1] BLB[0] gnd vdd WL[0] SRAM__SRAM_Row_16
+XSRAM_Row@1 BL[15] BL[14] BL[13] BL[12] BL[11] BL[10] BL[9] BL[8] BL[7] BL[6] BL[5] BL[4] BL[3] BL[2] BL[1] BL[0] BLB[15] BLB[14] BLB[13] BLB[12] BLB[11] BLB[10] BLB[9] BLB[8] BLB[7] BLB[6] BLB[5] BLB[4] BLB[3] BLB[2] BLB[1] BLB[0] gnd vdd WL[1] SRAM__SRAM_Row_16
+XSRAM_Row@2 BL[15] BL[14] BL[13] BL[12] BL[11] BL[10] BL[9] BL[8] BL[7] BL[6] BL[5] BL[4] BL[3] BL[2] BL[1] BL[0] BLB[15] BLB[14] BLB[13] BLB[12] BLB[11] BLB[10] BLB[9] BLB[8] BLB[7] BLB[6] BLB[5] BLB[4] BLB[3] BLB[2] BLB[1] BLB[0] gnd vdd WL[2] SRAM__SRAM_Row_16
+XSRAM_Row@3 BL[15] BL[14] BL[13] BL[12] BL[11] BL[10] BL[9] BL[8] BL[7] BL[6] BL[5] BL[4] BL[3] BL[2] BL[1] BL[0] BLB[15] BLB[14] BLB[13] BLB[12] BLB[11] BLB[10] BLB[9] BLB[8] BLB[7] BLB[6] BLB[5] BLB[4] BLB[3] BLB[2] BLB[1] BLB[0] gnd vdd WL[3] SRAM__SRAM_Row_16
+XSRAM_Row@4 BL[15] BL[14] BL[13] BL[12] BL[11] BL[10] BL[9] BL[8] BL[7] BL[6] BL[5] BL[4] BL[3] BL[2] BL[1] BL[0] BLB[15] BLB[14] BLB[13] BLB[12] BLB[11] BLB[10] BLB[9] BLB[8] BLB[7] BLB[6] BLB[5] BLB[4] BLB[3] BLB[2] BLB[1] BLB[0] gnd vdd WL[4] SRAM__SRAM_Row_16
+XSRAM_Row@5 BL[15] BL[14] BL[13] BL[12] BL[11] BL[10] BL[9] BL[8] BL[7] BL[6] BL[5] BL[4] BL[3] BL[2] BL[1] BL[0] BLB[15] BLB[14] BLB[13] BLB[12] BLB[11] BLB[10] BLB[9] BLB[8] BLB[7] BLB[6] BLB[5] BLB[4] BLB[3] BLB[2] BLB[1] BLB[0] gnd vdd WL[5] SRAM__SRAM_Row_16
+XSRAM_Row@6 BL[15] BL[14] BL[13] BL[12] BL[11] BL[10] BL[9] BL[8] BL[7] BL[6] BL[5] BL[4] BL[3] BL[2] BL[1] BL[0] BLB[15] BLB[14] BLB[13] BLB[12] BLB[11] BLB[10] BLB[9] BLB[8] BLB[7] BLB[6] BLB[5] BLB[4] BLB[3] BLB[2] BLB[1] BLB[0] gnd vdd WL[6] SRAM__SRAM_Row_16
+XSRAM_Row@7 BL[15] BL[14] BL[13] BL[12] BL[11] BL[10] BL[9] BL[8] BL[7] BL[6] BL[5] BL[4] BL[3] BL[2] BL[1] BL[0] BLB[15] BLB[14] BLB[13] BLB[12] BLB[11] BLB[10] BLB[9] BLB[8] BLB[7] BLB[6] BLB[5] BLB[4] BLB[3] BLB[2] BLB[1] BLB[0] gnd vdd WL[7] SRAM__SRAM_Row_16
+XSRAM_Row@8 BL[15] BL[14] BL[13] BL[12] BL[11] BL[10] BL[9] BL[8] BL[7] BL[6] BL[5] BL[4] BL[3] BL[2] BL[1] BL[0] BLB[15] BLB[14] BLB[13] BLB[12] BLB[11] BLB[10] BLB[9] BLB[8] BLB[7] BLB[6] BLB[5] BLB[4] BLB[3] BLB[2] BLB[1] BLB[0] gnd vdd WL[8] SRAM__SRAM_Row_16
+XSRAM_Row@9 BL[15] BL[14] BL[13] BL[12] BL[11] BL[10] BL[9] BL[8] BL[7] BL[6] BL[5] BL[4] BL[3] BL[2] BL[1] BL[0] BLB[15] BLB[14] BLB[13] BLB[12] BLB[11] BLB[10] BLB[9] BLB[8] BLB[7] BLB[6] BLB[5] BLB[4] BLB[3] BLB[2] BLB[1] BLB[0] gnd vdd WL[9] SRAM__SRAM_Row_16
+XSRAM_Row@10 BL[15] BL[14] BL[13] BL[12] BL[11] BL[10] BL[9] BL[8] BL[7] BL[6] BL[5] BL[4] BL[3] BL[2] BL[1] BL[0] BLB[15] BLB[14] BLB[13] BLB[12] BLB[11] BLB[10] BLB[9] BLB[8] BLB[7] BLB[6] BLB[5] BLB[4] BLB[3] BLB[2] BLB[1] BLB[0] gnd vdd WL[10] SRAM__SRAM_Row_16
+XSRAM_Row@11 BL[15] BL[14] BL[13] BL[12] BL[11] BL[10] BL[9] BL[8] BL[7] BL[6] BL[5] BL[4] BL[3] BL[2] BL[1] BL[0] BLB[15] BLB[14] BLB[13] BLB[12] BLB[11] BLB[10] BLB[9] BLB[8] BLB[7] BLB[6] BLB[5] BLB[4] BLB[3] BLB[2] BLB[1] BLB[0] gnd vdd WL[11] SRAM__SRAM_Row_16
+XSRAM_Row@12 BL[15] BL[14] BL[13] BL[12] BL[11] BL[10] BL[9] BL[8] BL[7] BL[6] BL[5] BL[4] BL[3] BL[2] BL[1] BL[0] BLB[15] BLB[14] BLB[13] BLB[12] BLB[11] BLB[10] BLB[9] BLB[8] BLB[7] BLB[6] BLB[5] BLB[4] BLB[3] BLB[2] BLB[1] BLB[0] gnd vdd WL[12] SRAM__SRAM_Row_16
+XSRAM_Row@13 BL[15] BL[14] BL[13] BL[12] BL[11] BL[10] BL[9] BL[8] BL[7] BL[6] BL[5] BL[4] BL[3] BL[2] BL[1] BL[0] BLB[15] BLB[14] BLB[13] BLB[12] BLB[11] BLB[10] BLB[9] BLB[8] BLB[7] BLB[6] BLB[5] BLB[4] BLB[3] BLB[2] BLB[1] BLB[0] gnd vdd WL[13] SRAM__SRAM_Row_16
+XSRAM_Row@14 BL[15] BL[14] BL[13] BL[12] BL[11] BL[10] BL[9] BL[8] BL[7] BL[6] BL[5] BL[4] BL[3] BL[2] BL[1] BL[0] BLB[15] BLB[14] BLB[13] BLB[12] BLB[11] BLB[10] BLB[9] BLB[8] BLB[7] BLB[6] BLB[5] BLB[4] BLB[3] BLB[2] BLB[1] BLB[0] gnd vdd WL[14] SRAM__SRAM_Row_16
+XSRAM_Row@15 BL[15] BL[14] BL[13] BL[12] BL[11] BL[10] BL[9] BL[8] BL[7] BL[6] BL[5] BL[4] BL[3] BL[2] BL[1] BL[0] BLB[15] BLB[14] BLB[13] BLB[12] BLB[11] BLB[10] BLB[9] BLB[8] BLB[7] BLB[6] BLB[5] BLB[4] BLB[3] BLB[2] BLB[1] BLB[0] gnd vdd WL[15] SRAM__SRAM_Row_16
+.ENDS SRAM__SRAM_Array_16x16
+
+.global gnd vdd
+
+*** TOP LEVEL CELL: SRAM:SRAM_Core_Datapath{sch}
+XCol_Mux_@0 net@60 net@56 net@52 net@48 net@44 net@40 net@36 net@32 net@28 net@24 net@20 net@16 net@12 net@8 net@4 net@0 net@61 net@57 net@53 net@49 net@45 net@41 net@37 net@33 net@29 net@25 net@21 net@17 net@13 net@9 net@5 net@1 COL_SEL[15] COL_SEL[14] COL_SEL[13] COL_SEL[12] COL_SEL[11] COL_SEL[10] COL_SEL[9] COL_SEL[8] COL_SEL[7] COL_SEL[6] COL_SEL[5] COL_SEL[4] COL_SEL[3] COL_SEL[2] COL_SEL[1] COL_SEL[0] COL_SEL_B[15] COL_SEL_B[14] COL_SEL_B[13] COL_SEL_B[12] COL_SEL_B[11] COL_SEL_B[10] COL_SEL_B[9] 
++COL_SEL_B[8] COL_SEL_B[7] COL_SEL_B[6] COL_SEL_B[5] COL_SEL_B[4] COL_SEL_B[3] COL_SEL_B[2] COL_SEL_B[1] COL_SEL_B[0] GBL GBLB gnd vdd SRAM__Col_Mux_Bank_16
+XPrecharg@0 net@60 net@56 net@52 net@48 net@44 net@40 net@36 net@32 net@28 net@24 net@20 net@16 net@12 net@8 net@4 net@0 net@61 net@57 net@53 net@49 net@45 net@41 net@37 net@33 net@29 net@25 net@21 net@17 net@13 net@9 net@5 net@1 gnd PRE_B vdd SRAM__Precharge_Bank_16
+XSRAM_Arr@0 net@60 net@56 net@52 net@48 net@44 net@40 net@36 net@32 net@28 net@24 net@20 net@16 net@12 net@8 net@4 net@0 net@61 net@57 net@53 net@49 net@45 net@41 net@37 net@33 net@29 net@25 net@21 net@17 net@13 net@9 net@5 net@1 gnd vdd WL[15] WL[14] WL[13] WL[12] WL[11] WL[10] WL[9] WL[8] WL[7] WL[6] WL[5] WL[4] WL[3] WL[2] WL[1] WL[0] SRAM__SRAM_Array_16x16
+.END

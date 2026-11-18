@@ -1,0 +1,80 @@
+* Testbench for 6T SRAM Cell from SRAM.jelib
+* Models: TSMC 0.18um CMOS
+.include "./tsmc018.lib"
+
+* 6T Subcircuit extracted from SRAM.jelib 6T;1{sch}
+* Default drawn size in Electric: L = 2 lambda = 0.18u
+* Pull-downs: nmos@0, nmos@1
+* Pull-ups:   pmos@0, pmos@1
+* Access:     nmos@2, nmos@3
+.subckt cell_6t bl blb gnd vdd wl
+* Inverter 1 (Left): Node Q, input QB
+Mpd1 q  qb gnd gnd CMOSN W=0.54u L=0.18u
+Mpu1 q  qb vdd vdd CMOSP W=0.28u L=0.18u
+
+* Inverter 2 (Right): Node QB, input Q
+Mpd2 qb q  gnd gnd CMOSN W=0.54u L=0.18u
+Mpu2 qb q  vdd vdd CMOSP W=0.28u L=0.18u
+
+* Access transistors
+Mpg1 bl  wl q  gnd CMOSN W=0.36u L=0.18u
+Mpg2 blb wl qb gnd CMOSN W=0.36u L=0.18u
+.ends cell_6t
+
+* Power Supply
+Vsup vdd 0 DC 1.8
+
+* Instantiate 6T Cell
+X1 bl blb 0 vdd wl cell_6t
+
+* Bit-line capacitance (columns of ~16 cells + wire parasitics)
+Cbl  bl  0 200f
+Cblb blb 0 200f
+
+* Switch models for precharge and write driver
+* In ngspice, voltage-controlled switch model syntax:
+* .model <name> vswitch(von=... voff=... ron=... roff=...) or sw(vt=... vh=... ron=... roff=...)
+.model swpc sw(vt=0.9 vh=0.1 ron=500 roff=1e12)
+.model swwr sw(vt=0.9 vh=0.1 ron=1k  roff=1e12)
+
+* Precharge switches (both bit lines pulled to VDD when pc is high)
+Spcbl  vdd bl  pc 0 swpc
+Spcblb vdd blb pc 0 swpc
+
+* Write pull-down switches (pull bit line low when enable is high)
+Swbl  bl  0 wrbl  0 swwr
+Swblb blb 0 wrblb 0 swwr
+
+* Control waveforms:
+* Vpc: active high (1.8V) during precharge intervals
+Vpc    pc    0 PWL(0 1.8 1n 1.8 1.1n 0 3.8n 0 3.9n 1.8 7n 1.8 7.1n 0 10.5n 0 10.6n 1.8 13n 1.8 13.1n 0 16.5n 0 16.6n 1.8 19n 1.8 19.1n 0 22.5n 0 22.6n 1.8 25n 1.8 25.1n 0 28.5n 0 28.6n 1.8 32n 1.8)
+
+* Vwl: wordline pulses high (1.8V) during access
+Vwl    wl    0 PWL(0 0 1.5n 0 1.6n 1.8 3.5n 1.8 3.6n 0 7.5n 0 7.6n 1.8 10n 1.8 10.1n 0 13.5n 0 13.6n 1.8 15.5n 1.8 15.6n 0 19.5n 0 19.6n 1.8 22n 1.8 22.1n 0 25.5n 0 25.6n 1.8 27.5n 1.8 27.6n 0 32n 0)
+
+* Vwrbl: write 0 driver (pulls BL low)
+Vwrbl  wrbl  0 PWL(0 0 1.3n 0 1.4n 1.8 3.7n 1.8 3.8n 0 25.3n 0 25.4n 1.8 28n 1.8 28.1n 0 32n 0)
+
+* Vwrblb: write 1 driver (pulls BLB low)
+Vwrblb wrblb 0 PWL(0 0 13.3n 0 13.4n 1.8 16n 1.8 16.1n 0 32n 0)
+
+* Transient simulation
+.tran 10p 32n
+
+* Measurements: bit-line voltages at the end of each read
+.meas tran bl_read0  find v(bl)  at=9.9n
+.meas tran blb_read0 find v(blb) at=9.9n
+.meas tran bl_read1  find v(bl)  at=21.9n
+.meas tran blb_read1 find v(blb) at=21.9n
+
+* Charge drawn from the supply during each write
+.meas tran q_write1 integ i(Vsup) from=13.3n to=16n
+.meas tran q_write0 integ i(Vsup) from=25.3n to=28n
+
+.control
+run
+set wr_vecnames
+wrdata 6T_tb_raw_results.txt v(wl) v(pc) v(bl) v(blb) v(x1.q) v(x1.qb)
+quit
+.endc
+.end

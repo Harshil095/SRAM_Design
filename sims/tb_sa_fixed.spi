@@ -1,0 +1,68 @@
+*** SPICE deck for cell sense_amplifier{sch} from library SRAM
+*** Created on Thu Oct 15, 2026 21:50:55
+*** Last revised on Tue Oct 27, 2026 22:59:34
+*** Written on Tue Oct 27, 2026 22:59:39 by Electric VLSI Design System, version 9.08
+*** Layout tech: mocmos, foundry MOSIS
+*** UC SPICE *** , MIN_RESIST 4.0, MIN_CAPAC 0.1FF
+
+*** SUBCIRCUIT SRAM__inverter FROM CELL SRAM:inverter{sch}
+.SUBCKT SRAM__inverter in out
+** GLOBAL gnd
+** GLOBAL vdd
+Mnmos@0 out in gnd gnd CMOSN L=0.18U W=0.36U
+Mpmos@0 vdd in out vdd CMOSP L=0.18U W=0.72U
+.ENDS SRAM__inverter
+
+.global gnd vdd
+
+*** TOP LEVEL CELL: SRAM:sense_amplifier{sch}
+Mnmos@0 net@9 BL net@3 gnd CMOSN L=0.18U W=0.36U
+Mnmos@1 net@3 BLB SO gnd CMOSN L=0.18U W=0.36U
+Mnmos@2 net@3 SAE gnd gnd CMOSN L=0.18U W=0.72U
+Mpmos@0 net@9 net@9 vdd vdd CMOSP L=0.18U W=1.44U
+Mpmos@1 vdd net@9 SO vdd CMOSP L=0.18U W=1.44U
+Xinverter@1 SO SOB SRAM__inverter
+
+* Spice Code nodes in cell cell 'SRAM:sense_amplifier{sch}'
+.include ../tsmc018.lib
+.param VDD = 1.8
+VDD1 vdd 0 DC 1.8
+* Small output load capacitors
+Cso  SO  0 10f
+Csob SOB 0 10f
+* Sense Enable (SE): pulses HIGH (1.8V) during read evaluation
+VSAE SAE 0 PWL(
++ 0n  0
++ 10n 0
++ 12n 1.8
++ 35n 1.8
++ 38n 0
++ 50n 0
++ 52n 1.8
++ 75n 1.8
++ 78n 0
++ 80n 0)
+* Read 0: BL dips to 1.65V (150mV dip), BLB stays at 1.8V
+* Read 1: BL stays at 1.8V, BLB dips to 1.65V (150mV dip)
+VBL BL 0 PWL(
++ 0n  1.8
++ 10n 1.8
++ 15n 1.65
++ 35n 1.65
++ 40n 1.8
++ 50n 1.8
++ 55n 1.8
++ 75n 1.8
++ 80n 1.8)
+VBLB BLB 0 PWL(
++ 0n  1.8
++ 10n 1.8
++ 15n 1.8
++ 35n 1.8
++ 40n 1.8
++ 50n 1.8
++ 55n 1.65
++ 75n 1.65
++ 80n 1.8)
+.tran 0.1n 80n
+.END

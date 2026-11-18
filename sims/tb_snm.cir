@@ -1,0 +1,45 @@
+* Butterfly Curve SNM Testbench for 6T SRAM Cell
+.include "../tsmc018.lib"
+
+* Supply
+Vdd vdd 0 DC 1.8
+
+* Parameter WPD sweep
+.param WPD_val = 0.54u
+.param WPG_val = 0.36u
+.param WPU_val = 0.28u
+.param L_val   = 0.18u
+
+* We simulate the two half-cells to get VTC1 and VTC2:
+* Half-Cell 1: Input is Vq_in, output is Vqb_out
+* Inverter 1: Mpu1 and Mpd1
+* For Read SNM: WL = 1.8V, BL = 1.8V
+Vwl wl 0 DC 1.8
+Vbl bl 0 DC 1.8
+Vblb blb 0 DC 1.8
+
+* Half-Cell 1
+V_in1 q_in 0 DC 0
+Mpd1 qb_out q_in 0   0   CMOSN W={WPD_val} L={L_val}
+Mpu1 qb_out q_in vdd vdd CMOSP W={WPU_val} L={L_val}
+Mpg1 blb    wl   qb_out 0 CMOSN W={WPG_val} L={L_val}
+
+* Half-Cell 2: Input is Vqb_in, output is Vq_out
+V_in2 qb_in 0 DC 0
+Mpd2 q_out qb_in 0   0   CMOSN W={WPD_val} L={L_val}
+Mpu2 q_out qb_in vdd vdd CMOSP W={WPU_val} L={L_val}
+Mpg2 bl    wl    q_out  0 CMOSN W={WPG_val} L={L_val}
+
+.control
+* Sweep V_in1 from 0 to 1.8V
+dc V_in1 0 1.8 0.005
+set wr_vecnames
+wrdata snm_vtc1.txt v(qb_out)
+
+* Sweep V_in2 from 0 to 1.8V
+dc V_in2 0 1.8 0.005
+wrdata snm_vtc2.txt v(q_out)
+
+quit
+.endc
+.end

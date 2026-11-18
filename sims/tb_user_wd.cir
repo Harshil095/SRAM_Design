@@ -1,0 +1,56 @@
+* Write driver simulation
+.include "../tsmc018.lib"
+
+* Instantiate schematic components:
+* Data inverter:
+Mpmos@0 pmos_s wd vdd vdd CMOSP W=0.72u L=0.18u
+Mnmos@4 pmos_s wd 0   0   CMOSN W=0.36u L=0.18u
+* (pmos_s is wd_b)
+
+* BL pull-down path:
+Mnmos@0 bl   we net0 0 CMOSN W=1.08u L=0.18u
+Mnmos@3 net0 wd 0    0 CMOSN W=1.08u L=0.18u
+
+* BLB pull-down path:
+Mnmos@1 blb  we     net1 0 CMOSN W=1.08u L=0.18u
+Mnmos@2 net1 pmos_s 0    0 CMOSN W=1.08u L=0.18u
+
+* Bitline capacitance + Precharge pull-up resistors to test pull-down:
+Cbl  bl  0 200f
+Cblb blb 0 200f
+Rpu1 bl  vdd 100k
+Rpu2 blb vdd 100k
+
+Vdd vdd 0 DC 1.8
+.ic v(bl)=1.8 v(blb)=1.8
+
+* Write Enable
+Vwe we 0 PWL(
++ 0n   0
++ 10n  0
++ 12n  1.8
++ 30n  1.8
++ 32n  0
++ 50n  0
++ 52n  1.8
++ 70n  1.8
++ 72n  0
++ 80n  0)
+
+* Write Data: First write 0 (0-50ns), then write 1 (50-80ns)
+* Wait, in this schematic:
+* When WD=0: pmos_s=1.8V -> Mnmos@2 is ON! When WE=1, BLB is pulled LOW!
+* When WD=1: Mnmos@3 is ON! When WE=1, BL is pulled LOW!
+Vwd wd 0 PWL(
++ 0n   0
++ 50n  0
++ 51n  1.8
++ 80n  1.8)
+
+.tran 0.1n 80n
+.control
+run
+wrdata wd_test_out.txt v(we) v(wd) v(bl) v(blb)
+quit
+.endc
+.end

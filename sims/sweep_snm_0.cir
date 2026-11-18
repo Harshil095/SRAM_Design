@@ -1,0 +1,19 @@
+* SNM VTC for WPD=0.28u
+.include "../tsmc018.lib"
+
+Vdd vdd 0 DC 1.8
+Vwl wl 0 DC 1.8
+Vblb blb 0 DC 1.8
+
+V_in1 q_in 0 DC 0
+Mpd1 qb_out q_in 0   0   CMOSN W=0.28u L=0.18u
+Mpu1 qb_out q_in vdd vdd CMOSP W=0.28u  L=0.18u
+Mpg1 blb    wl   qb_out 0 CMOSN W=0.36u  L=0.18u
+
+.control
+dc V_in1 0 1.8 0.005
+set wr_vecnames
+wrdata vtc_wpd_0.txt v(qb_out)
+quit
+.endc
+.end

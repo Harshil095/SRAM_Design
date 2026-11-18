@@ -1,0 +1,211 @@
+JobQueue:  Init database (waiting)
+JobQueue:  Init database (running)
+JobQueue:  Init database (running) AnalyzeExactFixes (waiting)
+Job com.sun.electric.tool.Job$Key@ffffffff
+JobQueue:  AnalyzeExactFixes (waiting)
+JobQueue:  AnalyzeExactFixes (running)
+Library /Users/harshil_rathan/Documents/BTech%20IITH/SEM5/VLSI/SRAM_Complete_V1_suraj.jelib read, took 0.156 secs
+Library Read found 0 errors, 0 warnings!
+Library /Users/harshil_rathan/Downloads/SRAM_Complete_V1_suraj_antigravity_BACKUP_DRC0_LVS0.jelib read, took 0.06 secs
+Library Read found 0 errors, 0 warnings!
+==================================================
+ANALYSIS 1: sense_amplifier
+==================================================
+--- USER NODES (Around contact@6 / via_se_m12) ---
+  User Node: Metal-1-P-Active-Con 'contact@0' @ EPointInt[-24.5, 26.0] size=17.0x17.0
+  User Node: Metal-1-P-Active-Con 'contact@1' @ EPointInt[-12.0, 26.0] size=17.0x17.0
+  User Node: Metal-1-P-Active-Con 'contact@2' @ EPointInt[0.5, 26.0] size=17.0x17.0
+  User Node: Metal-1-N-Active-Con 'contact@3' @ EPointInt[-24.5, -8.0] size=17.0x17.0
+  User Node: Metal-1-N-Active-Con 'contact@4' @ EPointInt[-12.0, -8.0] size=17.0x17.0
+  User Node: Metal-1-N-Active-Con 'contact@5' @ EPointInt[0.5, -8.0] size=17.0x17.0
+  User Node: Metal-1-N-Active-Con 'contact@6' @ EPointInt[-37.5, -8.0] size=17.0x32.0
+  User Node: Metal-1-N-Active-Con 'contact@7' @ EPointInt[-50.5, -8.0] size=17.0x32.0
+  User Node: Metal-1-Polysilicon-1-Con 'contact@8' @ EPointInt[-30.0, 36.5] size=5.0x5.0
+  User Node: Metal-1-Polysilicon-1-Con 'contact@11' @ EPointInt[-36.0, -24.0] size=5.0x5.0
+  User Node: Metal-1-Metal-2-Con 'contact@12' @ EPointInt[-12.0, 9.0] size=5.0x5.0
+  User Node: Metal-1-Metal-2-Con 'contact@13' @ EPointInt[-37.5, 9.0] size=5.0x5.0
+  User Node: Metal-1-P-Active-Con 'contact@14' @ EPointInt[8.5, 26.0] size=17.0x23.1
+  User Node: Metal-1-P-Active-Con 'contact@15' @ EPointInt[21.5, 26.0] size=17.0x23.1
+  User Node: Metal-1-N-Active-Con 'contact@16' @ EPointInt[8.5, -8.0] size=17.0x17.5
+  User Node: Metal-1-N-Active-Con 'contact@17' @ EPointInt[21.5, -8.0] size=17.0x17.5
+  User Node: Metal-1-Polysilicon-1-Con 'contact@18' @ EPointInt[8.5, 9.0] size=5.0x5.0
+  User Node: Metal-1-Polysilicon-1-Con 'contact@20' @ EPointInt[29.0, -22.0] size=5.0x5.0
+  User Node: Metal-1-Polysilicon-1-Con 'contact@21' @ EPointInt[-51.0, 13.0] size=5.0x5.0
+  User Node: Metal-2-Pin 'pin_se' @ EPointInt[-36.0, -34.0] size=3.0x3.0
+  User Node: Metal-1-P-Well-Con 'substr@0' @ EPointInt[-14.0, -34.0] size=97.0x20.0
+  User Node: Metal-1-Metal-2-Con 'via_se_m12' @ EPointInt[-36.0, -20.0] size=5.0x5.0
+  User Node: Metal-1-N-Well-Con 'well@0' @ EPointInt[-10.0, 52.0] size=87.0x20.0
+--- FRIEND NODES (Around contact@6 / via_se_m12) ---
+  Friend Node: Metal-1-P-Active-Con 'contact@0' @ EPointInt[-24.5, 26.0] size=17.0x17.0
+  Friend Node: Metal-1-P-Active-Con 'contact@1' @ EPointInt[-12.0, 26.0] size=17.0x17.0
+  Friend Node: Metal-1-P-Active-Con 'contact@2' @ EPointInt[0.5, 26.0] size=17.0x17.0
+  Friend Node: Metal-1-N-Active-Con 'contact@3' @ EPointInt[-24.5, -8.0] size=17.0x17.0
+  Friend Node: Metal-1-N-Active-Con 'contact@4' @ EPointInt[-12.0, -8.0] size=17.0x17.0
+  Friend Node: Metal-1-N-Active-Con 'contact@5' @ EPointInt[0.5, -8.0] size=17.0x17.0
+  Friend Node: Metal-1-N-Active-Con 'contact@6' @ EPointInt[-37.5, -8.0] size=17.0x32.0
+  Friend Node: Metal-1-N-Active-Con 'contact@7' @ EPointInt[-50.5, -8.0] size=17.0x32.0
+  Friend Node: Metal-1-Polysilicon-1-Con 'contact@8' @ EPointInt[-30.0, 36.5] size=5.0x5.0
+  Friend Node: Metal-1-Polysilicon-1-Con 'contact@11' @ EPointInt[-36.0, -24.0] size=5.0x5.0
+  Friend Node: Metal-1-Metal-2-Con 'contact@12' @ EPointInt[-12.0, 9.0] size=5.0x5.0
+  Friend Node: Metal-1-Metal-2-Con 'contact@13' @ EPointInt[-37.5, 9.0] size=5.0x5.0
+  Friend Node: Metal-1-P-Active-Con 'contact@14' @ EPointInt[8.5, 26.0] size=17.0x23.1
+  Friend Node: Metal-1-P-Active-Con 'contact@15' @ EPointInt[21.5, 26.0] size=17.0x23.1
+  Friend Node: Metal-1-N-Active-Con 'contact@16' @ EPointInt[8.5, -8.0] size=17.0x17.5
+  Friend Node: Metal-1-N-Active-Con 'contact@17' @ EPointInt[21.5, -8.0] size=17.0x17.5
+  Friend Node: Metal-1-Polysilicon-1-Con 'contact@18' @ EPointInt[8.5, 9.0] size=5.0x5.0
+  Friend Node: Metal-1-Polysilicon-1-Con 'contact@20' @ EPointInt[29.0, -22.0] size=5.0x5.0
+  Friend Node: Metal-1-Polysilicon-1-Con 'contact@21' @ EPointInt[-51.0, 13.0] size=5.0x5.0
+  Friend Node: Metal-2-Pin 'pin_se' @ EPointInt[-36.0, -34.0] size=3.0x3.0
+  Friend Node: Metal-1-P-Well-Con 'substr@0' @ EPointInt[-14.0, -34.0] size=97.0x20.0
+  Friend Node: Metal-1-Metal-2-Con 'via_se_m12' @ EPointInt[-36.0, -24.0] size=5.0x5.0
+  Friend Node: Metal-1-N-Well-Con 'well@0' @ EPointInt[-10.0, 52.0] size=87.0x20.0
+--- USER ARCS with 'se' ---
+  User Arc: Metal-1 'net_se_m1' head=EPointInt[-36.0, -24.0] tail=EPointInt[-36.0, -20.0] width=4.0
+  User Arc: Metal-2 'net_se_m2' head=EPointInt[-36.0, -20.0] tail=EPointInt[-36.0, -34.0] width=4.0
+--- FRIEND ARCS with 'se' ---
+  Friend Arc: Metal-1 'net_se_m1' head=EPointInt[-36.0, -24.0] tail=EPointInt[-36.0, -24.0] width=4.0
+  Friend Arc: Metal-2 'net_se_m2' head=EPointInt[-36.0, -24.0] tail=EPointInt[-36.0, -34.0] width=4.0
+
+==================================================
+ANALYSIS 2: wl_driver_gate
+==================================================
+--- USER ARCS (Metal-2) ---
+  User Arc: Metal-2 'net_en_m2_1' head=EPointInt[-78.0, -14.0] tail=EPointInt[1.0, -14.0] width=4.0
+  User Arc: Metal-2 'net_en_m2_seg0' head=EPointInt[-78.0, -60.0] tail=EPointInt[-78.0, -14.0] width=4.0
+  User Arc: Metal-2 'net_en_m2_seg1' head=EPointInt[-78.0, -14.0] tail=EPointInt[-78.0, -1.0] width=4.0
+  User Arc: Metal-1 'net_enb_cbar' head=EPointInt[-6.0, 23.0] tail=EPointInt[-6.0, 23.0] width=5.0
+  User Arc: Metal-1 'net_enb_gate' head=EPointInt[57.0, 23.0] tail=EPointInt[57.0, 12.0] width=5.0
+  User Arc: Metal-1 'net_enb_m1' head=EPointInt[-35.0, -3.5] tail=EPointInt[-23.0, -3.5] width=4.0
+  User Arc: Metal-2 'net_enb_m2_0' head=EPointInt[-23.0, -3.5] tail=EPointInt[-23.0, 23.0] width=4.0
+  User Arc: Metal-2 'net_enb_m2_1' head=EPointInt[-23.0, 23.0] tail=EPointInt[-6.0, 23.0] width=4.0
+  User Arc: Metal-2 'net_enb_m2_2' head=EPointInt[-6.0, 23.0] tail=EPointInt[57.0, 23.0] width=4.0
+  User Arc: Metal-1 'net_wlin_m1' head=EPointInt[-8.0, 12.0] tail=EPointInt[-8.0, 0.0] width=4.0
+  User Arc: Metal-2 'net_wlin_m2' head=EPointInt[-78.0, 12.0] tail=EPointInt[-8.0, 12.0] width=4.0
+--- FRIEND ARCS (Metal-2) ---
+  Friend Arc: Metal-2 'net_en_m2_1' head=EPointInt[-78.0, -14.0] tail=EPointInt[1.0, -14.0] width=4.0
+  Friend Arc: Metal-2 'net_en_m2_seg0' head=EPointInt[-78.0, -60.0] tail=EPointInt[-78.0, -14.0] width=4.0
+  Friend Arc: Metal-2 'net_en_m2_seg1' head=EPointInt[-78.0, -14.0] tail=EPointInt[-78.0, -1.0] width=4.0
+  Friend Arc: Metal-1 'net_enb_cbar' head=EPointInt[-6.0, 23.0] tail=EPointInt[-6.0, 23.0] width=5.0
+  Friend Arc: Metal-1 'net_enb_gate' head=EPointInt[57.0, 23.0] tail=EPointInt[57.0, 12.0] width=5.0
+  Friend Arc: Metal-2 'net_enb_m2_2' head=EPointInt[-6.0, 23.0] tail=EPointInt[57.0, 23.0] width=4.0
+  Friend Arc: Metal-1 'net_wlin_m1' head=EPointInt[-8.0, 12.0] tail=EPointInt[-8.0, 0.0] width=4.0
+  Friend Arc: Metal-2 'net_wlin_m2' head=EPointInt[-78.0, 12.0] tail=EPointInt[-8.0, 12.0] width=4.0
+
+==================================================
+ANALYSIS 3: wl_driver_x16
+==================================================
+User Arc Count: 126 | Friend Arc Count: 126
+  Arc 'net_gnd_seg_0':
+    User:   Metal-2 (EPointInt[47.0, -45.0] -> EPointInt[47.0, 60.0]) w=6.0
+    Friend: Metal-2 (EPointInt[84.0, -45.0] -> EPointInt[84.0, 60.0]) w=6.0
+  Arc 'net_gnd_seg_1':
+    User:   Metal-2 (EPointInt[47.0, 60.0] -> EPointInt[47.0, 165.0]) w=6.0
+    Friend: Metal-2 (EPointInt[84.0, 60.0] -> EPointInt[84.0, 165.0]) w=6.0
+  Arc 'net_gnd_seg_10':
+    User:   Metal-2 (EPointInt[47.0, 1005.0] -> EPointInt[47.0, 1110.0]) w=6.0
+    Friend: Metal-2 (EPointInt[84.0, 1005.0] -> EPointInt[84.0, 1110.0]) w=6.0
+  Arc 'net_gnd_seg_11':
+    User:   Metal-2 (EPointInt[47.0, 1110.0] -> EPointInt[47.0, 1215.0]) w=6.0
+    Friend: Metal-2 (EPointInt[84.0, 1110.0] -> EPointInt[84.0, 1215.0]) w=6.0
+  Arc 'net_gnd_seg_12':
+    User:   Metal-2 (EPointInt[47.0, 1215.0] -> EPointInt[47.0, 1320.0]) w=6.0
+    Friend: Metal-2 (EPointInt[84.0, 1215.0] -> EPointInt[84.0, 1320.0]) w=6.0
+  Arc 'net_gnd_seg_13':
+    User:   Metal-2 (EPointInt[47.0, 1320.0] -> EPointInt[47.0, 1425.0]) w=6.0
+    Friend: Metal-2 (EPointInt[84.0, 1320.0] -> EPointInt[84.0, 1425.0]) w=6.0
+  Arc 'net_gnd_seg_14':
+    User:   Metal-2 (EPointInt[47.0, 1425.0] -> EPointInt[47.0, 1530.0]) w=6.0
+    Friend: Metal-2 (EPointInt[84.0, 1425.0] -> EPointInt[84.0, 1530.0]) w=6.0
+  Arc 'net_gnd_seg_2':
+    User:   Metal-2 (EPointInt[47.0, 165.0] -> EPointInt[47.0, 270.0]) w=6.0
+    Friend: Metal-2 (EPointInt[84.0, 165.0] -> EPointInt[84.0, 270.0]) w=6.0
+  Arc 'net_gnd_seg_3':
+    User:   Metal-2 (EPointInt[47.0, 270.0] -> EPointInt[47.0, 375.0]) w=6.0
+    Friend: Metal-2 (EPointInt[84.0, 270.0] -> EPointInt[84.0, 375.0]) w=6.0
+  Arc 'net_gnd_seg_4':
+    User:   Metal-2 (EPointInt[47.0, 375.0] -> EPointInt[47.0, 480.0]) w=6.0
+    Friend: Metal-2 (EPointInt[84.0, 375.0] -> EPointInt[84.0, 480.0]) w=6.0
+  Arc 'net_gnd_seg_5':
+    User:   Metal-2 (EPointInt[47.0, 480.0] -> EPointInt[47.0, 585.0]) w=6.0
+    Friend: Metal-2 (EPointInt[84.0, 480.0] -> EPointInt[84.0, 585.0]) w=6.0
+  Arc 'net_gnd_seg_6':
+    User:   Metal-2 (EPointInt[47.0, 585.0] -> EPointInt[47.0, 690.0]) w=6.0
+    Friend: Metal-2 (EPointInt[84.0, 585.0] -> EPointInt[84.0, 690.0]) w=6.0
+  Arc 'net_gnd_seg_7':
+    User:   Metal-2 (EPointInt[47.0, 690.0] -> EPointInt[47.0, 795.0]) w=6.0
+    Friend: Metal-2 (EPointInt[84.0, 690.0] -> EPointInt[84.0, 795.0]) w=6.0
+  Arc 'net_gnd_seg_8':
+    User:   Metal-2 (EPointInt[47.0, 795.0] -> EPointInt[47.0, 900.0]) w=6.0
+    Friend: Metal-2 (EPointInt[84.0, 795.0] -> EPointInt[84.0, 900.0]) w=6.0
+  Arc 'net_gnd_seg_9':
+    User:   Metal-2 (EPointInt[47.0, 900.0] -> EPointInt[47.0, 1005.0]) w=6.0
+    Friend: Metal-2 (EPointInt[84.0, 900.0] -> EPointInt[84.0, 1005.0]) w=6.0
+  Arc 'net_gnd_tap_0':
+    User:   Metal-1 (EPointInt[47.0, -45.0] -> EPointInt[0.0, -45.0]) w=6.0
+    Friend: Metal-1 (EPointInt[84.0, -45.0] -> EPointInt[0.0, -45.0]) w=6.0
+  Arc 'net_gnd_tap_1':
+    User:   Metal-1 (EPointInt[47.0, 60.0] -> EPointInt[0.0, 60.0]) w=6.0
+    Friend: Metal-1 (EPointInt[84.0, 60.0] -> EPointInt[0.0, 60.0]) w=6.0
+  Arc 'net_gnd_tap_10':
+    User:   Metal-1 (EPointInt[47.0, 1005.0] -> EPointInt[0.0, 1005.0]) w=6.0
+    Friend: Metal-1 (EPointInt[84.0, 1005.0] -> EPointInt[0.0, 1005.0]) w=6.0
+  Arc 'net_gnd_tap_11':
+    User:   Metal-1 (EPointInt[47.0, 1110.0] -> EPointInt[0.0, 1110.0]) w=6.0
+    Friend: Metal-1 (EPointInt[84.0, 1110.0] -> EPointInt[0.0, 1110.0]) w=6.0
+  Arc 'net_gnd_tap_12':
+    User:   Metal-1 (EPointInt[47.0, 1215.0] -> EPointInt[0.0, 1215.0]) w=6.0
+    Friend: Metal-1 (EPointInt[84.0, 1215.0] -> EPointInt[0.0, 1215.0]) w=6.0
+  Arc 'net_gnd_tap_13':
+    User:   Metal-1 (EPointInt[47.0, 1320.0] -> EPointInt[0.0, 1320.0]) w=6.0
+    Friend: Metal-1 (EPointInt[84.0, 1320.0] -> EPointInt[0.0, 1320.0]) w=6.0
+  Arc 'net_gnd_tap_14':
+    User:   Metal-1 (EPointInt[47.0, 1425.0] -> EPointInt[0.0, 1425.0]) w=6.0
+    Friend: Metal-1 (EPointInt[84.0, 1425.0] -> EPointInt[0.0, 1425.0]) w=6.0
+  Arc 'net_gnd_tap_15':
+    User:   Metal-1 (EPointInt[47.0, 1530.0] -> EPointInt[0.0, 1530.0]) w=6.0
+    Friend: Metal-1 (EPointInt[84.0, 1530.0] -> EPointInt[0.0, 1530.0]) w=6.0
+  Arc 'net_gnd_tap_2':
+    User:   Metal-1 (EPointInt[47.0, 165.0] -> EPointInt[0.0, 165.0]) w=6.0
+    Friend: Metal-1 (EPointInt[84.0, 165.0] -> EPointInt[0.0, 165.0]) w=6.0
+  Arc 'net_gnd_tap_3':
+    User:   Metal-1 (EPointInt[47.0, 270.0] -> EPointInt[0.0, 270.0]) w=6.0
+    Friend: Metal-1 (EPointInt[84.0, 270.0] -> EPointInt[0.0, 270.0]) w=6.0
+  Arc 'net_gnd_tap_4':
+    User:   Metal-1 (EPointInt[47.0, 375.0] -> EPointInt[0.0, 375.0]) w=6.0
+    Friend: Metal-1 (EPointInt[84.0, 375.0] -> EPointInt[0.0, 375.0]) w=6.0
+  Arc 'net_gnd_tap_5':
+    User:   Metal-1 (EPointInt[47.0, 480.0] -> EPointInt[0.0, 480.0]) w=6.0
+    Friend: Metal-1 (EPointInt[84.0, 480.0] -> EPointInt[0.0, 480.0]) w=6.0
+  Arc 'net_gnd_tap_6':
+    User:   Metal-1 (EPointInt[47.0, 585.0] -> EPointInt[0.0, 585.0]) w=6.0
+    Friend: Metal-1 (EPointInt[84.0, 585.0] -> EPointInt[0.0, 585.0]) w=6.0
+  Arc 'net_gnd_tap_7':
+    User:   Metal-1 (EPointInt[47.0, 690.0] -> EPointInt[0.0, 690.0]) w=6.0
+    Friend: Metal-1 (EPointInt[84.0, 690.0] -> EPointInt[0.0, 690.0]) w=6.0
+  Arc 'net_gnd_tap_8':
+    User:   Metal-1 (EPointInt[47.0, 795.0] -> EPointInt[0.0, 795.0]) w=6.0
+    Friend: Metal-1 (EPointInt[84.0, 795.0] -> EPointInt[0.0, 795.0]) w=6.0
+Total Arc Differences in wl_driver_x16: 62
+  Node 'via_vdd_m12_8': User=Metal-1-Metal-2-Con @ EPointInt[-20.0, 885.0] vs Friend=Metal-1-Metal-2-Con @ EPointInt[96.0, 885.0]
+  Node 'via_vdd_m12_7': User=Metal-1-Metal-2-Con @ EPointInt[-20.0, 780.0] vs Friend=Metal-1-Metal-2-Con @ EPointInt[96.0, 780.0]
+  Node 'via_vdd_m12_9': User=Metal-1-Metal-2-Con @ EPointInt[-20.0, 990.0] vs Friend=Metal-1-Metal-2-Con @ EPointInt[96.0, 990.0]
+  Node 'via_vdd_m12_4': User=Metal-1-Metal-2-Con @ EPointInt[-20.0, 465.0] vs Friend=Metal-1-Metal-2-Con @ EPointInt[96.0, 465.0]
+  Node 'via_vdd_m12_3': User=Metal-1-Metal-2-Con @ EPointInt[-20.0, 360.0] vs Friend=Metal-1-Metal-2-Con @ EPointInt[96.0, 360.0]
+  Node 'via_vdd_m12_6': User=Metal-1-Metal-2-Con @ EPointInt[-20.0, 675.0] vs Friend=Metal-1-Metal-2-Con @ EPointInt[96.0, 675.0]
+  Node 'via_vdd_m12_5': User=Metal-1-Metal-2-Con @ EPointInt[-20.0, 570.0] vs Friend=Metal-1-Metal-2-Con @ EPointInt[96.0, 570.0]
+  Node 'via_vdd_m12_0': User=Metal-1-Metal-2-Con @ EPointInt[-20.0, 45.0] vs Friend=Metal-1-Metal-2-Con @ EPointInt[96.0, 45.0]
+  Node 'via_vdd_m12_2': User=Metal-1-Metal-2-Con @ EPointInt[-20.0, 255.0] vs Friend=Metal-1-Metal-2-Con @ EPointInt[96.0, 255.0]
+  Node 'via_vdd_m12_1': User=Metal-1-Metal-2-Con @ EPointInt[-20.0, 150.0] vs Friend=Metal-1-Metal-2-Con @ EPointInt[96.0, 150.0]
+  Node 'via_vdd_m12_12': User=Metal-1-Metal-2-Con @ EPointInt[-20.0, 1305.0] vs Friend=Metal-1-Metal-2-Con @ EPointInt[96.0, 1305.0]
+  Node 'via_vdd_m12_13': User=Metal-1-Metal-2-Con @ EPointInt[-20.0, 1410.0] vs Friend=Metal-1-Metal-2-Con @ EPointInt[96.0, 1410.0]
+  Node 'via_vdd_m12_14': User=Metal-1-Metal-2-Con @ EPointInt[-20.0, 1515.0] vs Friend=Metal-1-Metal-2-Con @ EPointInt[96.0, 1515.0]
+  Node 'via_vdd_m12_15': User=Metal-1-Metal-2-Con @ EPointInt[-20.0, 1620.0] vs Friend=Metal-1-Metal-2-Con @ EPointInt[96.0, 1620.0]
+  Node 'via_vdd_m12_10': User=Metal-1-Metal-2-Con @ EPointInt[-20.0, 1095.0] vs Friend=Metal-1-Metal-2-Con @ EPointInt[96.0, 1095.0]
+  Node 'via_vdd_m12_11': User=Metal-1-Metal-2-Con @ EPointInt[-20.0, 1200.0] vs Friend=Metal-1-Metal-2-Con @ EPointInt[96.0, 1200.0]
+  Node 'via_gnd_m12_9': User=Metal-1-Metal-2-Con @ EPointInt[47.0, 900.0] vs Friend=Metal-1-Metal-2-Con @ EPointInt[84.0, 900.0]
+  Node 'via_gnd_m12_8': User=Metal-1-Metal-2-Con @ EPointInt[47.0, 795.0] vs Friend=Metal-1-Metal-2-Con @ EPointInt[84.0, 795.0]
+  Node 'via_gnd_m12_7': User=Metal-1-Metal-2-Con @ EPointInt[47.0, 690.0] vs Friend=Metal-1-Metal-2-Con @ EPointInt[84.0, 690.0]
+  Node 'via_gnd_m12_6': User=Metal-1-Metal-2-Con @ EPointInt[47.0, 585.0] vs Friend=Metal-1-Metal-2-Con @ EPointInt[84.0, 585.0]
+Total Node Differences in wl_driver_x16: 32
+Job com.sun.electric.tool.Job$Key@fffffffe
+JobQueue: 

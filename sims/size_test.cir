@@ -1,0 +1,45 @@
+* Sweep sizes
+.include "../tsmc018.lib"
+
+.subckt inverter in out vdd gnd
+Mpinv out in vdd vdd CMOSP W=0.72u L=0.18u
+Mninv out in gnd gnd CMOSN W=0.36u L=0.18u
+.ends inverter
+
+.subckt diff_sa bl blb se so sob vdd gnd PARAMS: WPMOS=1.44u WNMOS=0.36u WTAIL=0.72u
+Mpmos0 n_left n_left vdd vdd CMOSP W={WPMOS} L=0.18u
+Mpmos1 so     n_left vdd vdd CMOSP W={WPMOS} L=0.18u
+
+Mnmos0 n_left bl  n_tail gnd CMOSN W={WNMOS} L=0.18u
+Mnmos1 so     blb n_tail gnd CMOSN W={WNMOS} L=0.18u
+
+Mnmos2 n_tail se  gnd    gnd CMOSN W={WTAIL} L=0.18u
+
+Xinv so sob vdd gnd inverter
+.ends diff_sa
+
+Vdd vdd 0 DC 1.8
+Xsa1 bl1 blb1 se so1 sob1 vdd 0 diff_sa WPMOS=1.44u WNMOS=0.36u WTAIL=0.72u
+Xsa2 bl2 blb2 se so2 sob2 vdd 0 diff_sa WPMOS=1.44u WNMOS=0.36u WTAIL=0.72u
+
+Cso1 so1 0 20f
+Cso2 so2 0 20f
+
+* Case 1: Read-0 (BL dips to 1.6V, BLB at 1.8V)
+Vbl1  bl1  0 DC 1.6
+Vblb1 blb1 0 DC 1.8
+
+* Case 2: Read-1 (BL at 1.8V, BLB dips to 1.6V)
+Vbl2  bl2  0 DC 1.8
+Vblb2 blb2 0 DC 1.6
+
+* SE pulses high
+Vse se 0 PWL(0n 0 2n 0 2.2n 1.8 10n 1.8)
+
+.tran 0.1n 10n
+.control
+run
+wrdata size_test.txt v(se) v(so1) v(sob1) v(so2) v(sob2)
+quit
+.endc
+.end

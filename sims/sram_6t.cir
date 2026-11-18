@@ -1,0 +1,16 @@
+* 6T SRAM Cell Subcircuit (TSMC 0.18um, Level 49 BSIM3v3.1)
+* Ports: WL BL BLB VDD GND Q QB
+
+.subckt sram_6t WL BL BLB VDD GND Q QB PARAMS: WPD=0.54u WPG=0.36u WPU=0.28u L=0.18u
+* Pull-Down NMOS
+Mpd1 Q  QB GND GND CMOSN W={WPD} L={L}
+Mpd2 QB Q  GND GND CMOSN W={WPD} L={L}
+
+* Pull-Up PMOS
+Mpu1 Q  QB VDD VDD CMOSP W={WPU} L={L}
+Mpu2 QB Q  VDD VDD CMOSP W={WPU} L={L}
+
+* Access NMOS (Pass-Gate)
+Mpg1 BL  WL Q  GND CMOSN W={WPG} L={L}
+Mpg2 BLB WL QB GND CMOSN W={WPG} L={L}
+.ends sram_6t

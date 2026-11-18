@@ -1,0 +1,65 @@
+
+Note: No compatibility mode selected!
+
+
+Circuit: *** spice deck for cell col_mux_1x{sch} from library sram
+
+Warning: Model issue on line 9 :
+  .model cmosn nmos ( level=49 version=3.1 tnom=27 tox=4.1e-9 xj=1e-7 nch= ...
+unrecognized parameter (xl) - ignored
+unrecognized parameter (xw) - ignored
+
+Warning: Model issue on line 51 :
+  .model cmosp pmos ( level=49 version=3.1 tnom=27 tox=4.1e-9 xj=1e-7 nch= ...
+unrecognized parameter (xl) - ignored
+unrecognized parameter (xw) - ignored
+
+binary raw file "col_mux_1x.raw"
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+Warning: Pd = 0 is less than W.
+Warning: Ps = 0 is less than W.
+Warning: Pd = 0 is less than W.
+Warning: Ps = 0 is less than W.
+Warning: Pd = 0 is less than W.
+Warning: Ps = 0 is less than W.
+Warning: Pd = 0 is less than W.
+Warning: Ps = 0 is less than W.
+No. of Data Columns : 12  
+Note: Starting dynamic gmin stepping
+Warning: Dynamic gmin stepping failed
+Note: Starting true gmin stepping
+Warning: True gmin stepping failed
+Note: Starting source stepping
+Note: Source stepping completed
+
+Initial Transient Solution
+--------------------------
+
+Node                                   Voltage
+----                                   -------
+net@6                                      1.8
+sel                                          0
+vdd                                        1.8
+gbl                                   0.491844
+bl                                        1.65
+gblb                                   1.32977
+blb                                        1.8
+vsel#branch                                  0
+vblb#branch                       -8.44863e-12
+vbl#branch                        -3.51146e-12
+vdd1#branch                       -2.81469e-11
+
+
+No. of Data Rows : 322
+
+Total analysis time (seconds) = 0.083271
+
+Total elapsed time (seconds) = 0.126 
+
+Total DRAM available = 8192.000 MB.
+DRAM currently available = 1054.109 MB.
+Maximum ngspice program size =   10.125 MB.
+Current ngspice program size =   10.125 MB.
+

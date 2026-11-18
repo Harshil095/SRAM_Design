@@ -1,0 +1,210 @@
+<svg width="1050" height="520" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif">
+  <defs>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="2" dy="3" stdDeviation="3" flood-opacity="0.10"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#0284c7"/>
+    </marker>
+    <marker id="arrow-green" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#16a34a"/>
+    </marker>
+    <marker id="arrow-purple" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#9333ea"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="#ffffff" rx="12"/>
+  <rect x="15" y="15" width="1020" height="490" fill="#fcfcfd" stroke="#e2e8f0" stroke-width="2" rx="10"/>
+
+  <!-- Title Badge -->
+  <rect x="35" y="28" width="340" height="34" rx="6" fill="#1e293b"/>
+  <text x="45" y="51" fill="#ffffff" font-size="16" font-weight="bold">DFF{sch} (Clean Manhattan Architecture)</text>
+  <text x="390" y="51" fill="#64748b" font-size="14">Master-Slave Transmission Gate D-Flip-Flop</text>
+
+  <!-- Forward Path Axis Label -->
+  <rect x="35" y="80" width="160" height="22" rx="4" fill="#e0f2fe"/>
+  <text x="45" y="96" fill="#0369a1" font-size="12" font-weight="bold">FORWARD DATA PATH</text>
+
+  <!-- Input Port D -->
+  <circle cx="50" cy="140" r="6" fill="#0284c7"/>
+  <text x="42" y="125" font-size="14" font-weight="bold" fill="#0369a1">D</text>
+  <line x1="50" y1="140" x2="110" y2="140" stroke="#0284c7" stroke-width="3"/>
+
+  <!-- TG1 (Master Input TG) -->
+  <g filter="url(#shadow)">
+    <rect x="110" y="110" width="70" height="60" rx="6" fill="#f8fafc" stroke="#0284c7" stroke-width="2.5"/>
+    <text x="132" y="136" font-size="13" font-weight="bold" fill="#0f172a">TG1</text>
+    <text x="122" y="155" font-size="10" fill="#64748b">T-Gate</text>
+  </g>
+  <line x1="180" y1="140" x2="250" y2="140" stroke="#0284c7" stroke-width="3"/>
+  <circle cx="215" cy="140" r="4" fill="#0284c7"/>
+  <text x="200" y="130" font-size="11" font-weight="bold" fill="#475569">M_in</text>
+
+  <!-- INV3 (Master Forward Inv) -->
+  <g filter="url(#shadow)">
+    <polygon points="250,110 310,140 250,170" fill="#eff6ff" stroke="#2563eb" stroke-width="2.5"/>
+    <circle cx="316" cy="140" r="6" fill="#ffffff" stroke="#2563eb" stroke-width="2.5"/>
+    <text x="260" y="144" font-size="12" font-weight="bold" fill="#1e40af">INV3</text>
+  </g>
+  <line x1="322" y1="140" x2="430" y2="140" stroke="#0284c7" stroke-width="3"/>
+  <circle cx="370" cy="140" r="4" fill="#0284c7"/>
+  <text x="355" y="130" font-size="11" font-weight="bold" fill="#475569">M_out</text>
+
+  <!-- TG3 (Slave Input TG) -->
+  <g filter="url(#shadow)">
+    <rect x="430" y="110" width="70" height="60" rx="6" fill="#f8fafc" stroke="#0284c7" stroke-width="2.5"/>
+    <text x="452" y="136" font-size="13" font-weight="bold" fill="#0f172a">TG3</text>
+    <text x="442" y="155" font-size="10" fill="#64748b">T-Gate</text>
+  </g>
+  <line x1="500" y1="140" x2="570" y2="140" stroke="#0284c7" stroke-width="3"/>
+  <circle cx="535" cy="140" r="4" fill="#0284c7"/>
+  <text x="522" y="130" font-size="11" font-weight="bold" fill="#475569">S_in</text>
+
+  <!-- INV5 (Slave Forward Inv) -->
+  <g filter="url(#shadow)">
+    <polygon points="570,110 630,140 570,170" fill="#eff6ff" stroke="#2563eb" stroke-width="2.5"/>
+    <circle cx="636" cy="140" r="6" fill="#ffffff" stroke="#2563eb" stroke-width="2.5"/>
+    <text x="580" y="144" font-size="12" font-weight="bold" fill="#1e40af">INV5</text>
+  </g>
+  <line x1="642" y1="140" x2="750" y2="140" stroke="#0284c7" stroke-width="3"/>
+  <circle cx="690" cy="140" r="4" fill="#0284c7"/>
+  <text x="675" y="130" font-size="11" font-weight="bold" fill="#475569">S_out</text>
+
+  <!-- INV6 (Output Driver Inv) -->
+  <g filter="url(#shadow)">
+    <polygon points="750,110 810,140 750,170" fill="#eff6ff" stroke="#2563eb" stroke-width="2.5"/>
+    <circle cx="816" cy="140" r="6" fill="#ffffff" stroke="#2563eb" stroke-width="2.5"/>
+    <text x="760" y="144" font-size="12" font-weight="bold" fill="#1e40af">INV6</text>
+  </g>
+  <line x1="822" y1="140" x2="920" y2="140" stroke="#0284c7" stroke-width="3"/>
+
+  <!-- Output Port Q -->
+  <circle cx="920" cy="140" r="6" fill="#0284c7"/>
+  <text x="930" y="145" font-size="15" font-weight="bold" fill="#0369a1">Q</text>
+
+  <!-- Master Feedback Loop -->
+  <line x1="370" y1="140" x2="370" y2="230" stroke="#0284c7" stroke-width="2.5"/>
+  <line x1="370" y1="230" x2="330" y2="230" stroke="#0284c7" stroke-width="2.5"/>
+  <!-- INV4 (facing left) -->
+  <g filter="url(#shadow)">
+    <polygon points="330,200 270,230 330,260" fill="#fdf4ff" stroke="#9333ea" stroke-width="2.5"/>
+    <circle cx="264" cy="230" r="6" fill="#ffffff" stroke="#9333ea" stroke-width="2.5"/>
+    <text x="285" y="234" font-size="12" font-weight="bold" fill="#7e22ce">INV4</text>
+  </g>
+  <line x1="258" y1="230" x2="210" y2="230" stroke="#0284c7" stroke-width="2.5"/>
+  <!-- TG2 (facing left) -->
+  <g filter="url(#shadow)">
+    <rect x="140" y="200" width="70" height="60" rx="6" fill="#f8fafc" stroke="#9333ea" stroke-width="2.5"/>
+    <text x="162" y="226" font-size="13" font-weight="bold" fill="#0f172a">TG2</text>
+    <text x="152" y="245" font-size="10" fill="#64748b">T-Gate</text>
+  </g>
+  <line x1="140" y1="230" x2="90" y2="230" stroke="#0284c7" stroke-width="2.5"/>
+  <line x1="90" y1="230" x2="90" y2="140" stroke="#0284c7" stroke-width="2.5"/>
+  <line x1="90" y1="140" x2="215" y2="140" stroke="#0284c7" stroke-width="2.5"/>
+
+  <!-- Slave Feedback Loop -->
+  <line x1="690" y1="140" x2="690" y2="230" stroke="#0284c7" stroke-width="2.5"/>
+  <line x1="690" y1="230" x2="630" y2="230" stroke="#0284c7" stroke-width="2.5"/>
+  <!-- TG4 (facing left) -->
+  <g filter="url(#shadow)">
+    <rect x="560" y="200" width="70" height="60" rx="6" fill="#f8fafc" stroke="#9333ea" stroke-width="2.5"/>
+    <text x="582" y="226" font-size="13" font-weight="bold" fill="#0f172a">TG4</text>
+    <text x="572" y="245" font-size="10" fill="#64748b">T-Gate</text>
+  </g>
+  <line x1="560" y1="230" x2="520" y2="230" stroke="#0284c7" stroke-width="2.5"/>
+  <line x1="520" y1="230" x2="520" y2="140" stroke="#0284c7" stroke-width="2.5"/>
+
+  <!-- Dual-Rail Clock Distribution Tracks -->
+  <rect x="35" y="300" width="160" height="22" rx="4" fill="#f0fdf4"/>
+  <text x="45" y="316" fill="#15803d" font-size="12" font-weight="bold">DUAL-RAIL CLOCK BUS</text>
+
+  <!-- CLKB Rail (Green) -->
+  <line x1="50" y1="340" x2="880" y2="340" stroke="#16a34a" stroke-width="3"/>
+  <text x="895" y="345" font-size="13" font-weight="bold" fill="#15803d">CLKB Rail</text>
+
+  <!-- CLK_buf Rail (Purple) -->
+  <line x1="50" y1="380" x2="880" y2="380" stroke="#9333ea" stroke-width="3"/>
+  <text x="895" y="385" font-size="13" font-weight="bold" fill="#7e22ce">CLK_buf Rail</text>
+
+  <!-- Clock Generation Path at Bottom -->
+  <circle cx="50" cy="450" r="6" fill="#16a34a"/>
+  <text x="35" y="475" font-size="14" font-weight="bold" fill="#15803d">CLK</text>
+  <line x1="50" y1="450" x2="110" y2="450" stroke="#16a34a" stroke-width="3"/>
+
+  <!-- INV1 (CLK -> CLKB) -->
+  <g filter="url(#shadow)">
+    <polygon points="110,420 170,450 110,480" fill="#f0fdf4" stroke="#16a34a" stroke-width="2.5"/>
+    <circle cx="176" cy="450" r="6" fill="#ffffff" stroke="#16a34a" stroke-width="2.5"/>
+    <text x="120" y="454" font-size="12" font-weight="bold" fill="#15803d">INV1</text>
+  </g>
+  <line x1="182" y1="450" x2="250" y2="450" stroke="#16a34a" stroke-width="3"/>
+  <circle cx="215" cy="450" r="4" fill="#16a34a"/>
+  <!-- Tap up to CLKB rail -->
+  <line x1="215" y1="450" x2="215" y2="340" stroke="#16a34a" stroke-width="3"/>
+  <circle cx="215" cy="340" r="4" fill="#16a34a"/>
+
+  <!-- INV2 (CLKB -> CLK_buf) -->
+  <g filter="url(#shadow)">
+    <polygon points="250,420 310,450 250,480" fill="#fdf4ff" stroke="#9333ea" stroke-width="2.5"/>
+    <circle cx="316" cy="450" r="6" fill="#ffffff" stroke="#9333ea" stroke-width="2.5"/>
+    <text x="260" y="454" font-size="12" font-weight="bold" fill="#7e22ce">INV2</text>
+  </g>
+  <line x1="322" y1="450" x2="380" y2="450" stroke="#9333ea" stroke-width="3"/>
+  <circle cx="380" cy="450" r="4" fill="#9333ea"/>
+  <!-- Tap up to CLK_buf rail -->
+  <line x1="380" y1="450" x2="380" y2="380" stroke="#9333ea" stroke-width="3"/>
+  <circle cx="380" cy="380" r="4" fill="#9333ea"/>
+
+  <!-- TG Drops from Clock Rails (Orthogonal Manhattan) -->
+  <!-- TG1: EN -> CLKB, ENB -> CLK_buf -->
+  <line x1="130" y1="170" x2="130" y2="340" stroke="#16a34a" stroke-width="2"/>
+  <circle cx="130" cy="340" r="3" fill="#16a34a"/>
+  <text x="135" y="280" font-size="10" fill="#15803d">EN: CLKB</text>
+
+  <line x1="160" y1="110" x2="160" y2="90" stroke="#9333ea" stroke-width="2"/>
+  <line x1="160" y1="90" x2="70" y2="90" stroke="#9333ea" stroke-width="2"/>
+  <line x1="70" y1="90" x2="70" y2="380" stroke="#9333ea" stroke-width="2"/>
+  <circle cx="70" cy="380" r="3" fill="#9333ea"/>
+  <text x="75" y="375" font-size="10" fill="#7e22ce">ENB: CLK_buf</text>
+
+  <!-- TG2: ENB -> CLKB, EN -> CLK_buf -->
+  <line x1="160" y1="260" x2="160" y2="340" stroke="#16a34a" stroke-width="2"/>
+  <circle cx="160" cy="340" r="3" fill="#16a34a"/>
+  <text x="165" y="330" font-size="10" fill="#15803d">ENB</text>
+
+  <line x1="190" y1="200" x2="190" y2="185" stroke="#9333ea" stroke-width="2"/>
+  <line x1="190" y1="185" x2="235" y2="185" stroke="#9333ea" stroke-width="2"/>
+  <line x1="235" y1="185" x2="235" y2="380" stroke="#9333ea" stroke-width="2"/>
+  <circle cx="235" cy="380" r="3" fill="#9333ea"/>
+  <text x="240" y="370" font-size="10" fill="#7e22ce">EN</text>
+
+  <!-- TG3: EN -> CLK_buf, ENB -> CLKB -->
+  <line x1="450" y1="170" x2="450" y2="380" stroke="#9333ea" stroke-width="2"/>
+  <circle cx="450" cy="380" r="3" fill="#9333ea"/>
+  <text x="455" y="370" font-size="10" fill="#7e22ce">EN</text>
+
+  <line x1="480" y1="110" x2="480" y2="90" stroke="#16a34a" stroke-width="2"/>
+  <line x1="480" y1="90" x2="410" y2="90" stroke="#16a34a" stroke-width="2"/>
+  <line x1="410" y1="90" x2="410" y2="340" stroke="#16a34a" stroke-width="2"/>
+  <circle cx="410" cy="340" r="3" fill="#16a34a"/>
+  <text x="415" y="330" font-size="10" fill="#15803d">ENB</text>
+
+  <!-- TG4: ENB -> CLK_buf, EN -> CLKB -->
+  <line x1="580" y1="260" x2="580" y2="380" stroke="#9333ea" stroke-width="2"/>
+  <circle cx="580" cy="380" r="3" fill="#9333ea"/>
+  <text x="585" y="370" font-size="10" fill="#7e22ce">ENB</text>
+
+  <line x1="610" y1="200" x2="610" y2="185" stroke="#16a34a" stroke-width="2"/>
+  <line x1="610" y1="185" x2="650" y2="185" stroke="#16a34a" stroke-width="2"/>
+  <line x1="650" y1="185" x2="650" y2="340" stroke="#16a34a" stroke-width="2"/>
+  <circle cx="650" cy="340" r="3" fill="#16a34a"/>
+  <text x="655" y="330" font-size="10" fill="#15803d">EN</text>
+
+  <!-- Status / Verification Pill -->
+  <rect x="740" y="440" width="270" height="40" rx="8" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
+  <circle cx="760" cy="460" r="6" fill="#10b981"/>
+  <text x="775" y="458" font-size="13" font-weight="bold" fill="#065f46">100% LVS &amp; DRC VERIFIED</text>
+  <text x="775" y="472" font-size="11" fill="#047857">0 Non-Manhattan Arcs · Strict Orthogonal</text>
+</svg>

@@ -1,0 +1,60 @@
+
+Note: No compatibility mode selected!
+
+
+Circuit: *** spice deck for cell 6t{sch} from library sram
+
+Warning: Model issue on line 9 :
+  .model cmosn nmos ( level=49 version=3.1 tnom=27 tox=4.1e-9 xj=1e-7 nch= ...
+unrecognized parameter (xl) - ignored
+unrecognized parameter (xw) - ignored
+
+Warning: Model issue on line 51 :
+  .model cmosp pmos ( level=49 version=3.1 tnom=27 tox=4.1e-9 xj=1e-7 nch= ...
+unrecognized parameter (xl) - ignored
+unrecognized parameter (xw) - ignored
+
+binary raw file "6T.raw"
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+Warning: Pd = 0 is less than W.
+Warning: Ps = 0 is less than W.
+Warning: Pd = 0 is less than W.
+Warning: Ps = 0 is less than W.
+Warning: Pd = 0 is less than W.
+Warning: Ps = 0 is less than W.
+No. of Data Columns : 15  
+
+Initial Transient Solution
+--------------------------
+
+Node                                   Voltage
+----                                   -------
+net@4                                 0.683758
+net@9                                 0.683758
+bl                                 1.65977e-09
+wl                                           0
+blb                                        1.8
+vdd                                        1.8
+dbl                                          0
+en                                         1.8
+dblb                                       1.8
+vwl#branch                                   0
+vdblb#branch                      -3.66754e-12
+vdbl#branch                        8.29887e-12
+ven#branch                                   0
+vsup#branch                       -5.75768e-05
+
+
+No. of Data Rows : 3910
+
+Total analysis time (seconds) = 0.033132
+
+Total elapsed time (seconds) = 0.067 
+
+Total DRAM available = 8192.000 MB.
+DRAM currently available = 1481.297 MB.
+Maximum ngspice program size =   10.094 MB.
+Current ngspice program size =   10.094 MB.
+

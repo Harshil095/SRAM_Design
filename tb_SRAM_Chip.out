@@ -1,0 +1,951 @@
+
+Note: No compatibility mode selected!
+
+
+Circuit: * spice testbench: tb_sram_chip.sp
+
+Warning: Model issue on line 9 :
+  .model cmosn nmos ( level=49 version=3.1 tnom=27 tox=4.1e-9 xj=1e-7 nch= ...
+unrecognized parameter (xl) - ignored
+unrecognized parameter (xw) - ignored
+
+Warning: Model issue on line 51 :
+  .model cmosp pmos ( level=49 version=3.1 tnom=27 tox=4.1e-9 xj=1e-7 nch= ...
+unrecognized parameter (xl) - ignored
+unrecognized parameter (xw) - ignored
+
+Note: Starting dynamic gmin stepping
+Note: Dynamic gmin stepping completed
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+Using SPARSE 1.3 as Direct Linear Solver
+Warning: Pd = 0 is less than W.
+Warning: Ps = 0 is less than W.
+Warning: Pd = 0 is less than W.
+Warning: Ps = 0 is less than W.
+Warning: Pd = 0 is less than W.
+Warning: Ps = 0 is less than W.
+Warning: Pd = 0 is less than W.
+Warning: Ps = 0 is less than W.
+Warning: Pd = 0 is less than W.
+Warning: Ps = 0 is less than W.
+Warning: Pd = 0 is less than W.
+Warning: Ps = 0 is less than W.
+Warning: Pd = 0 is less than W.
+Warning: Ps = 0 is less than W.
+Warning: Pd = 0 is less than W.
+Warning: Ps = 0 is less than W.
+Warning: Pd = 0 is less than W.
+Warning: Ps = 0 is less than W.
+
+Initial Transient Solution
+--------------------------
+
+Node                                   Voltage
+----                                   -------
+net@0                               1.0592e-08
+xinput_pa@0.net@1                          1.8
+vdd                                        1.8
+pad_clk                                      0
+net@1                                      1.8
+xinput_pa@1.net@1                   1.0592e-08
+pad_addr_in                                1.8
+net@2                                      1.8
+xinput_pa@2.net@1                   1.0592e-08
+pad_r_w                                    1.8
+net@3                                      1.8
+xinput_pa@3.net@1                   1.0592e-08
+pad_din                                    1.8
+xoutput_p@0.net@2                    0.0232199
+xoutput_p@0.net@1                      1.11163
+xoutput_p@0.net@3                          1.8
+pad_dout                                     0
+net@4                                 0.809659
+xsram_256@0.xdecoder_@0.net@3         0.815622
+xsram_256@0.net@24                    0.815615
+xsram_256@0.xdecoder_@0.net@7         0.815622
+xsram_256@0.net@22                    0.815615
+xsram_256@0.xdecoder_@0.net@11        0.815622
+xsram_256@0.net@20                    0.815615
+xsram_256@0.xdecoder_@0.net@15        0.815605
+xsram_256@0.net@18                    0.815616
+xsram_256@0.net@26                 3.91914e-08
+xsram_256@0.xdecoder_@0.net@16         1.74544
+xsram_256@0.net@27                 3.91922e-08
+xsram_256@0.xdecoder_@0.net@22         1.74544
+xsram_256@0.net@28                 3.91908e-08
+xsram_256@0.xdecoder_@0.net@28         1.74544
+xsram_256@0.net@29                 3.91916e-08
+xsram_256@0.xdecoder_@0.net@34         1.74544
+xsram_256@0.net@30                 3.91907e-08
+xsram_256@0.xdecoder_@0.net@40         1.74544
+xsram_256@0.net@31                 3.91915e-08
+xsram_256@0.xdecoder_@0.net@46         1.74544
+xsram_256@0.net@32                 3.91901e-08
+xsram_256@0.xdecoder_@0.net@52         1.74544
+xsram_256@0.net@33                 3.91909e-08
+xsram_256@0.xdecoder_@0.net@58         1.74544
+xsram_256@0.net@34                 3.91903e-08
+xsram_256@0.xdecoder_@0.net@64         1.74544
+xsram_256@0.net@35                 3.91911e-08
+xsram_256@0.xdecoder_@0.net@70         1.74544
+xsram_256@0.net@36                 3.91897e-08
+xsram_256@0.xdecoder_@0.net@76         1.74544
+xsram_256@0.net@37                 3.91905e-08
+xsram_256@0.xdecoder_@0.net@82         1.74544
+xsram_256@0.net@38                 3.91896e-08
+xsram_256@0.xdecoder_@0.net@88         1.74544
+xsram_256@0.net@39                 3.91904e-08
+xsram_256@0.xdecoder_@0.net@94         1.74544
+xsram_256@0.net@40                  3.9189e-08
+xsram_256@0.xdecoder_@0.net@100         1.74544
+xsram_256@0.net@41                 3.91898e-08
+xsram_256@0.xdecoder_@0.net@106         1.74544
+xsram_256@0.xdecoder_@0.xnand4@0.net@62        0.158555
+xsram_256@0.xdecoder_@0.xnand4@0.net@63       0.0897514
+xsram_256@0.xdecoder_@0.xnand4@0.net@64       0.0405261
+xsram_256@0.xdecoder_@0.xnand4@1.net@62        0.158554
+xsram_256@0.xdecoder_@0.xnand4@1.net@63       0.0897505
+xsram_256@0.xdecoder_@0.xnand4@1.net@64       0.0405251
+xsram_256@0.xdecoder_@0.xnand4@2.net@62        0.158555
+xsram_256@0.xdecoder_@0.xnand4@2.net@63        0.089752
+xsram_256@0.xdecoder_@0.xnand4@2.net@64       0.0405259
+xsram_256@0.xdecoder_@0.xnand4@3.net@62        0.158554
+xsram_256@0.xdecoder_@0.xnand4@3.net@63       0.0897512
+xsram_256@0.xdecoder_@0.xnand4@3.net@64       0.0405248
+xsram_256@0.xdecoder_@0.xnand4@4.net@62        0.158555
+xsram_256@0.xdecoder_@0.xnand4@4.net@63       0.0897503
+xsram_256@0.xdecoder_@0.xnand4@4.net@64       0.0405257
+xsram_256@0.xdecoder_@0.xnand4@5.net@62        0.158555
+xsram_256@0.xdecoder_@0.xnand4@5.net@63       0.0897494
+xsram_256@0.xdecoder_@0.xnand4@5.net@64       0.0405247
+xsram_256@0.xdecoder_@0.xnand4@6.net@62        0.158556
+xsram_256@0.xdecoder_@0.xnand4@6.net@63        0.089751
+xsram_256@0.xdecoder_@0.xnand4@6.net@64       0.0405254
+xsram_256@0.xdecoder_@0.xnand4@7.net@62        0.158555
+xsram_256@0.xdecoder_@0.xnand4@7.net@63       0.0897501
+xsram_256@0.xdecoder_@0.xnand4@7.net@64       0.0405244
+xsram_256@0.xdecoder_@0.xnand4@8.net@62         0.15855
+xsram_256@0.xdecoder_@0.xnand4@8.net@63       0.0897496
+xsram_256@0.xdecoder_@0.xnand4@8.net@64       0.0405254
+xsram_256@0.xdecoder_@0.xnand4@9.net@62         0.15855
+xsram_256@0.xdecoder_@0.xnand4@9.net@63       0.0897487
+xsram_256@0.xdecoder_@0.xnand4@9.net@64       0.0405244
+xsram_256@0.xdecoder_@0.xnand4@10.net@62        0.158551
+xsram_256@0.xdecoder_@0.xnand4@10.net@63       0.0897502
+xsram_256@0.xdecoder_@0.xnand4@10.net@64       0.0405252
+xsram_256@0.xdecoder_@0.xnand4@11.net@62         0.15855
+xsram_256@0.xdecoder_@0.xnand4@11.net@63       0.0897494
+xsram_256@0.xdecoder_@0.xnand4@11.net@64       0.0405241
+xsram_256@0.xdecoder_@0.xnand4@12.net@62        0.158551
+xsram_256@0.xdecoder_@0.xnand4@12.net@63       0.0897485
+xsram_256@0.xdecoder_@0.xnand4@12.net@64        0.040525
+xsram_256@0.xdecoder_@0.xnand4@13.net@62         0.15855
+xsram_256@0.xdecoder_@0.xnand4@13.net@63       0.0897477
+xsram_256@0.xdecoder_@0.xnand4@13.net@64        0.040524
+xsram_256@0.xdecoder_@0.xnand4@14.net@62        0.158552
+xsram_256@0.xdecoder_@0.xnand4@14.net@63       0.0897492
+xsram_256@0.xdecoder_@0.xnand4@14.net@64       0.0405247
+xsram_256@0.xdecoder_@0.xnand4@15.net@62        0.158551
+xsram_256@0.xdecoder_@0.xnand4@15.net@63       0.0897483
+xsram_256@0.xdecoder_@0.xnand4@15.net@64       0.0405237
+xsram_256@0.xdecoder_@1.net@3         0.815607
+xsram_256@0.net@25                    0.815616
+xsram_256@0.xdecoder_@1.net@7         0.815622
+xsram_256@0.net@23                    0.815615
+xsram_256@0.xdecoder_@1.net@11        0.815622
+xsram_256@0.net@21                    0.815615
+xsram_256@0.xdecoder_@1.net@15        0.815622
+xsram_256@0.net@19                    0.815615
+xsram_256@0.net@42                 3.91903e-08
+xsram_256@0.xdecoder_@1.net@16         1.74544
+xsram_256@0.net@45                 3.91898e-08
+xsram_256@0.xdecoder_@1.net@22         1.74544
+xsram_256@0.net@48                 3.91897e-08
+xsram_256@0.xdecoder_@1.net@28         1.74544
+xsram_256@0.net@51                 3.91892e-08
+xsram_256@0.xdecoder_@1.net@34         1.74544
+xsram_256@0.net@54                 3.91896e-08
+xsram_256@0.xdecoder_@1.net@40         1.74544
+xsram_256@0.net@57                 3.91891e-08
+xsram_256@0.xdecoder_@1.net@46         1.74544
+xsram_256@0.net@60                  3.9189e-08
+xsram_256@0.xdecoder_@1.net@52         1.74544
+xsram_256@0.net@63                 3.91885e-08
+xsram_256@0.xdecoder_@1.net@58         1.74544
+xsram_256@0.net@66                 3.91916e-08
+xsram_256@0.xdecoder_@1.net@64         1.74544
+xsram_256@0.net@69                 3.91911e-08
+xsram_256@0.xdecoder_@1.net@70         1.74544
+xsram_256@0.net@72                  3.9191e-08
+xsram_256@0.xdecoder_@1.net@76         1.74544
+xsram_256@0.net@75                 3.91905e-08
+xsram_256@0.xdecoder_@1.net@82         1.74544
+xsram_256@0.net@78                 3.91909e-08
+xsram_256@0.xdecoder_@1.net@88         1.74544
+xsram_256@0.net@81                 3.91904e-08
+xsram_256@0.xdecoder_@1.net@94         1.74544
+xsram_256@0.net@84                 3.91903e-08
+xsram_256@0.xdecoder_@1.net@100         1.74544
+xsram_256@0.net@87                 3.91898e-08
+xsram_256@0.xdecoder_@1.net@106         1.74544
+xsram_256@0.xdecoder_@1.xnand4@0.net@62        0.158545
+xsram_256@0.xdecoder_@1.xnand4@0.net@63       0.0897462
+xsram_256@0.xdecoder_@1.xnand4@0.net@64        0.040523
+xsram_256@0.xdecoder_@1.xnand4@1.net@62        0.158545
+xsram_256@0.xdecoder_@1.xnand4@1.net@63       0.0897467
+xsram_256@0.xdecoder_@1.xnand4@1.net@64       0.0405236
+xsram_256@0.xdecoder_@1.xnand4@2.net@62        0.158545
+xsram_256@0.xdecoder_@1.xnand4@2.net@63       0.0897468
+xsram_256@0.xdecoder_@1.xnand4@2.net@64       0.0405227
+xsram_256@0.xdecoder_@1.xnand4@3.net@62        0.158545
+xsram_256@0.xdecoder_@1.xnand4@3.net@63       0.0897474
+xsram_256@0.xdecoder_@1.xnand4@3.net@64       0.0405233
+xsram_256@0.xdecoder_@1.xnand4@4.net@62        0.158545
+xsram_256@0.xdecoder_@1.xnand4@4.net@63       0.0897451
+xsram_256@0.xdecoder_@1.xnand4@4.net@64       0.0405225
+xsram_256@0.xdecoder_@1.xnand4@5.net@62        0.158546
+xsram_256@0.xdecoder_@1.xnand4@5.net@63       0.0897456
+xsram_256@0.xdecoder_@1.xnand4@5.net@64       0.0405232
+xsram_256@0.xdecoder_@1.xnand4@6.net@62        0.158546
+xsram_256@0.xdecoder_@1.xnand4@6.net@63       0.0897458
+xsram_256@0.xdecoder_@1.xnand4@6.net@64       0.0405222
+xsram_256@0.xdecoder_@1.xnand4@7.net@62        0.158546
+xsram_256@0.xdecoder_@1.xnand4@7.net@63       0.0897463
+xsram_256@0.xdecoder_@1.xnand4@7.net@64       0.0405229
+xsram_256@0.xdecoder_@1.xnand4@8.net@62         0.15855
+xsram_256@0.xdecoder_@1.xnand4@8.net@63       0.0897483
+xsram_256@0.xdecoder_@1.xnand4@8.net@64       0.0405238
+xsram_256@0.xdecoder_@1.xnand4@9.net@62         0.15855
+xsram_256@0.xdecoder_@1.xnand4@9.net@63       0.0897488
+xsram_256@0.xdecoder_@1.xnand4@9.net@64       0.0405245
+xsram_256@0.xdecoder_@1.xnand4@10.net@62         0.15855
+xsram_256@0.xdecoder_@1.xnand4@10.net@63       0.0897489
+xsram_256@0.xdecoder_@1.xnand4@10.net@64       0.0405235
+xsram_256@0.xdecoder_@1.xnand4@11.net@62         0.15855
+xsram_256@0.xdecoder_@1.xnand4@11.net@63       0.0897495
+xsram_256@0.xdecoder_@1.xnand4@11.net@64       0.0405242
+xsram_256@0.xdecoder_@1.xnand4@12.net@62         0.15855
+xsram_256@0.xdecoder_@1.xnand4@12.net@63       0.0897472
+xsram_256@0.xdecoder_@1.xnand4@12.net@64       0.0405234
+xsram_256@0.xdecoder_@1.xnand4@13.net@62        0.158551
+xsram_256@0.xdecoder_@1.xnand4@13.net@63       0.0897478
+xsram_256@0.xdecoder_@1.xnand4@13.net@64        0.040524
+xsram_256@0.xdecoder_@1.xnand4@14.net@62        0.158551
+xsram_256@0.xdecoder_@1.xnand4@14.net@63       0.0897479
+xsram_256@0.xdecoder_@1.xnand4@14.net@64       0.0405231
+xsram_256@0.xdecoder_@1.xnand4@15.net@62        0.158551
+xsram_256@0.xdecoder_@1.xnand4@15.net@63       0.0897484
+xsram_256@0.xdecoder_@1.xnand4@15.net@64       0.0405237
+xsram_256@0.xdiv8_cou@0.xdff@0.net@20             1.8
+xsram_256@0.xdiv8_cou@0.xdff@0.net@22      1.0592e-08
+xsram_256@0.xdiv8_cou@0.xdff@0.net@3             1.8
+xsram_256@0.xdiv8_cou@0.xdff@0.net@1               0
+xsram_256@0.xdiv8_cou@0.xdff@0.net@12     1.63024e-08
+xsram_256@0.xdiv8_cou@0.xdff@0.net@7        0.893778
+xsram_256@0.xdiv8_cou@0.xdff@0.net@5             1.8
+xsram_256@0.xdiv8_cou@0.net@24             1.8
+xsram_256@0.xdiv8_cou@0.net@7                0
+xsram_256@0.xdiv8_cou@0.xdff@1.net@20             1.8
+xsram_256@0.xdiv8_cou@0.xdff@1.net@22      1.0592e-08
+xsram_256@0.xdiv8_cou@0.xdff@1.net@3             1.8
+xsram_256@0.xdiv8_cou@0.xdff@1.net@1               0
+xsram_256@0.xdiv8_cou@0.xdff@1.net@12     1.63024e-08
+xsram_256@0.xdiv8_cou@0.xdff@1.net@7        0.893778
+xsram_256@0.xdiv8_cou@0.xdff@1.net@5             1.8
+xsram_256@0.xdiv8_cou@0.net@31             1.8
+xsram_256@0.xdiv8_cou@0.net@9                0
+xsram_256@0.xdiv8_cou@0.xdff@2.net@20             1.8
+xsram_256@0.xdiv8_cou@0.xdff@2.net@22      1.0592e-08
+xsram_256@0.xdiv8_cou@0.xdff@2.net@3             1.8
+xsram_256@0.xdiv8_cou@0.xdff@2.net@1               0
+xsram_256@0.xdiv8_cou@0.xdff@2.net@12     1.63024e-08
+xsram_256@0.xdiv8_cou@0.xdff@2.net@7        0.893778
+xsram_256@0.xdiv8_cou@0.xdff@2.net@5             1.8
+xsram_256@0.xdiv8_cou@0.net@38             1.8
+xsram_256@0.xdiv8_cou@0.net@11               0
+xsram_256@0.net@94                         1.8
+xsram_256@0.xdiv8_cou@0.net@49     4.61158e-08
+xsram_256@0.xdiv8_cou@0.xnand4@0.net@62     3.45869e-08
+xsram_256@0.xdiv8_cou@0.xnand4@0.net@63     2.30579e-08
+xsram_256@0.xdiv8_cou@0.xnand4@0.net@64      1.1529e-08
+xsram_256@0.xsram_cor@0.net@0         0.265384
+xsram_256@0.net@90                  1.5488e-07
+xsram_256@0.net@44                         1.8
+xsram_256@0.xsram_cor@0.net@1        0.0951645
+xsram_256@0.net@92                    0.624785
+xsram_256@0.xsram_cor@0.net@4         0.265384
+xsram_256@0.net@47                         1.8
+xsram_256@0.xsram_cor@0.net@5        0.0951645
+xsram_256@0.xsram_cor@0.net@8         0.265384
+xsram_256@0.net@50                         1.8
+xsram_256@0.xsram_cor@0.net@9        0.0951649
+xsram_256@0.xsram_cor@0.net@12        0.265384
+xsram_256@0.net@53                         1.8
+xsram_256@0.xsram_cor@0.net@13       0.0951666
+xsram_256@0.xsram_cor@0.net@16        0.265384
+xsram_256@0.net@56                         1.8
+xsram_256@0.xsram_cor@0.net@17       0.0951655
+xsram_256@0.xsram_cor@0.net@20        0.265384
+xsram_256@0.net@59                         1.8
+xsram_256@0.xsram_cor@0.net@21       0.0951645
+xsram_256@0.xsram_cor@0.net@24        0.265384
+xsram_256@0.net@62                         1.8
+xsram_256@0.xsram_cor@0.net@25       0.0951654
+xsram_256@0.xsram_cor@0.net@28        0.265384
+xsram_256@0.net@65                         1.8
+xsram_256@0.xsram_cor@0.net@29       0.0951657
+xsram_256@0.xsram_cor@0.net@32        0.140893
+xsram_256@0.net@68                         1.8
+xsram_256@0.xsram_cor@0.net@33       0.0515803
+xsram_256@0.xsram_cor@0.net@36        0.198208
+xsram_256@0.net@71                         1.8
+xsram_256@0.xsram_cor@0.net@37       0.0858971
+xsram_256@0.xsram_cor@0.net@40        0.198211
+xsram_256@0.net@74                         1.8
+xsram_256@0.xsram_cor@0.net@41       0.0858975
+xsram_256@0.xsram_cor@0.net@44        0.265384
+xsram_256@0.net@77                         1.8
+xsram_256@0.xsram_cor@0.net@45       0.0951662
+xsram_256@0.xsram_cor@0.net@48        0.198208
+xsram_256@0.net@80                         1.8
+xsram_256@0.xsram_cor@0.net@49       0.0858964
+xsram_256@0.xsram_cor@0.net@52        0.265384
+xsram_256@0.net@83                         1.8
+xsram_256@0.xsram_cor@0.net@53       0.0951669
+xsram_256@0.xsram_cor@0.net@56        0.265384
+xsram_256@0.net@86                         1.8
+xsram_256@0.xsram_cor@0.net@57       0.0951665
+xsram_256@0.xsram_cor@0.net@60        0.265384
+xsram_256@0.net@89                         1.8
+xsram_256@0.xsram_cor@0.net@61       0.0951651
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@0.x_6t@0.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@0.x_6t@0.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@0.x_6t@1.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@0.x_6t@1.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@0.x_6t@2.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@0.x_6t@2.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@0.x_6t@3.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@0.x_6t@3.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@0.x_6t@4.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@0.x_6t@4.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@0.x_6t@5.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@0.x_6t@5.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@0.x_6t@6.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@0.x_6t@6.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@0.x_6t@7.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@0.x_6t@7.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@0.x_6t@8.net@4     6.63032e-09
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@0.x_6t@8.net@9             1.8
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@0.x_6t@9.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@0.x_6t@9.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@0.x_6t@10.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@0.x_6t@10.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@0.x_6t@11.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@0.x_6t@11.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@0.x_6t@12.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@0.x_6t@12.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@0.x_6t@13.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@0.x_6t@13.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@0.x_6t@14.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@0.x_6t@14.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@0.x_6t@15.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@0.x_6t@15.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@1.x_6t@0.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@1.x_6t@0.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@1.x_6t@1.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@1.x_6t@1.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@1.x_6t@2.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@1.x_6t@2.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@1.x_6t@3.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@1.x_6t@3.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@1.x_6t@4.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@1.x_6t@4.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@1.x_6t@5.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@1.x_6t@5.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@1.x_6t@6.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@1.x_6t@6.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@1.x_6t@7.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@1.x_6t@7.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@1.x_6t@8.net@4     6.63032e-09
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@1.x_6t@8.net@9             1.8
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@1.x_6t@9.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@1.x_6t@9.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@1.x_6t@10.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@1.x_6t@10.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@1.x_6t@11.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@1.x_6t@11.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@1.x_6t@12.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@1.x_6t@12.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@1.x_6t@13.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@1.x_6t@13.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@1.x_6t@14.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@1.x_6t@14.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@1.x_6t@15.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@1.x_6t@15.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@2.x_6t@0.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@2.x_6t@0.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@2.x_6t@1.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@2.x_6t@1.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@2.x_6t@2.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@2.x_6t@2.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@2.x_6t@3.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@2.x_6t@3.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@2.x_6t@4.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@2.x_6t@4.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@2.x_6t@5.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@2.x_6t@5.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@2.x_6t@6.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@2.x_6t@6.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@2.x_6t@7.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@2.x_6t@7.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@2.x_6t@8.net@4     6.63032e-09
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@2.x_6t@8.net@9             1.8
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@2.x_6t@9.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@2.x_6t@9.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@2.x_6t@10.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@2.x_6t@10.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@2.x_6t@11.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@2.x_6t@11.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@2.x_6t@12.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@2.x_6t@12.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@2.x_6t@13.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@2.x_6t@13.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@2.x_6t@14.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@2.x_6t@14.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@2.x_6t@15.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@2.x_6t@15.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@3.x_6t@0.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@3.x_6t@0.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@3.x_6t@1.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@3.x_6t@1.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@3.x_6t@2.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@3.x_6t@2.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@3.x_6t@3.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@3.x_6t@3.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@3.x_6t@4.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@3.x_6t@4.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@3.x_6t@5.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@3.x_6t@5.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@3.x_6t@6.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@3.x_6t@6.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@3.x_6t@7.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@3.x_6t@7.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@3.x_6t@8.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@3.x_6t@8.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@3.x_6t@9.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@3.x_6t@9.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@3.x_6t@10.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@3.x_6t@10.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@3.x_6t@11.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@3.x_6t@11.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@3.x_6t@12.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@3.x_6t@12.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@3.x_6t@13.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@3.x_6t@13.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@3.x_6t@14.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@3.x_6t@14.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@3.x_6t@15.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@3.x_6t@15.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@4.x_6t@0.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@4.x_6t@0.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@4.x_6t@1.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@4.x_6t@1.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@4.x_6t@2.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@4.x_6t@2.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@4.x_6t@3.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@4.x_6t@3.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@4.x_6t@4.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@4.x_6t@4.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@4.x_6t@5.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@4.x_6t@5.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@4.x_6t@6.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@4.x_6t@6.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@4.x_6t@7.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@4.x_6t@7.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@4.x_6t@8.net@4             1.8
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@4.x_6t@8.net@9     6.86599e-09
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@4.x_6t@9.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@4.x_6t@9.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@4.x_6t@10.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@4.x_6t@10.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@4.x_6t@11.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@4.x_6t@11.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@4.x_6t@12.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@4.x_6t@12.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@4.x_6t@13.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@4.x_6t@13.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@4.x_6t@14.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@4.x_6t@14.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@4.x_6t@15.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@4.x_6t@15.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@5.x_6t@0.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@5.x_6t@0.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@5.x_6t@1.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@5.x_6t@1.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@5.x_6t@2.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@5.x_6t@2.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@5.x_6t@3.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@5.x_6t@3.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@5.x_6t@4.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@5.x_6t@4.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@5.x_6t@5.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@5.x_6t@5.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@5.x_6t@6.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@5.x_6t@6.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@5.x_6t@7.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@5.x_6t@7.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@5.x_6t@8.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@5.x_6t@8.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@5.x_6t@9.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@5.x_6t@9.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@5.x_6t@10.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@5.x_6t@10.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@5.x_6t@11.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@5.x_6t@11.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@5.x_6t@12.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@5.x_6t@12.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@5.x_6t@13.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@5.x_6t@13.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@5.x_6t@14.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@5.x_6t@14.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@5.x_6t@15.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@5.x_6t@15.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@6.x_6t@0.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@6.x_6t@0.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@6.x_6t@1.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@6.x_6t@1.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@6.x_6t@2.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@6.x_6t@2.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@6.x_6t@3.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@6.x_6t@3.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@6.x_6t@4.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@6.x_6t@4.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@6.x_6t@5.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@6.x_6t@5.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@6.x_6t@6.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@6.x_6t@6.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@6.x_6t@7.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@6.x_6t@7.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@6.x_6t@8.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@6.x_6t@8.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@6.x_6t@9.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@6.x_6t@9.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@6.x_6t@10.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@6.x_6t@10.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@6.x_6t@11.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@6.x_6t@11.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@6.x_6t@12.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@6.x_6t@12.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@6.x_6t@13.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@6.x_6t@13.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@6.x_6t@14.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@6.x_6t@14.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@6.x_6t@15.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@6.x_6t@15.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@7.x_6t@0.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@7.x_6t@0.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@7.x_6t@1.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@7.x_6t@1.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@7.x_6t@2.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@7.x_6t@2.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@7.x_6t@3.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@7.x_6t@3.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@7.x_6t@4.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@7.x_6t@4.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@7.x_6t@5.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@7.x_6t@5.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@7.x_6t@6.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@7.x_6t@6.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@7.x_6t@7.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@7.x_6t@7.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@7.x_6t@8.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@7.x_6t@8.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@7.x_6t@9.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@7.x_6t@9.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@7.x_6t@10.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@7.x_6t@10.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@7.x_6t@11.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@7.x_6t@11.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@7.x_6t@12.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@7.x_6t@12.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@7.x_6t@13.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@7.x_6t@13.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@7.x_6t@14.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@7.x_6t@14.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@7.x_6t@15.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@7.x_6t@15.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@8.x_6t@0.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@8.x_6t@0.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@8.x_6t@1.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@8.x_6t@1.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@8.x_6t@2.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@8.x_6t@2.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@8.x_6t@3.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@8.x_6t@3.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@8.x_6t@4.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@8.x_6t@4.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@8.x_6t@5.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@8.x_6t@5.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@8.x_6t@6.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@8.x_6t@6.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@8.x_6t@7.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@8.x_6t@7.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@8.x_6t@8.net@4             1.8
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@8.x_6t@8.net@9     6.86599e-09
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@8.x_6t@9.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@8.x_6t@9.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@8.x_6t@10.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@8.x_6t@10.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@8.x_6t@11.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@8.x_6t@11.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@8.x_6t@12.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@8.x_6t@12.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@8.x_6t@13.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@8.x_6t@13.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@8.x_6t@14.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@8.x_6t@14.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@8.x_6t@15.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@8.x_6t@15.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@9.x_6t@0.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@9.x_6t@0.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@9.x_6t@1.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@9.x_6t@1.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@9.x_6t@2.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@9.x_6t@2.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@9.x_6t@3.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@9.x_6t@3.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@9.x_6t@4.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@9.x_6t@4.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@9.x_6t@5.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@9.x_6t@5.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@9.x_6t@6.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@9.x_6t@6.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@9.x_6t@7.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@9.x_6t@7.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@9.x_6t@8.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@9.x_6t@8.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@9.x_6t@9.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@9.x_6t@9.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@9.x_6t@10.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@9.x_6t@10.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@9.x_6t@11.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@9.x_6t@11.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@9.x_6t@12.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@9.x_6t@12.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@9.x_6t@13.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@9.x_6t@13.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@9.x_6t@14.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@9.x_6t@14.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@9.x_6t@15.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@9.x_6t@15.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@10.x_6t@0.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@10.x_6t@0.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@10.x_6t@1.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@10.x_6t@1.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@10.x_6t@2.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@10.x_6t@2.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@10.x_6t@3.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@10.x_6t@3.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@10.x_6t@4.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@10.x_6t@4.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@10.x_6t@5.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@10.x_6t@5.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@10.x_6t@6.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@10.x_6t@6.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@10.x_6t@7.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@10.x_6t@7.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@10.x_6t@8.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@10.x_6t@8.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@10.x_6t@9.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@10.x_6t@9.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@10.x_6t@10.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@10.x_6t@10.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@10.x_6t@11.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@10.x_6t@11.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@10.x_6t@12.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@10.x_6t@12.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@10.x_6t@13.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@10.x_6t@13.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@10.x_6t@14.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@10.x_6t@14.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@10.x_6t@15.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@10.x_6t@15.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@11.x_6t@0.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@11.x_6t@0.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@11.x_6t@1.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@11.x_6t@1.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@11.x_6t@2.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@11.x_6t@2.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@11.x_6t@3.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@11.x_6t@3.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@11.x_6t@4.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@11.x_6t@4.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@11.x_6t@5.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@11.x_6t@5.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@11.x_6t@6.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@11.x_6t@6.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@11.x_6t@7.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@11.x_6t@7.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@11.x_6t@8.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@11.x_6t@8.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@11.x_6t@9.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@11.x_6t@9.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@11.x_6t@10.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@11.x_6t@10.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@11.x_6t@11.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@11.x_6t@11.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@11.x_6t@12.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@11.x_6t@12.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@11.x_6t@13.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@11.x_6t@13.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@11.x_6t@14.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@11.x_6t@14.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@11.x_6t@15.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@11.x_6t@15.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@12.x_6t@0.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@12.x_6t@0.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@12.x_6t@1.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@12.x_6t@1.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@12.x_6t@2.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@12.x_6t@2.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@12.x_6t@3.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@12.x_6t@3.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@12.x_6t@4.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@12.x_6t@4.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@12.x_6t@5.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@12.x_6t@5.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@12.x_6t@6.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@12.x_6t@6.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@12.x_6t@7.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@12.x_6t@7.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@12.x_6t@8.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@12.x_6t@8.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@12.x_6t@9.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@12.x_6t@9.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@12.x_6t@10.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@12.x_6t@10.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@12.x_6t@11.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@12.x_6t@11.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@12.x_6t@12.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@12.x_6t@12.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@12.x_6t@13.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@12.x_6t@13.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@12.x_6t@14.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@12.x_6t@14.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@12.x_6t@15.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@12.x_6t@15.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@13.x_6t@0.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@13.x_6t@0.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@13.x_6t@1.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@13.x_6t@1.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@13.x_6t@2.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@13.x_6t@2.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@13.x_6t@3.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@13.x_6t@3.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@13.x_6t@4.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@13.x_6t@4.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@13.x_6t@5.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@13.x_6t@5.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@13.x_6t@6.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@13.x_6t@6.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@13.x_6t@7.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@13.x_6t@7.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@13.x_6t@8.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@13.x_6t@8.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@13.x_6t@9.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@13.x_6t@9.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@13.x_6t@10.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@13.x_6t@10.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@13.x_6t@11.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@13.x_6t@11.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@13.x_6t@12.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@13.x_6t@12.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@13.x_6t@13.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@13.x_6t@13.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@13.x_6t@14.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@13.x_6t@14.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@13.x_6t@15.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@13.x_6t@15.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@14.x_6t@0.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@14.x_6t@0.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@14.x_6t@1.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@14.x_6t@1.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@14.x_6t@2.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@14.x_6t@2.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@14.x_6t@3.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@14.x_6t@3.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@14.x_6t@4.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@14.x_6t@4.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@14.x_6t@5.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@14.x_6t@5.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@14.x_6t@6.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@14.x_6t@6.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@14.x_6t@7.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@14.x_6t@7.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@14.x_6t@8.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@14.x_6t@8.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@14.x_6t@9.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@14.x_6t@9.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@14.x_6t@10.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@14.x_6t@10.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@14.x_6t@11.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@14.x_6t@11.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@14.x_6t@12.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@14.x_6t@12.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@14.x_6t@13.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@14.x_6t@13.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@14.x_6t@14.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@14.x_6t@14.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@14.x_6t@15.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@14.x_6t@15.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@15.x_6t@0.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@15.x_6t@0.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@15.x_6t@1.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@15.x_6t@1.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@15.x_6t@2.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@15.x_6t@2.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@15.x_6t@3.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@15.x_6t@3.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@15.x_6t@4.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@15.x_6t@4.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@15.x_6t@5.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@15.x_6t@5.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@15.x_6t@6.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@15.x_6t@6.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@15.x_6t@7.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@15.x_6t@7.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@15.x_6t@8.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@15.x_6t@8.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@15.x_6t@9.net@4             1.8
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@15.x_6t@9.net@9     6.90184e-09
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@15.x_6t@10.net@4             1.8
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@15.x_6t@10.net@9     6.90184e-09
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@15.x_6t@11.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@15.x_6t@11.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@15.x_6t@12.net@4             1.8
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@15.x_6t@12.net@9     6.90184e-09
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@15.x_6t@13.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@15.x_6t@13.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@15.x_6t@14.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@15.x_6t@14.net@9        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@15.x_6t@15.net@4        0.677033
+xsram_256@0.xsram_cor@0.xsram_arr@0.xsram_row@15.x_6t@15.net@9        0.677033
+xsram_256@0.xshiftreg@0.xdff@0.net@20             1.8
+xsram_256@0.xshiftreg@0.xdff@0.net@22      1.0592e-08
+xsram_256@0.xshiftreg@0.xdff@0.net@3     2.47926e-08
+xsram_256@0.xshiftreg@0.xdff@0.net@1             1.8
+xsram_256@0.xshiftreg@0.xdff@0.net@12             1.8
+xsram_256@0.xshiftreg@0.xdff@0.net@7        0.815615
+xsram_256@0.xshiftreg@0.xdff@0.net@5        0.815615
+xsram_256@0.xshiftreg@0.xdff@1.net@20             1.8
+xsram_256@0.xshiftreg@0.xdff@1.net@22      1.0592e-08
+xsram_256@0.xshiftreg@0.xdff@1.net@3        0.815605
+xsram_256@0.xshiftreg@0.xdff@1.net@1        0.815616
+xsram_256@0.xshiftreg@0.xdff@1.net@12        0.816181
+xsram_256@0.xshiftreg@0.xdff@1.net@7        0.815615
+xsram_256@0.xshiftreg@0.xdff@1.net@5        0.815615
+xsram_256@0.xshiftreg@0.xdff@2.net@20             1.8
+xsram_256@0.xshiftreg@0.xdff@2.net@22      1.0592e-08
+xsram_256@0.xshiftreg@0.xdff@2.net@3        0.815622
+xsram_256@0.xshiftreg@0.xdff@2.net@1        0.815615
+xsram_256@0.xshiftreg@0.xdff@2.net@12        0.815259
+xsram_256@0.xshiftreg@0.xdff@2.net@7        0.815615
+xsram_256@0.xshiftreg@0.xdff@2.net@5        0.815615
+xsram_256@0.xshiftreg@0.xdff@3.net@20             1.8
+xsram_256@0.xshiftreg@0.xdff@3.net@22      1.0592e-08
+xsram_256@0.xshiftreg@0.xdff@3.net@3        0.815622
+xsram_256@0.xshiftreg@0.xdff@3.net@1        0.815615
+xsram_256@0.xshiftreg@0.xdff@3.net@12        0.815259
+xsram_256@0.xshiftreg@0.xdff@3.net@7        0.815615
+xsram_256@0.xshiftreg@0.xdff@3.net@5        0.815615
+xsram_256@0.xshiftreg@0.xdff@4.net@20             1.8
+xsram_256@0.xshiftreg@0.xdff@4.net@22      1.0592e-08
+xsram_256@0.xshiftreg@0.xdff@4.net@3        0.815622
+xsram_256@0.xshiftreg@0.xdff@4.net@1        0.815615
+xsram_256@0.xshiftreg@0.xdff@4.net@12        0.815259
+xsram_256@0.xshiftreg@0.xdff@4.net@7        0.815615
+xsram_256@0.xshiftreg@0.xdff@4.net@5        0.815615
+xsram_256@0.xshiftreg@0.xdff@5.net@20             1.8
+xsram_256@0.xshiftreg@0.xdff@5.net@22      1.0592e-08
+xsram_256@0.xshiftreg@0.xdff@5.net@3        0.815622
+xsram_256@0.xshiftreg@0.xdff@5.net@1        0.815615
+xsram_256@0.xshiftreg@0.xdff@5.net@12        0.815259
+xsram_256@0.xshiftreg@0.xdff@5.net@7        0.815615
+xsram_256@0.xshiftreg@0.xdff@5.net@5        0.815615
+xsram_256@0.xshiftreg@0.xdff@6.net@20             1.8
+xsram_256@0.xshiftreg@0.xdff@6.net@22      1.0592e-08
+xsram_256@0.xshiftreg@0.xdff@6.net@3        0.815622
+xsram_256@0.xshiftreg@0.xdff@6.net@1        0.815615
+xsram_256@0.xshiftreg@0.xdff@6.net@12        0.815259
+xsram_256@0.xshiftreg@0.xdff@6.net@7        0.815615
+xsram_256@0.xshiftreg@0.xdff@6.net@5        0.815615
+xsram_256@0.xshiftreg@0.xdff@7.net@20             1.8
+xsram_256@0.xshiftreg@0.xdff@7.net@22      1.0592e-08
+xsram_256@0.xshiftreg@0.xdff@7.net@3        0.815622
+xsram_256@0.xshiftreg@0.xdff@7.net@1        0.815615
+xsram_256@0.xshiftreg@0.xdff@7.net@12        0.815259
+xsram_256@0.xshiftreg@0.xdff@7.net@7        0.815615
+xsram_256@0.xshiftreg@0.xdff@7.net@5        0.815615
+xsram_256@0.net@96                  1.0592e-08
+xsram_256@0.net@97                         1.8
+xsram_256@0.net@99                  1.0592e-08
+xsram_256@0.net@102                 1.0592e-08
+xsram_256@0.net@104                        1.8
+xsram_256@0.net@103                4.61158e-08
+xsram_256@0.net@106                 1.0592e-08
+xsram_256@0.net@105                        1.8
+xsram_256@0.xnand4@0.net@62        3.45869e-08
+xsram_256@0.xnand4@0.net@63        2.30579e-08
+xsram_256@0.xnand4@0.net@64         1.1529e-08
+xsram_256@0.xnand4@1.net@62          0.0193564
+xsram_256@0.xnand4@1.net@63        4.47303e-09
+xsram_256@0.xnand4@1.net@64        2.23651e-09
+xsram_256@0.xsense_am@0.net@9          1.78907
+xsram_256@0.xsense_am@0.net@3         0.445382
+xsram_256@0.sense_am@0_sob             1.11163
+xsram_256@0.xwrite_dr@0.net@0      7.74398e-08
+xsram_256@0.xwrite_dr@0.net@1         0.624785
+xsram_256@0.xwrite_dr@0.net@3      1.16771e-08
+ext_clk                                      0
+xpkg_clk.node1                               0
+ext_addr_in                                1.8
+xpkg_addr_in.node1                         1.8
+ext_r_w                                    1.8
+xpkg_r_w.node1                             1.8
+ext_din                                    1.8
+xpkg_din.node1                             1.8
+ext_dout                                     0
+xpkg_dout.node1                              0
+l.xpkg_dout.l_bond#branch                    0
+l.xpkg_din.l_bond#branch          -2.22045e-16
+l.xpkg_r_w.l_bond#branch          -2.22045e-16
+l.xpkg_addr_in.l_bond#branch      -2.22045e-16
+l.xpkg_clk.l_bond#branch                     0
+v_r_w#branch                       2.22045e-16
+v_din#branch                       2.22045e-16
+v_addr_in#branch                   2.22045e-16
+v_clk#branch                                 0
+v_vdd#branch                        -0.0127734
+
+ Reference value :  0.00000e+00 Reference value :  1.36200e-09 Reference value :  2.92442e-09 Reference value :  4.96640e-09 Reference value :  6.76417e-09 Reference value :  8.66568e-09 Reference value :  1.06140e-08 Reference value :  1.26301e-08 Reference value :  1.47575e-08 Reference value :  1.65542e-08 Reference value :  1.83406e-08 Reference value :  2.01336e-08 Reference value :  2.19063e-08 Reference value :  2.37029e-08 Reference value :  2.57315e-08 Reference value :  2.75541e-08 Reference value :  2.92304e-08 Reference value :  3.09845e-08 Reference value :  3.28757e-08 Reference value :  3.50050e-08 Reference value :  3.67728e-08 Reference value :  3.85223e-08 Reference value :  4.03579e-08 Reference value :  4.23544e-08 Reference value :  4.44531e-08 Reference value :  4.62894e-08 Reference value :  4.81133e-08 Reference value :  4.99678e-08 Reference value :  5.17913e-08 Reference value :  5.38082e-08 Reference value :  5.57327e-08 Reference value :  5.74460e-08 Reference value :  5.91190e-08 Reference value :  6.08062e-08 Reference value :  6.29475e-08 Reference value :  6.48353e-08 Reference value :  6.63631e-08 Reference value :  6.80769e-08 Reference value :  6.97508e-08 Reference value :  7.17105e-08 Reference value :  7.38094e-08 Reference value :  7.58060e-08 Reference value :  7.75925e-08 Reference value :  7.90821e-08 Reference value :  8.05025e-08 Reference value :  8.23446e-08 Reference value :  8.42037e-08 Reference value :  8.62706e-08 Reference value :  8.82802e-08 Reference value :  9.03433e-08 Reference value :  9.21124e-08 Reference value :  9.39367e-08 Reference value :  9.56432e-08 Reference value :  9.74660e-08 Reference value :  9.93660e-08 Reference value :  1.01104e-07 Reference value :  1.02740e-07 Reference value :  1.04415e-07 Reference value :  1.06227e-07 Reference value :  1.08191e-07 Reference value :  1.10100e-07 Reference value :  1.12143e-07 Reference value :  1.14150e-07 Reference value :  1.16308e-07 Reference value :  1.18725e-07 Reference value :  1.21209e-07 Reference value :  1.23441e-07 Reference value :  1.25621e-07 Reference value :  1.27669e-07 Reference value :  1.29830e-07 Reference value :  1.31617e-07 Reference value :  1.33626e-07 Reference value :  1.35709e-07 Reference value :  1.38300e-07 Reference value :  1.40758e-07 Reference value :  1.42691e-07 Reference value :  1.44365e-07 Reference value :  1.46405e-07 Reference value :  1.48155e-07 Reference value :  1.50078e-07 Reference value :  1.52018e-07 Reference value :  1.54214e-07 Reference value :  1.56551e-07 Reference value :  1.59155e-07
+No. of Data Rows : 4405
+
+  Measurements for Transient Analysis
+
+i_write_avg         =  -3.99320e-03 from=  7.00000e-08 to=  8.00036e-08
+i_read_avg          =  -4.67588e-03 from=  8.00000e-08 to=  9.00041e-08
+i_read_steady       =  -6.60456e-04 from=  1.50000e-07 to=  1.60000e-07
+t_rise              =  1.24262e-09 targ=  8.32855e-08 trig=  8.20429e-08
+t_prop              =  1.32355e-08 targ=  8.32855e-08 trig=  7.00500e-08
+
+
+Total analysis time (seconds) = 22.9065
+
+Total elapsed time (seconds) = 22.956 
+
+Total DRAM available = 8192.000 MB.
+DRAM currently available = 1172.172 MB.
+Maximum ngspice program size =   21.156 MB.
+Current ngspice program size =   16.547 MB.
+

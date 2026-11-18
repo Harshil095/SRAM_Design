@@ -1,0 +1,22 @@
+* Write Margin / Trip Voltage test for WPD=0.36u
+.include "../tsmc018.lib"
+.include "sram_6t.cir"
+
+Vdd vdd 0 DC 1.8
+Vwl wl 0 DC 1.8
+Vblb blb 0 DC 1.8
+
+* Cell starts storing Q=1.8V, QB=0V
+* We pull BL from 1.8V down to 0V (DC sweep) and see at what BL voltage Q trips below 0.9V
+Vbl bl 0 DC 1.8
+Xcell wl bl blb vdd 0 q qb sram_6t WPD=0.36u WPG=0.36u WPU=0.28u L=0.18u
+.ic v(q)=1.8 v(qb)=0
+
+.control
+* Sweep Vbl from 1.8V down to 0V
+dc Vbl 1.8 0 -0.01
+set wr_vecnames
+wrdata write_trip_1.txt v(q) v(qb)
+quit
+.endc
+.end

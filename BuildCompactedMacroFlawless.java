@@ -1,0 +1,941 @@
+import java.util.*;
+import com.sun.electric.Main;
+import com.sun.electric.database.EditingPreferences;
+import com.sun.electric.database.geometry.GeometryHandler;
+import com.sun.electric.database.hierarchy.*;
+import com.sun.electric.database.topology.*;
+import com.sun.electric.technology.ArcProto;
+import com.sun.electric.database.prototype.NodeProto;
+import com.sun.electric.tool.Job;
+import com.sun.electric.tool.drc.DRC;
+import com.sun.electric.tool.io.FileType;
+import com.sun.electric.tool.io.input.LibraryFiles;
+import com.sun.electric.tool.io.output.Output;
+import com.sun.electric.tool.io.output.Spice;
+import com.sun.electric.tool.ncc.Ncc;
+import com.sun.electric.tool.ncc.NccOptions;
+import com.sun.electric.tool.ncc.result.NccResults;
+import com.sun.electric.tool.simulation.SimulationTool;
+import com.sun.electric.tool.user.ErrorLogger;
+import com.sun.electric.tool.user.IconParameters;
+import com.sun.electric.tool.user.User;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.io.File;
+import java.net.URL;
+
+public class BuildCompactedMacroFlawless {
+
+    public static final double[] WL_Y = {
+        5.0, 153.0, 175.0, 323.0, 345.0, 493.0, 515.0, 663.0,
+        685.0, 833.0, 855.0, 1003.0, 1025.0, 1173.0, 1195.0, 1343.0
+    };
+
+    public static void main(String[] args) throws Exception {
+        Main.main(new String[]{"-batch"});
+        Job j = new Job("BuildCompactedMacroFlawless", User.getUserTool(), Job.Type.CHANGE, null, null, Job.Priority.USER) {
+            public boolean doIt() {
+                try {
+                    File f = new File("SRAM.jelib");
+                    URL url = f.toURI().toURL();
+                    Library lib = LibraryFiles.readLibrary(getEditingPreferences(), url, null, FileType.JELIB, false);
+                    EditingPreferences ep = getEditingPreferences();
+                    IconParameters ip = IconParameters.makeInstance(true);
+
+                    // ==========================================
+                    // 1. SCHEMATIC: SRAM_256_Macro{sch}
+                    // ==========================================
+                    System.out.println("=== 1. Building SRAM_256_Macro{sch} ===");
+
+                    Cell icData = lib.findNodeProto("SRAM_Core_Datapath{ic}");
+                    Cell icDec  = lib.findNodeProto("Decoder_4x16{ic}");
+                    Cell icSreg = lib.findNodeProto("ShiftReg_8bit{ic}");
+                    Cell icDiv8 = lib.findNodeProto("Div8_Counter{ic}");
+                    Cell icSa   = lib.findNodeProto("sense_amplifier{ic}");
+                    Cell icWd   = lib.findNodeProto("write_driver{ic}");
+                    Cell icInv  = lib.findNodeProto("inverter{ic}");
+                    Cell icNand = lib.findNodeProto("nand4{ic}");
+
+                    Cell oldSch = lib.findNodeProto("SRAM_256_Macro{sch}");
+                    if (oldSch != null) oldSch.kill();
+                    Cell oldIc = lib.findNodeProto("SRAM_256_Macro{ic}");
+                    if (oldIc != null) oldIc.kill();
+
+                    Cell sch = Cell.makeInstance(lib, "SRAM_256_Macro{sch}");
+                    ArcProto wire = sch.getTechnology().findArcProto("wire");
+                    NodeProto offPage = sch.getTechnology().findNodeProto("Off-Page");
+                    NodeProto pwrProto = sch.getTechnology().findNodeProto("Power");
+                    NodeProto gndProto = sch.getTechnology().findNodeProto("Ground");
+
+                    // Instantiations
+                    NodeInst instData   = NodeInst.makeInstance(icData, new Point2D.Double(0.0, 0.0), 0, 0, sch);
+                    NodeInst instRowDec = NodeInst.makeInstance(icDec,  new Point2D.Double(-200.0, 100.0), 0, 0, sch);
+                    NodeInst instColDec = NodeInst.makeInstance(icDec,  new Point2D.Double(-200.0, -100.0), 0, 0, sch);
+                    NodeInst instSreg   = NodeInst.makeInstance(icSreg, new Point2D.Double(-350.0, 0.0), 0, 0, sch);
+                    NodeInst instDiv8   = NodeInst.makeInstance(icDiv8, new Point2D.Double(-350.0, -150.0), 0, 0, sch);
+                    NodeInst instSa     = NodeInst.makeInstance(icSa,   new Point2D.Double(100.0, -150.0), 0, 0, sch);
+                    NodeInst instWd     = NodeInst.makeInstance(icWd,   new Point2D.Double(0.0, -150.0), 0, 0, sch);
+
+                    // 16 inverters for COL_SEL_B
+                    NodeInst[] instColInvs = new NodeInst[16];
+                    for (int c = 0; c < 16; c++) {
+                        instColInvs[c] = NodeInst.makeInstance(icInv, new Point2D.Double(-100.0, -50.0 - c * 10.0), 0, 0, sch);
+                    }
+
+                    // Timing Inverters
+                    NodeInst invD1 = NodeInst.makeInstance(icInv, new Point2D.Double(-250.0, -200.0), 0, 0, sch);
+                    NodeInst invD2 = NodeInst.makeInstance(icInv, new Point2D.Double(-200.0, -200.0), 0, 0, sch);
+                    NodeInst invD3 = NodeInst.makeInstance(icInv, new Point2D.Double(-150.0, -200.0), 0, 0, sch);
+                    NodeInst invRw = NodeInst.makeInstance(icInv, new Point2D.Double(-250.0, -250.0), 0, 0, sch);
+
+                    // AND Gates using nand4 + inverter
+                    NodeInst nandWe = NodeInst.makeInstance(icNand, new Point2D.Double(-100.0, -220.0), 0, 0, sch);
+                    NodeInst invWe  = NodeInst.makeInstance(icInv,  new Point2D.Double(-50.0, -220.0), 0, 0, sch);
+
+                    NodeInst nandSae = NodeInst.makeInstance(icNand, new Point2D.Double(-100.0, -260.0), 0, 0, sch);
+                    NodeInst invSae  = NodeInst.makeInstance(icInv,  new Point2D.Double(-50.0, -260.0), 0, 0, sch);
+
+                    // Power & Ground
+                    NodeInst pwr = NodeInst.makeInstance(pwrProto, new Point2D.Double(200.0, 100.0), 0, 0, sch);
+                    NodeInst gnd = NodeInst.makeInstance(gndProto, new Point2D.Double(200.0, -100.0), 0, 0, sch);
+
+                    ArcInst.makeInstance(wire, ep, pwr.getPortInst(0), instData.findPortInstFromProto(icData.findExport("vdd")));
+                    ArcInst.makeInstance(wire, ep, pwr.getPortInst(0), instRowDec.findPortInstFromProto(icDec.findExport("vdd")));
+                    ArcInst.makeInstance(wire, ep, pwr.getPortInst(0), instColDec.findPortInstFromProto(icDec.findExport("vdd")));
+                    ArcInst.makeInstance(wire, ep, pwr.getPortInst(0), instSreg.findPortInstFromProto(icSreg.findExport("vdd")));
+                    ArcInst.makeInstance(wire, ep, pwr.getPortInst(0), instDiv8.findPortInstFromProto(icDiv8.findExport("vdd")));
+                    ArcInst.makeInstance(wire, ep, pwr.getPortInst(0), instSa.findPortInstFromProto(icSa.findExport("vdd")));
+                    ArcInst.makeInstance(wire, ep, pwr.getPortInst(0), instWd.findPortInstFromProto(icWd.findExport("vdd")));
+
+                    ArcInst.makeInstance(wire, ep, gnd.getPortInst(0), instData.findPortInstFromProto(icData.findExport("gnd")));
+                    ArcInst.makeInstance(wire, ep, gnd.getPortInst(0), instRowDec.findPortInstFromProto(icDec.findExport("gnd")));
+                    ArcInst.makeInstance(wire, ep, gnd.getPortInst(0), instColDec.findPortInstFromProto(icDec.findExport("gnd")));
+                    ArcInst.makeInstance(wire, ep, gnd.getPortInst(0), instSreg.findPortInstFromProto(icSreg.findExport("gnd")));
+                    ArcInst.makeInstance(wire, ep, gnd.getPortInst(0), instDiv8.findPortInstFromProto(icDiv8.findExport("gnd")));
+                    ArcInst.makeInstance(wire, ep, gnd.getPortInst(0), instSa.findPortInstFromProto(icSa.findExport("gnd")));
+                    ArcInst.makeInstance(wire, ep, gnd.getPortInst(0), instWd.findPortInstFromProto(icWd.findExport("gnd")));
+
+                    // Tie C and D of nandWe and nandSae to vdd
+                    ArcInst.makeInstance(wire, ep, pwr.getPortInst(0), nandWe.findPortInstFromProto(icNand.findExport("C")));
+                    ArcInst.makeInstance(wire, ep, pwr.getPortInst(0), nandWe.findPortInstFromProto(icNand.findExport("D")));
+                    ArcInst.makeInstance(wire, ep, pwr.getPortInst(0), nandSae.findPortInstFromProto(icNand.findExport("C")));
+                    ArcInst.makeInstance(wire, ep, pwr.getPortInst(0), nandSae.findPortInstFromProto(icNand.findExport("D")));
+
+                    // Address Wiring
+                    for (int b = 0; b < 4; b++) {
+                        ArcInst.makeInstance(wire, ep,
+                            instSreg.findPortInstFromProto(icSreg.findExport("Q[" + b + "]")),
+                            instRowDec.findPortInstFromProto(icDec.findExport("A[" + b + "]")));
+                        ArcInst.makeInstance(wire, ep,
+                            instSreg.findPortInstFromProto(icSreg.findExport("Q[" + (b + 4) + "]")),
+                            instColDec.findPortInstFromProto(icDec.findExport("A[" + b + "]")));
+                    }
+
+                    // Row Decode -> WL
+                    for (int r = 0; r < 16; r++) {
+                        ArcInst.makeInstance(wire, ep,
+                            instRowDec.findPortInstFromProto(icDec.findExport("OUT[" + r + "]")),
+                            instData.findPortInstFromProto(icData.findExport("WL[" + r + "]")));
+                    }
+
+                    // Col Decode -> COL_SEL & COL_SEL_B
+                    for (int c = 0; c < 16; c++) {
+                        PortInst pColOut = instColDec.findPortInstFromProto(icDec.findExport("OUT[" + c + "]"));
+                        PortInst pColSel = instData.findPortInstFromProto(icData.findExport("COL_SEL[" + c + "]"));
+                        PortInst pColSelB = instData.findPortInstFromProto(icData.findExport("COL_SEL_B[" + c + "]"));
+
+                        ArcInst.makeInstance(wire, ep, pColOut, pColSel);
+                        ArcInst.makeInstance(wire, ep, pColOut, instColInvs[c].findPortInstFromProto(icInv.findExport("in")));
+                        ArcInst.makeInstance(wire, ep, instColInvs[c].findPortInstFromProto(icInv.findExport("out")), pColSelB);
+                    }
+
+                    // Global Bitlines
+                    PortInst pGbl = instData.findPortInstFromProto(icData.findExport("GBL"));
+                    PortInst pGblb = instData.findPortInstFromProto(icData.findExport("GBLB"));
+                    ArcInst.makeInstance(wire, ep, pGbl, instSa.findPortInstFromProto(icSa.findExport("BL")));
+                    ArcInst.makeInstance(wire, ep, pGbl, instWd.findPortInstFromProto(icWd.findExport("BL")));
+                    ArcInst.makeInstance(wire, ep, pGblb, instSa.findPortInstFromProto(icSa.findExport("BLB")));
+                    ArcInst.makeInstance(wire, ep, pGblb, instWd.findPortInstFromProto(icWd.findExport("BLB")));
+
+                    // Timing Logic
+                    PortInst pExec = instDiv8.findPortInstFromProto(icDiv8.findExport("EXECUTE"));
+                    PortInst pPreB = instData.findPortInstFromProto(icData.findExport("PRE_B"));
+                    ArcInst.makeInstance(wire, ep, pExec, pPreB);
+                    ArcInst.makeInstance(wire, ep, pExec, invD1.findPortInstFromProto(icInv.findExport("in")));
+
+                    PortInst pD1 = invD1.findPortInstFromProto(icInv.findExport("out"));
+                    ArcInst.makeInstance(wire, ep, pD1, invD2.findPortInstFromProto(icInv.findExport("in")));
+
+                    PortInst pD2 = invD2.findPortInstFromProto(icInv.findExport("out"));
+                    ArcInst.makeInstance(wire, ep, pD2, invD3.findPortInstFromProto(icInv.findExport("in")));
+                    ArcInst.makeInstance(wire, ep, pD2, nandWe.findPortInstFromProto(icNand.findExport("A")));
+
+                    PortInst pD3 = invD3.findPortInstFromProto(icInv.findExport("out"));
+                    ArcInst.makeInstance(wire, ep, pD3, nandSae.findPortInstFromProto(icNand.findExport("A")));
+
+                    NodeInst pinRw = NodeInst.makeInstance(offPage, new Point2D.Double(-350.0, -250.0), 0, 0, sch);
+                    ArcInst.makeInstance(wire, ep, pinRw.getPortInst(0), nandWe.findPortInstFromProto(icNand.findExport("B")));
+                    ArcInst.makeInstance(wire, ep, pinRw.getPortInst(0), invRw.findPortInstFromProto(icInv.findExport("in")));
+
+                    PortInst pRwB = invRw.findPortInstFromProto(icInv.findExport("out"));
+                    ArcInst.makeInstance(wire, ep, pRwB, nandSae.findPortInstFromProto(icNand.findExport("B")));
+
+                    ArcInst.makeInstance(wire, ep, nandWe.findPortInstFromProto(icNand.findExport("out")), invWe.findPortInstFromProto(icInv.findExport("in")));
+                    ArcInst.makeInstance(wire, ep, invWe.findPortInstFromProto(icInv.findExport("out")), instWd.findPortInstFromProto(icWd.findExport("WE")));
+
+                    ArcInst.makeInstance(wire, ep, nandSae.findPortInstFromProto(icNand.findExport("out")), invSae.findPortInstFromProto(icInv.findExport("in")));
+                    ArcInst.makeInstance(wire, ep, invSae.findPortInstFromProto(icInv.findExport("out")), instSa.findPortInstFromProto(icSa.findExport("SAE")));
+
+                    // Global I/O
+                    NodeInst pinClk = NodeInst.makeInstance(offPage, new Point2D.Double(-400.0, -50.0), 0, 0, sch);
+                    ArcInst.makeInstance(wire, ep, pinClk.getPortInst(0), instSreg.findPortInstFromProto(icSreg.findExport("CLK")));
+                    ArcInst.makeInstance(wire, ep, pinClk.getPortInst(0), instDiv8.findPortInstFromProto(icDiv8.findExport("CLK")));
+
+                    NodeInst pinAddrIn = NodeInst.makeInstance(offPage, new Point2D.Double(-400.0, 50.0), 0, 0, sch);
+                    ArcInst.makeInstance(wire, ep, pinAddrIn.getPortInst(0), instSreg.findPortInstFromProto(icSreg.findExport("ADDR_IN")));
+
+                    NodeInst pinDin = NodeInst.makeInstance(offPage, new Point2D.Double(-100.0, -150.0), 0, 0, sch);
+                    ArcInst.makeInstance(wire, ep, pinDin.getPortInst(0), instWd.findPortInstFromProto(icWd.findExport("WD")));
+
+                    NodeInst pinDout = NodeInst.makeInstance(offPage, new Point2D.Double(200.0, -150.0), 0, 0, sch);
+                    ArcInst.makeInstance(wire, ep, instSa.findPortInstFromProto(icSa.findExport("SO")), pinDout.getPortInst(0));
+
+                    // Exports on Schematic (7 total)
+                    Export.newInst(sch, pinClk.getPortInst(0), "CLK", ep);
+                    Export.newInst(sch, pinAddrIn.getPortInst(0), "ADDR_IN", ep);
+                    Export.newInst(sch, pinRw.getPortInst(0), "R_W", ep);
+                    Export.newInst(sch, pinDin.getPortInst(0), "DIN", ep);
+                    Export.newInst(sch, pinDout.getPortInst(0), "DOUT", ep);
+                    Export.newInst(sch, pwr.getPortInst(0), "vdd", ep);
+                    Export.newInst(sch, gnd.getPortInst(0), "gnd", ep);
+
+                    Cell ic = ip.makeIconForCell(sch, ep);
+                    System.out.println("  SRAM_256_Macro{sch} and {ic} generated successfully with 7 exports.");
+
+                    // ==========================================
+                    // 2. LAYOUT: SRAM_256_Macro{lay}
+                    // ==========================================
+                    System.out.println("=== 2. Building Flawless Compacted SRAM_256_Macro{lay} ===");
+
+                    Cell layData = lib.findNodeProto("SRAM_Core_Datapath{lay}");
+                    Cell layDec  = lib.findNodeProto("Decoder_4x16{lay}");
+                    Cell laySreg = lib.findNodeProto("ShiftReg_8bit{lay}");
+                    Cell layDiv8 = lib.findNodeProto("Div8_Counter{lay}");
+                    Cell laySa   = lib.findNodeProto("sense_amplifier{lay}");
+                    Cell layWd   = lib.findNodeProto("write_driver{lay}");
+                    Cell layInv  = lib.findNodeProto("inverter{lay}");
+                    Cell layNand = lib.findNodeProto("nand4{lay}");
+
+                    Cell oldLay = lib.findNodeProto("SRAM_256_Macro{lay}");
+                    if (oldLay != null) oldLay.kill();
+
+                    Cell lay = Cell.makeInstance(lib, "SRAM_256_Macro{lay}");
+                    ArcProto poly = lay.getTechnology().findArcProto("Polysilicon-1");
+                    ArcProto m1   = lay.getTechnology().findArcProto("Metal-1");
+                    ArcProto m2   = lay.getTechnology().findArcProto("Metal-2");
+                    ArcProto m3   = lay.getTechnology().findArcProto("Metal-3");
+
+                    NodeProto conPolyM1  = lay.getTechnology().findNodeProto("Metal-1-Polysilicon-1-Con");
+                    NodeProto via12Proto = lay.getTechnology().findNodeProto("Metal-1-Metal-2-Con");
+                    NodeProto via23Proto = lay.getTechnology().findNodeProto("Metal-2-Metal-3-Con");
+                    NodeProto m1Pin      = lay.getTechnology().findNodeProto("Metal-1-Pin");
+                    NodeProto m2Pin      = lay.getTechnology().findNodeProto("Metal-2-Pin");
+                    NodeProto m3Pin      = lay.getTechnology().findNodeProto("Metal-3-Pin");
+                    NodeProto polyPin    = lay.getTechnology().findNodeProto("Polysilicon-1-Pin");
+
+                    // Optimized Coordinates with verified clearance
+                    double xRowDec = -640.0, yRowDec = 0.0;
+                    double xColDec = -640.0, yColDec = -1850.0;
+                    double xData = 0.0, yData = 0.0;
+                    double xWd = 0.0, yWd = -340.0;
+                    double xSa = 200.0, ySa = -340.0;
+                    double xDiv8 = -640.0, yDiv8 = 1470.0;
+                    double yTiming = 1860.0;
+                    double xSreg = -640.0, ySreg = 2050.0;
+
+                    NodeInst lInstData   = NodeInst.makeInstance(layData, new Point2D.Double(xData, yData), 0, 0, lay);
+                    NodeInst lInstRowDec = NodeInst.makeInstance(layDec,  new Point2D.Double(xRowDec, yRowDec), 0, 0, lay);
+                    NodeInst lInstColDec = NodeInst.makeInstance(layDec,  new Point2D.Double(xColDec, yColDec), 0, 0, lay);
+                    NodeInst lInstWd     = NodeInst.makeInstance(layWd,   new Point2D.Double(xWd, yWd), 0, 0, lay);
+                    NodeInst lInstSa     = NodeInst.makeInstance(laySa,   new Point2D.Double(xSa, ySa), 0, 0, lay);
+                    NodeInst lInstDiv8   = NodeInst.makeInstance(layDiv8, new Point2D.Double(xDiv8, yDiv8), 0, 0, lay);
+                    NodeInst lInstSreg   = NodeInst.makeInstance(laySreg, new Point2D.Double(xSreg, ySreg), 0, 0, lay);
+
+                    // 16 inverters along Y = -460.0
+                    double yColInvs = -460.0;
+                    NodeInst[] lColInvs = new NodeInst[16];
+                    for (int c = 0; c < 16; c++) {
+                        lColInvs[c] = NodeInst.makeInstance(layInv, new Point2D.Double(c * 76.0 + 35.0, yColInvs), 0, 0, lay);
+                    }
+
+                    // Timing gates at Y = 1860.0
+                    NodeInst lInvD1   = NodeInst.makeInstance(layInv,  new Point2D.Double(-400.0, yTiming), 0, 0, lay);
+                    NodeInst lInvD2   = NodeInst.makeInstance(layInv,  new Point2D.Double(-300.0, yTiming), 0, 0, lay);
+                    NodeInst lInvD3   = NodeInst.makeInstance(layInv,  new Point2D.Double(-200.0, yTiming), 0, 0, lay);
+                    NodeInst lInvRw   = NodeInst.makeInstance(layInv,  new Point2D.Double(-100.0, yTiming), 0, 0, lay);
+                    NodeInst lNandWe  = NodeInst.makeInstance(layNand, new Point2D.Double(0.0, yTiming), 0, 0, lay);
+                    NodeInst lInvWe   = NodeInst.makeInstance(layInv,  new Point2D.Double(80.0, yTiming), 0, 0, lay);
+                    NodeInst lNandSae = NodeInst.makeInstance(layNand, new Point2D.Double(180.0, yTiming), 0, 0, lay);
+                    NodeInst lInvSae  = NodeInst.makeInstance(layInv,  new Point2D.Double(260.0, yTiming), 0, 0, lay);
+
+                    // ------------------------------------------
+                    // ROUTING A: Wordlines (Row_Decoder -> Datapath)
+                    // ------------------------------------------
+                    for (int r = 0; r < 16; r++) {
+                        PortInst pDecOut = lInstRowDec.findPortInstFromProto(layDec.findExport("OUT[" + r + "]"));
+                        PortInst pDatWL  = lInstData.findPortInstFromProto(layData.findExport("WL[" + r + "]"));
+                        double y = pDecOut.getCenter().getY();
+
+                        NodeInst v12_left = NodeInst.makeInstance(via12Proto, new Point2D.Double(-100.0, y), 5.0, 5.0, lay);
+                        NodeInst v23_left = NodeInst.makeInstance(via23Proto, new Point2D.Double(-100.0, y), 6.0, 6.0, lay);
+                        ArcInst.makeInstance(m1, ep, pDecOut, v12_left.getPortInst(0));
+                        ArcInst.makeInstance(m2, ep, v12_left.getPortInst(0), v23_left.getPortInst(0));
+
+                        NodeInst v23_right = NodeInst.makeInstance(via23Proto, new Point2D.Double(10.0, y), 6.0, 6.0, lay);
+                        NodeInst v12_right = NodeInst.makeInstance(via12Proto, new Point2D.Double(10.0, y), 5.0, 5.0, lay);
+                        ArcInst.makeInstance(m3, ep, v23_left.getPortInst(0), v23_right.getPortInst(0));
+                        ArcInst.makeInstance(m2, ep, v23_right.getPortInst(0), v12_right.getPortInst(0));
+                        ArcInst.makeInstance(m1, ep, v12_right.getPortInst(0), pDatWL);
+                    }
+
+                    // ------------------------------------------
+                    // ROUTING B: Column Select & Inverters
+                    // ------------------------------------------
+                    for (int c = 0; c < 16; c++) {
+                        PortInst pDecOut = lInstColDec.findPortInstFromProto(layDec.findExport("OUT[" + c + "]"));
+                        double yOut = pDecOut.getCenter().getY();
+                        PortInst pInvIn  = lColInvs[c].findPortInstFromProto(layInv.findExport("in"));
+                        PortInst pInvOut = lColInvs[c].findPortInstFromProto(layInv.findExport("out"));
+                        PortInst pDatSel  = lInstData.findPortInstFromProto(layData.findExport("COL_SEL[" + c + "]"));
+                        PortInst pDatSelB = lInstData.findPortInstFromProto(layData.findExport("COL_SEL_B[" + c + "]"));
+
+                        NodeInst v12_out = NodeInst.makeInstance(via12Proto, new Point2D.Double(-100.0, yOut), 5.0, 5.0, lay);
+                        NodeInst v23_out = NodeInst.makeInstance(via23Proto, new Point2D.Double(-100.0, yOut), 6.0, 6.0, lay);
+                        ArcInst.makeInstance(m1, ep, pDecOut, v12_out.getPortInst(0));
+                        ArcInst.makeInstance(m2, ep, v12_out.getPortInst(0), v23_out.getPortInst(0));
+
+                        double xSelTrack = c * 76.0 + 10.0;
+                        if (c == 0) xSelTrack = -25.0;
+                        if (c == 3) xSelTrack = c * 76.0 + 22.0;
+
+                        NodeInst v23_m3_bot = NodeInst.makeInstance(via23Proto, new Point2D.Double(xSelTrack, yOut), 6.0, 6.0, lay);
+                        ArcInst.makeInstance(m3, ep, v23_out.getPortInst(0), v23_m3_bot.getPortInst(0));
+
+                        NodeInst v12_inv_in = NodeInst.makeInstance(via12Proto, new Point2D.Double(xSelTrack, yColInvs - 1.0), 5.0, 5.0, lay);
+                        ArcInst.makeInstance(m1, ep, v12_inv_in.getPortInst(0), pInvIn);
+
+                        if (c == 0) {
+                            NodeInst v12_m2_bot = NodeInst.makeInstance(via12Proto, new Point2D.Double(-25.0, yColInvs - 1.0), 5.0, 5.0, lay);
+                            ArcInst.makeInstance(m2, ep, v23_m3_bot.getPortInst(0), v12_m2_bot.getPortInst(0));
+                            ArcInst.makeInstance(m1, ep, v12_m2_bot.getPortInst(0), v12_inv_in.getPortInst(0));
+                        } else {
+                            ArcInst.makeInstance(m2, ep, v23_m3_bot.getPortInst(0), v12_inv_in.getPortInst(0));
+                        }
+
+                        // Connect to COL_SEL[c] at Y = -200.0
+                        NodeInst cPoly_sel = NodeInst.makeInstance(conPolyM1, new Point2D.Double(c * 76.0, -200.0), 5.0, 5.0, lay);
+                        NodeInst v12_sel   = NodeInst.makeInstance(via12Proto, new Point2D.Double(c * 76.0, -200.0), 5.0, 5.0, lay);
+                        ArcInst.makeInstance(poly, ep, pDatSel, cPoly_sel.getPortInst(0));
+                        ArcInst.makeInstance(m1, ep, cPoly_sel.getPortInst(0), v12_sel.getPortInst(0));
+
+                        if (c == 0) {
+                            NodeInst v12_sel_c0 = NodeInst.makeInstance(via12Proto, new Point2D.Double(-25.0, -200.0), 5.0, 5.0, lay);
+                            ArcInst.makeInstance(m2, ep, v23_m3_bot.getPortInst(0), v12_sel_c0.getPortInst(0));
+                            ArcInst.makeInstance(m1, ep, v12_sel_c0.getPortInst(0), v12_sel.getPortInst(0));
+                        } else {
+                            NodeInst v12_sel_top = NodeInst.makeInstance(via12Proto, new Point2D.Double(xSelTrack, -200.0), 5.0, 5.0, lay);
+                            ArcInst.makeInstance(m2, ep, v12_inv_in.getPortInst(0), v12_sel_top.getPortInst(0));
+                            ArcInst.makeInstance(m1, ep, v12_sel_top.getPortInst(0), v12_sel.getPortInst(0));
+                        }
+
+                        // Connect to COL_SEL_B[c] at Y = -158.0
+                        double x = c * 76.0;
+                        NodeInst cPoly_selb = NodeInst.makeInstance(conPolyM1, new Point2D.Double(x, -158.0), 5.0, 5.0, lay);
+                        NodeInst v12_selb   = NodeInst.makeInstance(via12Proto, new Point2D.Double(x, -158.0), 5.0, 5.0, lay);
+                        ArcInst.makeInstance(poly, ep, pDatSelB, cPoly_selb.getPortInst(0));
+                        ArcInst.makeInstance(m1, ep, cPoly_selb.getPortInst(0), v12_selb.getPortInst(0));
+
+                        NodeInst v12_inv_out = NodeInst.makeInstance(via12Proto, new Point2D.Double(c * 76.0 + 43.0, yColInvs - 1.5), 5.0, 5.0, lay);
+                        NodeInst v23_inv_out = NodeInst.makeInstance(via23Proto, new Point2D.Double(c * 76.0 + 43.0, yColInvs - 1.5), 6.0, 6.0, lay);
+                        ArcInst.makeInstance(m1, ep, pInvOut, v12_inv_out.getPortInst(0));
+                        ArcInst.makeInstance(m2, ep, v12_inv_out.getPortInst(0), v23_inv_out.getPortInst(0));
+
+                        if (c == 0) {
+                            NodeInst v23_bridge = NodeInst.makeInstance(via23Proto, new Point2D.Double(-40.0, -158.0), 6.0, 6.0, lay);
+                            ArcInst.makeInstance(m2, ep, v12_selb.getPortInst(0), v23_bridge.getPortInst(0));
+                            NodeInst jogLeft = NodeInst.makeInstance(m3Pin, new Point2D.Double(-120.0, -158.0), 3.0, 3.0, lay);
+                            ArcInst.makeInstance(m3, ep, v23_bridge.getPortInst(0), jogLeft.getPortInst(0));
+
+                            NodeInst v23_b0_bot = NodeInst.makeInstance(via23Proto, new Point2D.Double(-120.0, yColInvs - 1.5), 6.0, 6.0, lay);
+                            ArcInst.makeInstance(m3, ep, jogLeft.getPortInst(0), v23_b0_bot.getPortInst(0));
+                            ArcInst.makeInstance(m3, ep, v23_b0_bot.getPortInst(0), v23_inv_out.getPortInst(0));
+                        } else {
+                            NodeInst v23_selb_top = NodeInst.makeInstance(via23Proto, new Point2D.Double(x, -158.0), 6.0, 6.0, lay);
+                            ArcInst.makeInstance(m2, ep, v12_selb.getPortInst(0), v23_selb_top.getPortInst(0));
+
+                            NodeInst v23_selb_bot = NodeInst.makeInstance(via23Proto, new Point2D.Double(x, yColInvs - 1.5), 6.0, 6.0, lay);
+                            ArcInst.makeInstance(m3, ep, v23_selb_top.getPortInst(0), v23_selb_bot.getPortInst(0));
+                            ArcInst.makeInstance(m3, ep, v23_selb_bot.getPortInst(0), v23_inv_out.getPortInst(0));
+                        }
+                    }
+
+                    // ------------------------------------------
+                    // ROUTING C: Global Bitlines (Flawless Manhattan)
+                    // ------------------------------------------
+                    PortInst lGbl   = lInstData.findPortInstFromProto(layData.findExport("GBL"));
+                    PortInst lGblb  = lInstData.findPortInstFromProto(layData.findExport("GBLB"));
+                    PortInst pWdBl  = lInstWd.findPortInstFromProto(layWd.findExport("BL"));
+                    PortInst pWdBlb = lInstWd.findPortInstFromProto(layWd.findExport("BLB"));
+                    PortInst pSaBl  = lInstSa.findPortInstFromProto(laySa.findExport("BL"));
+                    PortInst pSaBlb = lInstSa.findPortInstFromProto(laySa.findExport("BLB"));
+
+                    // GBL: starts at (-5.0, -225.0) on Metal-2
+                    NodeInst v12_gbl_trunk = NodeInst.makeInstance(via12Proto, new Point2D.Double(-5.0, -265.0), 5.0, 5.0, lay);
+                    ArcInst.makeInstance(m2, ep, lGbl, v12_gbl_trunk.getPortInst(0));
+
+                    // M1 horizontal at Y = -265.0 to WD at X = 11.5 and SA at X = 180.0
+                    NodeInst v12_gbl_wd = NodeInst.makeInstance(via12Proto, new Point2D.Double(11.5, -265.0), 5.0, 5.0, lay);
+                    ArcInst.makeInstance(m1, ep, v12_gbl_trunk.getPortInst(0), v12_gbl_wd.getPortInst(0));
+                    NodeInst v12_wd_bl = NodeInst.makeInstance(via12Proto, new Point2D.Double(11.5, -344.0), 5.0, 5.0, lay);
+                    ArcInst.makeInstance(m2, ep, v12_gbl_wd.getPortInst(0), v12_wd_bl.getPortInst(0));
+                    ArcInst.makeInstance(m1, ep, v12_wd_bl.getPortInst(0), pWdBl);
+
+                    NodeInst v12_gbl_sa = NodeInst.makeInstance(via12Proto, new Point2D.Double(180.0, -265.0), 5.0, 5.0, lay);
+                    ArcInst.makeInstance(m1, ep, v12_gbl_wd.getPortInst(0), v12_gbl_sa.getPortInst(0));
+                    NodeInst v12_sa_bl = NodeInst.makeInstance(via12Proto, new Point2D.Double(180.0, -358.0), 5.0, 5.0, lay);
+                    NodeInst cPoly_sa_bl = NodeInst.makeInstance(conPolyM1, new Point2D.Double(180.0, -358.0), 5.0, 5.0, lay);
+                    ArcInst.makeInstance(m2, ep, v12_gbl_sa.getPortInst(0), v12_sa_bl.getPortInst(0));
+                    ArcInst.makeInstance(m1, ep, v12_sa_bl.getPortInst(0), cPoly_sa_bl.getPortInst(0));
+                    ArcInst.makeInstance(poly, ep, cPoly_sa_bl.getPortInst(0), pSaBl);
+
+                    // GBLB: starts at (35.0, -135.0) on Metal-2
+                    NodeInst v23_gblb_top = NodeInst.makeInstance(via23Proto, new Point2D.Double(35.0, -135.0), 6.0, 6.0, lay);
+                    ArcInst.makeInstance(m2, ep, lGblb, v23_gblb_top.getPortInst(0));
+
+                    NodeInst v23_gblb_bot = NodeInst.makeInstance(via23Proto, new Point2D.Double(35.0, -275.0), 6.0, 6.0, lay);
+                    NodeInst v12_gblb_trunk = NodeInst.makeInstance(via12Proto, new Point2D.Double(35.0, -275.0), 5.0, 5.0, lay);
+                    ArcInst.makeInstance(m3, ep, v23_gblb_top.getPortInst(0), v23_gblb_bot.getPortInst(0));
+                    ArcInst.makeInstance(m2, ep, v23_gblb_bot.getPortInst(0), v12_gblb_trunk.getPortInst(0));
+
+                    // M1 horizontal at Y = -275.0 to WD at X = 23.5 and SA at X = 220.0
+                    NodeInst v12_gblb_wd = NodeInst.makeInstance(via12Proto, new Point2D.Double(23.5, -275.0), 5.0, 5.0, lay);
+                    NodeInst v12_wd_blb = NodeInst.makeInstance(via12Proto, new Point2D.Double(23.5, -344.0), 5.0, 5.0, lay);
+                    ArcInst.makeInstance(m1, ep, v12_gblb_trunk.getPortInst(0), v12_gblb_wd.getPortInst(0));
+                    ArcInst.makeInstance(m2, ep, v12_gblb_wd.getPortInst(0), v12_wd_blb.getPortInst(0));
+                    ArcInst.makeInstance(m1, ep, v12_wd_blb.getPortInst(0), pWdBlb);
+
+                    NodeInst v12_gblb_sa = NodeInst.makeInstance(via12Proto, new Point2D.Double(220.0, -275.0), 5.0, 5.0, lay);
+                    ArcInst.makeInstance(m1, ep, v12_gblb_trunk.getPortInst(0), v12_gblb_sa.getPortInst(0));
+                    NodeInst v12_sa_blb = NodeInst.makeInstance(via12Proto, new Point2D.Double(220.0, -358.0), 5.0, 5.0, lay);
+                    NodeInst cPoly_sa_blb = NodeInst.makeInstance(conPolyM1, new Point2D.Double(220.0, -358.0), 5.0, 5.0, lay);
+                    ArcInst.makeInstance(m2, ep, v12_gblb_sa.getPortInst(0), v12_sa_blb.getPortInst(0));
+                    ArcInst.makeInstance(m1, ep, v12_sa_blb.getPortInst(0), cPoly_sa_blb.getPortInst(0));
+                    ArcInst.makeInstance(poly, ep, cPoly_sa_blb.getPortInst(0), pSaBlb);
+
+                    // ------------------------------------------
+                    // ROUTING D: Address Bus (Proven Manhattan Architecture)
+                    // ------------------------------------------
+                    // Q[0:3] -> Row_Decoder.A[0:3]
+                    for (int b = 0; b < 4; b++) {
+                        PortInst pQ = lInstSreg.findPortInstFromProto(laySreg.findExport("Q[" + b + "]"));
+                        PortInst pA = lInstRowDec.findPortInstFromProto(layDec.findExport("A[" + b + "]"));
+
+                        double xQ = pQ.getCenter().getX();
+                        double yQ = pQ.getCenter().getY();
+                        double xA = pA.getCenter().getX();
+                        double yA = pA.getCenter().getY();
+
+                        NodeInst v12_q = NodeInst.makeInstance(via12Proto, new Point2D.Double(xQ, yQ), 5.0, 5.0, lay);
+                        NodeInst v23_q = NodeInst.makeInstance(via23Proto, new Point2D.Double(xQ, yQ), 6.0, 6.0, lay);
+                        ArcInst.makeInstance(m1, ep, pQ, v12_q.getPortInst(0));
+                        ArcInst.makeInstance(m2, ep, v12_q.getPortInst(0), v23_q.getPortInst(0));
+
+                        double yJog = 2660.0 + b * 12.0;
+                        NodeInst v23_top = NodeInst.makeInstance(via23Proto, new Point2D.Double(xQ, yJog), 6.0, 6.0, lay);
+                        ArcInst.makeInstance(m3, ep, v23_q.getPortInst(0), v23_top.getPortInst(0));
+
+                        NodeInst v12_corner = NodeInst.makeInstance(via12Proto, new Point2D.Double(xA, yJog), 5.0, 5.0, lay);
+                        ArcInst.makeInstance(m2, ep, v23_top.getPortInst(0), v12_corner.getPortInst(0));
+
+                        NodeInst v12_a = NodeInst.makeInstance(via12Proto, new Point2D.Double(xA, yA), 5.0, 5.0, lay);
+                        ArcInst.makeInstance(m2, ep, v12_corner.getPortInst(0), v12_a.getPortInst(0));
+                        ArcInst.makeInstance(m1, ep, v12_a.getPortInst(0), pA);
+                    }
+
+                    // Q[4:7] -> Col_Decoder.A[0:3]
+                    for (int b = 0; b < 4; b++) {
+                        PortInst pQ = lInstSreg.findPortInstFromProto(laySreg.findExport("Q[" + (b + 4) + "]"));
+                        PortInst pA = lInstColDec.findPortInstFromProto(layDec.findExport("A[" + b + "]"));
+
+                        double xQ = pQ.getCenter().getX();
+                        double yQ = pQ.getCenter().getY();
+                        double xTrack = -950.0 - b * 12.0;
+                        double xA = pA.getCenter().getX();
+                        double yA = pA.getCenter().getY();
+
+                        NodeInst v12_q = NodeInst.makeInstance(via12Proto, new Point2D.Double(xQ, yQ), 5.0, 5.0, lay);
+                        NodeInst v23_q = NodeInst.makeInstance(via23Proto, new Point2D.Double(xQ, yQ), 6.0, 6.0, lay);
+                        ArcInst.makeInstance(m1, ep, pQ, v12_q.getPortInst(0));
+                        ArcInst.makeInstance(m2, ep, v12_q.getPortInst(0), v23_q.getPortInst(0));
+
+                        double yJog = 2710.0 + b * 12.0;
+                        NodeInst v23_top = NodeInst.makeInstance(via23Proto, new Point2D.Double(xQ, yJog), 6.0, 6.0, lay);
+                        ArcInst.makeInstance(m3, ep, v23_q.getPortInst(0), v23_top.getPortInst(0));
+
+                        NodeInst v12_corner = NodeInst.makeInstance(via12Proto, new Point2D.Double(xTrack, yJog), 5.0, 5.0, lay);
+                        ArcInst.makeInstance(m2, ep, v23_top.getPortInst(0), v12_corner.getPortInst(0));
+
+                        NodeInst v12_bot = NodeInst.makeInstance(via12Proto, new Point2D.Double(xTrack, yA), 5.0, 5.0, lay);
+                        ArcInst.makeInstance(m2, ep, v12_corner.getPortInst(0), v12_bot.getPortInst(0));
+                        ArcInst.makeInstance(m1, ep, v12_bot.getPortInst(0), pA);
+                    }
+
+                    // ------------------------------------------
+                    // ROUTING E: Timing Logic & Control Lines
+                    // ------------------------------------------
+                    // 1. EXECUTE -> PRE_B & invD1.in
+                    PortInst lExec = lInstDiv8.findPortInstFromProto(layDiv8.findExport("EXECUTE"));
+                    PortInst lPreB = lInstData.findPortInstFromProto(layData.findExport("PRE_B"));
+
+                    double xExec = lExec.getCenter().getX();
+                    double yExec = lExec.getCenter().getY();
+
+                    NodeInst v12_exec = NodeInst.makeInstance(via12Proto, new Point2D.Double(xExec, yExec), 5.0, 5.0, lay);
+                    NodeInst v23_exec = NodeInst.makeInstance(via23Proto, new Point2D.Double(xExec, yExec), 6.0, 6.0, lay);
+                    ArcInst.makeInstance(m1, ep, lExec, v12_exec.getPortInst(0));
+                    ArcInst.makeInstance(m2, ep, v12_exec.getPortInst(0), v23_exec.getPortInst(0));
+
+                    // Route M3 down to Y = 1455.0
+                    NodeInst v23_exec_low = NodeInst.makeInstance(via23Proto, new Point2D.Double(xExec, 1455.0), 6.0, 6.0, lay);
+                    ArcInst.makeInstance(m3, ep, v23_exec.getPortInst(0), v23_exec_low.getPortInst(0));
+
+                    // Tap to PRE_B at (-34.25, 1455.0)
+                    NodeInst v23_pre_tap = NodeInst.makeInstance(via23Proto, new Point2D.Double(-34.25, 1455.0), 6.0, 6.0, lay);
+                    ArcInst.makeInstance(m3, ep, v23_exec_low.getPortInst(0), v23_pre_tap.getPortInst(0));
+                    ArcInst.makeInstance(m2, ep, v23_pre_tap.getPortInst(0), lPreB);
+
+                    // Route M3 up to Y = 1780.0
+                    NodeInst v23_exec_top = NodeInst.makeInstance(via23Proto, new Point2D.Double(xExec, 1780.0), 6.0, 6.0, lay);
+                    ArcInst.makeInstance(m3, ep, v23_exec.getPortInst(0), v23_exec_top.getPortInst(0));
+
+                    // Route M3 left to (-425.0, 1780.0), M2 up to (-425.0, yTiming - 1.0), Via12 to invD1.in
+                    NodeInst v23_d1 = NodeInst.makeInstance(via23Proto, new Point2D.Double(-425.0, 1780.0), 6.0, 6.0, lay);
+                    NodeInst v12_d1 = NodeInst.makeInstance(via12Proto, new Point2D.Double(-425.0, yTiming - 1.0), 5.0, 5.0, lay);
+                    ArcInst.makeInstance(m3, ep, v23_exec_top.getPortInst(0), v23_d1.getPortInst(0));
+                    ArcInst.makeInstance(m2, ep, v23_d1.getPortInst(0), v12_d1.getPortInst(0));
+                    ArcInst.makeInstance(m1, ep, v12_d1.getPortInst(0), lInvD1.findPortInstFromProto(layInv.findExport("in")));
+
+                    // 2. D1 -> D2
+                    PortInst pD1Out = lInvD1.findPortInstFromProto(layInv.findExport("out"));
+                    PortInst pD2In  = lInvD2.findPortInstFromProto(layInv.findExport("in"));
+                    NodeInst jD1_1 = NodeInst.makeInstance(m1Pin, new Point2D.Double(-360.0, yTiming - 1.5), 3.0, 3.0, lay);
+                    NodeInst jD1_2 = NodeInst.makeInstance(m1Pin, new Point2D.Double(-360.0, yTiming - 1.0), 3.0, 3.0, lay);
+                    ArcInst.makeInstance(m1, ep, pD1Out, jD1_1.getPortInst(0));
+                    ArcInst.makeInstance(m1, ep, jD1_1.getPortInst(0), jD1_2.getPortInst(0));
+                    ArcInst.makeInstance(m1, ep, jD1_2.getPortInst(0), pD2In);
+
+                    // 3. D2 -> D3 & nandWe.A
+                    PortInst pD2Out = lInvD2.findPortInstFromProto(layInv.findExport("out"));
+                    PortInst pD3In  = lInvD3.findPortInstFromProto(layInv.findExport("in"));
+                    NodeInst jD2_1 = NodeInst.makeInstance(m1Pin, new Point2D.Double(-260.0, yTiming - 1.5), 3.0, 3.0, lay);
+                    NodeInst jD2_2 = NodeInst.makeInstance(m1Pin, new Point2D.Double(-260.0, yTiming - 1.0), 3.0, 3.0, lay);
+                    ArcInst.makeInstance(m1, ep, pD2Out, jD2_1.getPortInst(0));
+                    ArcInst.makeInstance(m1, ep, jD2_1.getPortInst(0), jD2_2.getPortInst(0));
+                    ArcInst.makeInstance(m1, ep, jD2_2.getPortInst(0), pD3In);
+
+                    NodeInst v12_d2_tap = NodeInst.makeInstance(via12Proto, new Point2D.Double(-292.0, yTiming - 1.5), 5.0, 5.0, lay);
+                    NodeInst v23_d2_top = NodeInst.makeInstance(via23Proto, new Point2D.Double(-292.0, yTiming - 1.5), 6.0, 6.0, lay);
+                    NodeInst v23_d2_bot = NodeInst.makeInstance(via23Proto, new Point2D.Double(-292.0, 1750.0), 6.0, 6.0, lay);
+                    ArcInst.makeInstance(m1, ep, pD2Out, v12_d2_tap.getPortInst(0));
+                    ArcInst.makeInstance(m2, ep, v12_d2_tap.getPortInst(0), v23_d2_top.getPortInst(0));
+                    ArcInst.makeInstance(m2, ep, v23_d2_top.getPortInst(0), v23_d2_bot.getPortInst(0));
+
+                    NodeInst v23_we_a = NodeInst.makeInstance(via23Proto, new Point2D.Double(-56.0, 1750.0), 6.0, 6.0, lay);
+                    NodeInst v12_we_a = NodeInst.makeInstance(via12Proto, new Point2D.Double(-56.0, yTiming - 52.5), 5.0, 5.0, lay);
+                    ArcInst.makeInstance(m3, ep, v23_d2_bot.getPortInst(0), v23_we_a.getPortInst(0));
+                    ArcInst.makeInstance(m2, ep, v23_we_a.getPortInst(0), v12_we_a.getPortInst(0));
+                    ArcInst.makeInstance(m1, ep, v12_we_a.getPortInst(0), lNandWe.findPortInstFromProto(layNand.findExport("A")));
+
+                    // 4. D3 -> nandSae.A
+                    PortInst pD3Out = lInvD3.findPortInstFromProto(layInv.findExport("out"));
+                    NodeInst v12_d3_tap = NodeInst.makeInstance(via12Proto, new Point2D.Double(-192.0, yTiming - 1.5), 5.0, 5.0, lay);
+                    NodeInst v23_d3_top = NodeInst.makeInstance(via23Proto, new Point2D.Double(-192.0, yTiming - 1.5), 6.0, 6.0, lay);
+                    NodeInst v23_d3_bot = NodeInst.makeInstance(via23Proto, new Point2D.Double(-192.0, 1770.0), 6.0, 6.0, lay);
+                    ArcInst.makeInstance(m1, ep, pD3Out, v12_d3_tap.getPortInst(0));
+                    ArcInst.makeInstance(m2, ep, v12_d3_tap.getPortInst(0), v23_d3_top.getPortInst(0));
+                    ArcInst.makeInstance(m2, ep, v23_d3_top.getPortInst(0), v23_d3_bot.getPortInst(0));
+
+                    NodeInst v23_sae_a = NodeInst.makeInstance(via23Proto, new Point2D.Double(124.0, 1770.0), 6.0, 6.0, lay);
+                    NodeInst v12_sae_a = NodeInst.makeInstance(via12Proto, new Point2D.Double(124.0, yTiming - 52.5), 5.0, 5.0, lay);
+                    ArcInst.makeInstance(m3, ep, v23_d3_bot.getPortInst(0), v23_sae_a.getPortInst(0));
+                    ArcInst.makeInstance(m2, ep, v23_sae_a.getPortInst(0), v12_sae_a.getPortInst(0));
+                    ArcInst.makeInstance(m1, ep, v12_sae_a.getPortInst(0), lNandSae.findPortInstFromProto(layNand.findExport("A")));
+
+                    // 5. R_W -> invRw.in & nandWe.B
+                    NodeInst pinRwLay  = NodeInst.makeInstance(m3Pin, new Point2D.Double(-700.0, 1740.0), 3.0, 3.0, lay);
+                    NodeInst v23_rw_in = NodeInst.makeInstance(via23Proto, new Point2D.Double(-125.0, 1740.0), 6.0, 6.0, lay);
+                    NodeInst v12_rw_in = NodeInst.makeInstance(via12Proto, new Point2D.Double(-125.0, yTiming - 1.0), 5.0, 5.0, lay);
+                    ArcInst.makeInstance(m3, ep, pinRwLay.getPortInst(0), v23_rw_in.getPortInst(0));
+                    ArcInst.makeInstance(m2, ep, v23_rw_in.getPortInst(0), v12_rw_in.getPortInst(0));
+                    ArcInst.makeInstance(m1, ep, v12_rw_in.getPortInst(0), lInvRw.findPortInstFromProto(layInv.findExport("in")));
+
+                    NodeInst v23_we_b = NodeInst.makeInstance(via23Proto, new Point2D.Double(-41.5, 1740.0), 6.0, 6.0, lay);
+                    NodeInst v12_we_b = NodeInst.makeInstance(via12Proto, new Point2D.Double(-41.5, yTiming - 52.5), 5.0, 5.0, lay);
+                    ArcInst.makeInstance(m3, ep, v23_rw_in.getPortInst(0), v23_we_b.getPortInst(0));
+                    ArcInst.makeInstance(m2, ep, v23_we_b.getPortInst(0), v12_we_b.getPortInst(0));
+                    ArcInst.makeInstance(m1, ep, v12_we_b.getPortInst(0), lNandWe.findPortInstFromProto(layNand.findExport("B")));
+
+                    // 6. R_W_b -> nandSae.B
+                    PortInst pRwBOut = lInvRw.findPortInstFromProto(layInv.findExport("out"));
+                    NodeInst v12_rwb_tap = NodeInst.makeInstance(via12Proto, new Point2D.Double(-92.0, yTiming - 1.5), 5.0, 5.0, lay);
+                    NodeInst v23_rwb_top = NodeInst.makeInstance(via23Proto, new Point2D.Double(-92.0, yTiming - 1.5), 6.0, 6.0, lay);
+                    NodeInst v23_rwb_bot = NodeInst.makeInstance(via23Proto, new Point2D.Double(-92.0, 1760.0), 6.0, 6.0, lay);
+                    ArcInst.makeInstance(m1, ep, pRwBOut, v12_rwb_tap.getPortInst(0));
+                    ArcInst.makeInstance(m2, ep, v12_rwb_tap.getPortInst(0), v23_rwb_top.getPortInst(0));
+                    ArcInst.makeInstance(m2, ep, v23_rwb_top.getPortInst(0), v23_rwb_bot.getPortInst(0));
+
+                    NodeInst v23_sae_b = NodeInst.makeInstance(via23Proto, new Point2D.Double(138.5, 1760.0), 6.0, 6.0, lay);
+                    NodeInst v12_sae_b = NodeInst.makeInstance(via12Proto, new Point2D.Double(138.5, yTiming - 52.5), 5.0, 5.0, lay);
+                    ArcInst.makeInstance(m3, ep, v23_rwb_bot.getPortInst(0), v23_sae_b.getPortInst(0));
+                    ArcInst.makeInstance(m2, ep, v23_sae_b.getPortInst(0), v12_sae_b.getPortInst(0));
+                    ArcInst.makeInstance(m1, ep, v12_sae_b.getPortInst(0), lNandSae.findPortInstFromProto(layNand.findExport("B")));
+
+                    // 7. nandWe C & D tied to VDD via M3 at X = 20.0
+                    PortInst pNandWeC = lNandWe.findPortInstFromProto(layNand.findExport("C"));
+                    PortInst pNandWeD = lNandWe.findPortInstFromProto(layNand.findExport("D"));
+                    ArcInst.makeInstance(m1, ep, pNandWeC, pNandWeD);
+                    NodeInst v12_we_cd_bot = NodeInst.makeInstance(via12Proto, new Point2D.Double(20.0, yTiming - 52.5), 5.0, 5.0, lay);
+                    NodeInst v23_we_cd_bot = NodeInst.makeInstance(via23Proto, new Point2D.Double(20.0, yTiming - 52.5), 6.0, 6.0, lay);
+                    NodeInst v23_we_cd_top = NodeInst.makeInstance(via23Proto, new Point2D.Double(20.0, yTiming + 60.0), 6.0, 6.0, lay);
+                    NodeInst v12_we_cd_top = NodeInst.makeInstance(via12Proto, new Point2D.Double(20.0, yTiming + 60.0), 5.0, 5.0, lay);
+                    ArcInst.makeInstance(m1, ep, pNandWeD, v12_we_cd_bot.getPortInst(0));
+                    ArcInst.makeInstance(m2, ep, v12_we_cd_bot.getPortInst(0), v23_we_cd_bot.getPortInst(0));
+                    ArcInst.makeInstance(m3, ep, v23_we_cd_bot.getPortInst(0), v23_we_cd_top.getPortInst(0));
+                    ArcInst.makeInstance(m2, ep, v23_we_cd_top.getPortInst(0), v12_we_cd_top.getPortInst(0));
+
+                    // 8. nandSae C & D tied to VDD via M3 at X = 200.0
+                    PortInst pNandSaeC = lNandSae.findPortInstFromProto(layNand.findExport("C"));
+                    PortInst pNandSaeD = lNandSae.findPortInstFromProto(layNand.findExport("D"));
+                    ArcInst.makeInstance(m1, ep, pNandSaeC, pNandSaeD);
+                    NodeInst v12_sae_cd_bot = NodeInst.makeInstance(via12Proto, new Point2D.Double(200.0, yTiming - 52.5), 5.0, 5.0, lay);
+                    NodeInst v23_sae_cd_bot = NodeInst.makeInstance(via23Proto, new Point2D.Double(200.0, yTiming - 52.5), 6.0, 6.0, lay);
+                    NodeInst v23_sae_cd_top = NodeInst.makeInstance(via23Proto, new Point2D.Double(200.0, yTiming + 60.0), 6.0, 6.0, lay);
+                    NodeInst v12_sae_cd_top = NodeInst.makeInstance(via12Proto, new Point2D.Double(200.0, yTiming + 60.0), 5.0, 5.0, lay);
+                    ArcInst.makeInstance(m1, ep, pNandSaeD, v12_sae_cd_bot.getPortInst(0));
+                    ArcInst.makeInstance(m2, ep, v12_sae_cd_bot.getPortInst(0), v23_sae_cd_bot.getPortInst(0));
+                    ArcInst.makeInstance(m3, ep, v23_sae_cd_bot.getPortInst(0), v23_sae_cd_top.getPortInst(0));
+                    ArcInst.makeInstance(m2, ep, v23_sae_cd_top.getPortInst(0), v12_sae_cd_top.getPortInst(0));
+
+                    // 9. nandWe.out -> invWe.in
+                    PortInst pNandWeOut = lNandWe.findPortInstFromProto(layNand.findExport("out"));
+                    PortInst pInvWeIn   = lInvWe.findPortInstFromProto(layInv.findExport("in"));
+                    NodeInst v12_we_in = NodeInst.makeInstance(via12Proto, new Point2D.Double(55.0, yTiming - 1.0), 5.0, 5.0, lay);
+                    NodeInst jWeOut_m2 = NodeInst.makeInstance(m2Pin, new Point2D.Double(55.0, yTiming + 45.0), 3.0, 3.0, lay);
+                    ArcInst.makeInstance(m2, ep, pNandWeOut, jWeOut_m2.getPortInst(0));
+                    ArcInst.makeInstance(m2, ep, jWeOut_m2.getPortInst(0), v12_we_in.getPortInst(0));
+                    ArcInst.makeInstance(m1, ep, v12_we_in.getPortInst(0), pInvWeIn);
+
+                    // 10. nandSae.out -> invSae.in
+                    PortInst pNandSaeOut = lNandSae.findPortInstFromProto(layNand.findExport("out"));
+                    PortInst pInvSaeIn   = lInvSae.findPortInstFromProto(layInv.findExport("in"));
+                    NodeInst v12_sae_in = NodeInst.makeInstance(via12Proto, new Point2D.Double(235.0, yTiming - 1.0), 5.0, 5.0, lay);
+                    NodeInst jSaeOut_m2 = NodeInst.makeInstance(m2Pin, new Point2D.Double(235.0, yTiming + 45.0), 3.0, 3.0, lay);
+                    ArcInst.makeInstance(m2, ep, pNandSaeOut, jSaeOut_m2.getPortInst(0));
+                    ArcInst.makeInstance(m2, ep, jSaeOut_m2.getPortInst(0), v12_sae_in.getPortInst(0));
+                    ArcInst.makeInstance(m1, ep, v12_sae_in.getPortInst(0), pInvSaeIn);
+
+                    // 11. invWe.out (WE) -> write_driver.WE
+                    PortInst pInvWeOut = lInvWe.findPortInstFromProto(layInv.findExport("out"));
+                    PortInst pWdWe     = lInstWd.findPortInstFromProto(layWd.findExport("WE"));
+                    NodeInst v12_we_out = NodeInst.makeInstance(via12Proto, new Point2D.Double(88.0, yTiming - 1.5), 5.0, 5.0, lay);
+                    NodeInst v23_we_out = NodeInst.makeInstance(via23Proto, new Point2D.Double(88.0, yTiming - 1.5), 6.0, 6.0, lay);
+                    NodeInst v23_we_tr  = NodeInst.makeInstance(via23Proto, new Point2D.Double(88.0, 1810.0), 6.0, 6.0, lay);
+                    ArcInst.makeInstance(m1, ep, pInvWeOut, v12_we_out.getPortInst(0));
+                    ArcInst.makeInstance(m2, ep, v12_we_out.getPortInst(0), v23_we_out.getPortInst(0));
+                    ArcInst.makeInstance(m2, ep, v23_we_out.getPortInst(0), v23_we_tr.getPortInst(0));
+
+                    double xEastWe = 1210.0;
+                    NodeInst v23_we_r1 = NodeInst.makeInstance(via23Proto, new Point2D.Double(xEastWe, 1810.0), 6.0, 6.0, lay);
+                    NodeInst v23_we_r2 = NodeInst.makeInstance(via23Proto, new Point2D.Double(xEastWe, -295.0), 6.0, 6.0, lay);
+                    NodeInst v12_we_r2 = NodeInst.makeInstance(via12Proto, new Point2D.Double(xEastWe, -295.0), 5.0, 5.0, lay);
+                    ArcInst.makeInstance(m3, ep, v23_we_tr.getPortInst(0), v23_we_r1.getPortInst(0));
+                    ArcInst.makeInstance(m2, ep, v23_we_r1.getPortInst(0), v23_we_r2.getPortInst(0));
+                    ArcInst.makeInstance(m2, ep, v23_we_r2.getPortInst(0), v12_we_r2.getPortInst(0));
+
+                    NodeInst v12_we_drop = NodeInst.makeInstance(via12Proto, new Point2D.Double(17.5, -295.0), 5.0, 5.0, lay);
+                    NodeInst v12_we_pin  = NodeInst.makeInstance(via12Proto, new Point2D.Double(17.5, -348.0), 5.0, 5.0, lay);
+                    NodeInst cPoly_we    = NodeInst.makeInstance(conPolyM1,  new Point2D.Double(17.5, -348.0), 5.0, 5.0, lay);
+                    ArcInst.makeInstance(m1, ep, v12_we_r2.getPortInst(0), v12_we_drop.getPortInst(0));
+                    ArcInst.makeInstance(m2, ep, v12_we_drop.getPortInst(0), v12_we_pin.getPortInst(0));
+                    ArcInst.makeInstance(m1, ep, v12_we_pin.getPortInst(0), cPoly_we.getPortInst(0));
+                    ArcInst.makeInstance(poly, ep, cPoly_we.getPortInst(0), pWdWe);
+
+                    // 12. invSae.out (SAE) -> sense_amplifier.SAE
+                    PortInst pInvSaeOut = lInvSae.findPortInstFromProto(layInv.findExport("out"));
+                    PortInst pSaSae     = lInstSa.findPortInstFromProto(laySa.findExport("SAE"));
+                    NodeInst v12_sae_out = NodeInst.makeInstance(via12Proto, new Point2D.Double(268.0, yTiming - 1.5), 5.0, 5.0, lay);
+                    NodeInst v23_sae_out = NodeInst.makeInstance(via23Proto, new Point2D.Double(268.0, yTiming - 1.5), 6.0, 6.0, lay);
+                    NodeInst v23_sae_tr  = NodeInst.makeInstance(via23Proto, new Point2D.Double(268.0, 1820.0), 6.0, 6.0, lay);
+                    ArcInst.makeInstance(m1, ep, pInvSaeOut, v12_sae_out.getPortInst(0));
+                    ArcInst.makeInstance(m2, ep, v12_sae_out.getPortInst(0), v23_sae_out.getPortInst(0));
+                    ArcInst.makeInstance(m2, ep, v23_sae_out.getPortInst(0), v23_sae_tr.getPortInst(0));
+
+                    double xEastSae = 1225.0;
+                    NodeInst v23_sae_r1 = NodeInst.makeInstance(via23Proto, new Point2D.Double(xEastSae, 1820.0), 6.0, 6.0, lay);
+                    NodeInst v23_sae_r2 = NodeInst.makeInstance(via23Proto, new Point2D.Double(xEastSae, -378.0), 6.0, 6.0, lay);
+                    NodeInst v12_sae_r2 = NodeInst.makeInstance(via12Proto, new Point2D.Double(xEastSae, -378.0), 5.0, 5.0, lay);
+                    ArcInst.makeInstance(m3, ep, v23_sae_tr.getPortInst(0), v23_sae_r1.getPortInst(0));
+                    ArcInst.makeInstance(m2, ep, v23_sae_r1.getPortInst(0), v23_sae_r2.getPortInst(0));
+                    ArcInst.makeInstance(m2, ep, v23_sae_r2.getPortInst(0), v12_sae_r2.getPortInst(0));
+
+                    NodeInst cPoly_sae   = NodeInst.makeInstance(conPolyM1, new Point2D.Double(200.0, -378.0), 5.0, 5.0, lay);
+                    ArcInst.makeInstance(m1, ep, v12_sae_r2.getPortInst(0), cPoly_sae.getPortInst(0));
+                    ArcInst.makeInstance(poly, ep, cPoly_sae.getPortInst(0), pSaSae);
+
+                    // ------------------------------------------
+                    // ROUTING F: Power & Ground Network
+                    // ------------------------------------------
+                    PortInst pVddDat = lInstData.findPortInstFromProto(layData.findExport("vdd"));
+                    PortInst pGndDat = lInstData.findPortInstFromProto(layData.findExport("gnd"));
+
+                    // Downward Power:
+                    NodeInst v12_vdd_row = NodeInst.makeInstance(via12Proto, new Point2D.Double(-55.0, -200.0), 5.0, 5.0, lay);
+                    NodeInst v12_vdd_sa  = NodeInst.makeInstance(via12Proto, new Point2D.Double(-55.0, -288.0), 5.0, 5.0, lay);
+                    NodeInst v12_vdd_inv = NodeInst.makeInstance(via12Proto, new Point2D.Double(-55.0, yColInvs + 21.5), 5.0, 5.0, lay);
+                    NodeInst v12_vdd_col = NodeInst.makeInstance(via12Proto, new Point2D.Double(-55.0, yColDec - 400.0), 5.0, 5.0, lay);
+
+                    ArcInst.makeInstance(m2, ep, pVddDat, v12_vdd_row.getPortInst(0));
+                    ArcInst.makeInstance(m2, ep, v12_vdd_row.getPortInst(0), v12_vdd_sa.getPortInst(0));
+                    ArcInst.makeInstance(m2, ep, v12_vdd_sa.getPortInst(0), v12_vdd_inv.getPortInst(0));
+                    ArcInst.makeInstance(m2, ep, v12_vdd_inv.getPortInst(0), v12_vdd_col.getPortInst(0));
+
+                    NodeInst v12_gnd_row = NodeInst.makeInstance(via12Proto, new Point2D.Double(-75.0, -220.0), 5.0, 5.0, lay);
+                    NodeInst v12_gnd_wd  = NodeInst.makeInstance(via12Proto, new Point2D.Double(-75.0, -384.0), 5.0, 5.0, lay);
+                    NodeInst v12_gnd_inv = NodeInst.makeInstance(via12Proto, new Point2D.Double(-75.0, yColInvs - 23.0), 5.0, 5.0, lay);
+                    NodeInst v12_gnd_col = NodeInst.makeInstance(via12Proto, new Point2D.Double(-75.0, yColDec - 420.0), 5.0, 5.0, lay);
+
+                    ArcInst.makeInstance(m2, ep, pGndDat, v12_gnd_row.getPortInst(0));
+                    ArcInst.makeInstance(m2, ep, v12_gnd_row.getPortInst(0), v12_gnd_wd.getPortInst(0));
+                    ArcInst.makeInstance(m2, ep, v12_gnd_wd.getPortInst(0), v12_gnd_inv.getPortInst(0));
+                    ArcInst.makeInstance(m2, ep, v12_gnd_inv.getPortInst(0), v12_gnd_col.getPortInst(0));
+
+                    // Row_Decoder power
+                    PortInst pVddRow = lInstRowDec.findPortInstFromProto(layDec.findExport("vdd"));
+                    PortInst pGndRow = lInstRowDec.findPortInstFromProto(layDec.findExport("gnd"));
+                    ArcInst.makeInstance(m1, ep, v12_vdd_row.getPortInst(0), pVddRow);
+                    ArcInst.makeInstance(m1, ep, v12_gnd_row.getPortInst(0), pGndRow);
+
+                    // Col_Decoder power
+                    PortInst pVddCol = lInstColDec.findPortInstFromProto(layDec.findExport("vdd"));
+                    PortInst pGndCol = lInstColDec.findPortInstFromProto(layDec.findExport("gnd"));
+                    ArcInst.makeInstance(m1, ep, v12_vdd_col.getPortInst(0), pVddCol);
+                    ArcInst.makeInstance(m1, ep, v12_gnd_col.getPortInst(0), pGndCol);
+
+                    // WD & SA power
+                    PortInst pVddWd = lInstWd.findPortInstFromProto(layWd.findExport("vdd"));
+                    PortInst pGndWd = lInstWd.findPortInstFromProto(layWd.findExport("gnd"));
+                    PortInst pVddSa = lInstSa.findPortInstFromProto(laySa.findExport("vdd"));
+                    PortInst pGndSa = lInstSa.findPortInstFromProto(laySa.findExport("gnd"));
+
+                    NodeInst jogVddWd = NodeInst.makeInstance(m1Pin, new Point2D.Double(-45.0, -296.0), 3.0, 3.0, lay);
+                    ArcInst.makeInstance(m1, ep, v12_vdd_sa.getPortInst(0), jogVddWd.getPortInst(0));
+                    ArcInst.makeInstance(m1, ep, jogVddWd.getPortInst(0), pVddWd);
+                    ArcInst.makeInstance(m1, ep, v12_vdd_sa.getPortInst(0), pVddSa);
+
+                    NodeInst jogGndSa = NodeInst.makeInstance(m1Pin, new Point2D.Double(200.0, -388.0), 3.0, 3.0, lay);
+                    ArcInst.makeInstance(m1, ep, v12_gnd_wd.getPortInst(0), pGndWd);
+                    ArcInst.makeInstance(m1, ep, pGndWd, jogGndSa.getPortInst(0));
+                    ArcInst.makeInstance(m1, ep, jogGndSa.getPortInst(0), pGndSa);
+
+                    // 16 Inverters power along yColInvs
+                    PortInst prevVddPi = v12_vdd_inv.getPortInst(0);
+                    for (int c = 0; c < 16; c++) {
+                        PortInst pVddIc = lColInvs[c].findPortInstFromProto(layInv.findExport("vdd"));
+                        ArcInst.makeInstance(m1, ep, prevVddPi, pVddIc);
+                        prevVddPi = pVddIc;
+                    }
+                    PortInst prevGndPi = v12_gnd_inv.getPortInst(0);
+                    for (int c = 0; c < 16; c++) {
+                        PortInst pGndIc = lColInvs[c].findPortInstFromProto(layInv.findExport("gnd"));
+                        ArcInst.makeInstance(m1, ep, prevGndPi, pGndIc);
+                        prevGndPi = pGndIc;
+                    }
+
+                    // Upward Power:
+                    NodeInst v12_vdd_dtop = NodeInst.makeInstance(via12Proto, new Point2D.Double(-55.0, 1425.0), 5.0, 5.0, lay);
+                    NodeInst v12_gnd_dtop = NodeInst.makeInstance(via12Proto, new Point2D.Double(-75.0, 1440.0), 5.0, 5.0, lay);
+                    ArcInst.makeInstance(m2, ep, pVddDat, v12_vdd_dtop.getPortInst(0));
+                    ArcInst.makeInstance(m2, ep, pGndDat, v12_gnd_dtop.getPortInst(0));
+
+                    NodeInst v12_vdd_rail_bot = NodeInst.makeInstance(via12Proto, new Point2D.Double(-750.0, 1425.0), 5.0, 5.0, lay);
+                    NodeInst v12_gnd_rail_bot = NodeInst.makeInstance(via12Proto, new Point2D.Double(-770.0, 1440.0), 5.0, 5.0, lay);
+                    ArcInst.makeInstance(m1, ep, v12_vdd_dtop.getPortInst(0), v12_vdd_rail_bot.getPortInst(0));
+                    ArcInst.makeInstance(m1, ep, v12_gnd_dtop.getPortInst(0), v12_gnd_rail_bot.getPortInst(0));
+
+                    NodeInst v12_vdd_div8 = NodeInst.makeInstance(via12Proto, new Point2D.Double(-750.0, 1530.0), 5.0, 5.0, lay);
+                    NodeInst v12_vdd_tm   = NodeInst.makeInstance(via12Proto, new Point2D.Double(-750.0, yTiming + 60.0), 5.0, 5.0, lay);
+                    NodeInst v12_vdd_sreg = NodeInst.makeInstance(via12Proto, new Point2D.Double(-750.0, 2110.0), 5.0, 5.0, lay);
+
+                    ArcInst.makeInstance(m2, ep, v12_vdd_rail_bot.getPortInst(0), v12_vdd_div8.getPortInst(0));
+                    ArcInst.makeInstance(m2, ep, v12_vdd_div8.getPortInst(0), v12_vdd_tm.getPortInst(0));
+                    ArcInst.makeInstance(m2, ep, v12_vdd_tm.getPortInst(0), v12_vdd_sreg.getPortInst(0));
+
+                    NodeInst v12_gnd_div8 = NodeInst.makeInstance(via12Proto, new Point2D.Double(-770.0, 1390.0), 5.0, 5.0, lay);
+                    NodeInst v12_gnd_tm   = NodeInst.makeInstance(via12Proto, new Point2D.Double(-770.0, yTiming - 70.0), 5.0, 5.0, lay);
+                    NodeInst v12_gnd_sreg = NodeInst.makeInstance(via12Proto, new Point2D.Double(-770.0, 1970.0), 5.0, 5.0, lay);
+
+                    ArcInst.makeInstance(m2, ep, v12_gnd_rail_bot.getPortInst(0), v12_gnd_div8.getPortInst(0));
+                    ArcInst.makeInstance(m2, ep, v12_gnd_div8.getPortInst(0), v12_gnd_tm.getPortInst(0));
+                    ArcInst.makeInstance(m2, ep, v12_gnd_tm.getPortInst(0), v12_gnd_sreg.getPortInst(0));
+
+                    // Div8 power
+                    PortInst pVddDiv8 = lInstDiv8.findPortInstFromProto(layDiv8.findExport("vdd"));
+                    PortInst pGndDiv8 = lInstDiv8.findPortInstFromProto(layDiv8.findExport("gnd"));
+                    ArcInst.makeInstance(m1, ep, v12_vdd_div8.getPortInst(0), pVddDiv8);
+                    ArcInst.makeInstance(m1, ep, v12_gnd_div8.getPortInst(0), pGndDiv8);
+
+                    // ShiftReg power
+                    PortInst pVddSreg = lInstSreg.findPortInstFromProto(laySreg.findExport("vdd"));
+                    PortInst pGndSreg = lInstSreg.findPortInstFromProto(laySreg.findExport("gnd"));
+                    ArcInst.makeInstance(m1, ep, v12_vdd_sreg.getPortInst(0), pVddSreg);
+                    ArcInst.makeInstance(m1, ep, v12_gnd_sreg.getPortInst(0), pGndSreg);
+
+                    // Timing gates power chain along Y = yTiming + 60.0 (VDD) and Y = yTiming - 70.0 (GND)
+                    double[] xGatesVdd = {-409.5, -309.5, -209.5, -109.5, -28.0, 20.0, 70.5, 152.0, 200.0, 250.5};
+                    NodeInst prevVddTm = v12_vdd_tm;
+                    for (int i = 0; i < xGatesVdd.length; i++) {
+                        NodeInst tapV = NodeInst.makeInstance(m1Pin, new Point2D.Double(xGatesVdd[i], yTiming + 60.0), 3.0, 3.0, lay);
+                        ArcInst.makeInstance(m1, ep, prevVddTm.getPortInst(0), tapV.getPortInst(0));
+                        if (xGatesVdd[i] == -409.5) ArcInst.makeInstance(m1, ep, tapV.getPortInst(0), lInvD1.findPortInstFromProto(layInv.findExport("vdd")));
+                        else if (xGatesVdd[i] == -309.5) ArcInst.makeInstance(m1, ep, tapV.getPortInst(0), lInvD2.findPortInstFromProto(layInv.findExport("vdd")));
+                        else if (xGatesVdd[i] == -209.5) ArcInst.makeInstance(m1, ep, tapV.getPortInst(0), lInvD3.findPortInstFromProto(layInv.findExport("vdd")));
+                        else if (xGatesVdd[i] == -109.5) ArcInst.makeInstance(m1, ep, tapV.getPortInst(0), lInvRw.findPortInstFromProto(layInv.findExport("vdd")));
+                        else if (xGatesVdd[i] == -28.0)  ArcInst.makeInstance(m1, ep, tapV.getPortInst(0), lNandWe.findPortInstFromProto(layNand.findExport("vdd")));
+                        else if (xGatesVdd[i] == 20.0)   ArcInst.makeInstance(m1, ep, tapV.getPortInst(0), v12_we_cd_top.getPortInst(0));
+                        else if (xGatesVdd[i] == 70.5)   ArcInst.makeInstance(m1, ep, tapV.getPortInst(0), lInvWe.findPortInstFromProto(layInv.findExport("vdd")));
+                        else if (xGatesVdd[i] == 152.0)  ArcInst.makeInstance(m1, ep, tapV.getPortInst(0), lNandSae.findPortInstFromProto(layNand.findExport("vdd")));
+                        else if (xGatesVdd[i] == 200.0)  ArcInst.makeInstance(m1, ep, tapV.getPortInst(0), v12_sae_cd_top.getPortInst(0));
+                        else if (xGatesVdd[i] == 250.5)  ArcInst.makeInstance(m1, ep, tapV.getPortInst(0), lInvSae.findPortInstFromProto(layInv.findExport("vdd")));
+                        prevVddTm = tapV;
+                    }
+
+                    double[] xGatesGnd = {-409.5, -309.5, -209.5, -109.5, -28.0, 70.5, 152.0, 250.5};
+                    NodeInst prevGndTm = v12_gnd_tm;
+                    for (int i = 0; i < xGatesGnd.length; i++) {
+                        NodeInst tapG = NodeInst.makeInstance(m1Pin, new Point2D.Double(xGatesGnd[i], yTiming - 70.0), 3.0, 3.0, lay);
+                        ArcInst.makeInstance(m1, ep, prevGndTm.getPortInst(0), tapG.getPortInst(0));
+                        if (xGatesGnd[i] == -409.5) ArcInst.makeInstance(m1, ep, tapG.getPortInst(0), lInvD1.findPortInstFromProto(layInv.findExport("gnd")));
+                        else if (xGatesGnd[i] == -309.5) ArcInst.makeInstance(m1, ep, tapG.getPortInst(0), lInvD2.findPortInstFromProto(layInv.findExport("gnd")));
+                        else if (xGatesGnd[i] == -209.5) ArcInst.makeInstance(m1, ep, tapG.getPortInst(0), lInvD3.findPortInstFromProto(layInv.findExport("gnd")));
+                        else if (xGatesGnd[i] == -109.5) ArcInst.makeInstance(m1, ep, tapG.getPortInst(0), lInvRw.findPortInstFromProto(layInv.findExport("gnd")));
+                        else if (xGatesGnd[i] == -28.0)  ArcInst.makeInstance(m1, ep, tapG.getPortInst(0), lNandWe.findPortInstFromProto(layNand.findExport("gnd")));
+                        else if (xGatesGnd[i] == 70.5)   ArcInst.makeInstance(m1, ep, tapG.getPortInst(0), lInvWe.findPortInstFromProto(layInv.findExport("gnd")));
+                        else if (xGatesGnd[i] == 152.0)  ArcInst.makeInstance(m1, ep, tapG.getPortInst(0), lNandSae.findPortInstFromProto(layNand.findExport("gnd")));
+                        else if (xGatesGnd[i] == 250.5)  ArcInst.makeInstance(m1, ep, tapG.getPortInst(0), lInvSae.findPortInstFromProto(layInv.findExport("gnd")));
+                        prevGndTm = tapG;
+                    }
+
+                    // ------------------------------------------
+                    // ROUTING G: Global I/O Exports (7 total)
+                    // ------------------------------------------
+                    // 1. CLK: connects ShiftReg CLK and Div8 CLK along X = -685.0
+                    PortInst pClkSreg = lInstSreg.findPortInstFromProto(laySreg.findExport("CLK"));
+                    PortInst pClkDiv8 = lInstDiv8.findPortInstFromProto(layDiv8.findExport("CLK"));
+                    NodeInst pinClkLay = NodeInst.makeInstance(m2Pin, new Point2D.Double(-685.0, 2055.0), 3.0, 3.0, lay);
+                    ArcInst.makeInstance(m2, ep, pinClkLay.getPortInst(0), pClkSreg);
+                    ArcInst.makeInstance(m2, ep, pClkSreg, pClkDiv8);
+                    Export.newInst(lay, pinClkLay.getPortInst(0), "CLK", ep);
+
+                    // 2. ADDR_IN: ShiftReg ADDR_IN at (-560.0, 2060.0)
+                    PortInst pAddrIn = lInstSreg.findPortInstFromProto(laySreg.findExport("ADDR_IN"));
+                    Export.newInst(lay, pAddrIn, "ADDR_IN", ep);
+
+                    // 3. R_W: pinRwLay at (-700.0, 1740.0)
+                    Export.newInst(lay, pinRwLay.getPortInst(0), "R_W", ep);
+
+                    // 4. DIN: connects write_driver.WD (Poly tap LEFT to -75.0)
+                    PortInst pDin = lInstWd.findPortInstFromProto(layWd.findExport("WD"));
+                    NodeInst pinDinLay = NodeInst.makeInstance(polyPin, new Point2D.Double(-75.0, yWd), 2.0, 2.0, lay);
+                    ArcInst.makeInstance(poly, ep, pinDinLay.getPortInst(0), pDin);
+                    Export.newInst(lay, pinDinLay.getPortInst(0), "DIN", ep);
+
+                    // 5. DOUT: sense_amplifier.SO via Metal-2 to (213.5, ySa - 80.0)
+                    PortInst pDout = lInstSa.findPortInstFromProto(laySa.findExport("SO"));
+                    NodeInst v12_dout = NodeInst.makeInstance(via12Proto, new Point2D.Double(213.5, -335.0), 5.0, 5.0, lay);
+                    NodeInst pinDoutLay = NodeInst.makeInstance(m2Pin, new Point2D.Double(213.5, -420.0), 3.0, 3.0, lay);
+                    ArcInst.makeInstance(m1, ep, pDout, v12_dout.getPortInst(0));
+                    ArcInst.makeInstance(m2, ep, v12_dout.getPortInst(0), pinDoutLay.getPortInst(0));
+                    Export.newInst(lay, pinDoutLay.getPortInst(0), "DOUT", ep);
+
+                    // 6. vdd
+                    Export.newInst(lay, v12_vdd_col.getPortInst(0), "vdd", ep);
+
+                    // 7. gnd
+                    Export.newInst(lay, v12_gnd_col.getPortInst(0), "gnd", ep);
+
+                    System.out.println("  SRAM_256_Macro{lay} constructed with all 7 exports.");
+
+                    // ==========================================
+                    // 3. VERIFICATION: DRC & NCC
+                    // ==========================================
+                    System.out.println("=== 3. Running DRC on SRAM_256_Macro{lay} ===");
+                    ErrorLogger errLog = DRC.getDRCErrorLogger(true, null);
+                    DRC.DRCPreferences dp = new DRC.DRCPreferences(false);
+                    dp.minAreaAlgoOption = DRC.DRCCheckMinArea.AREA_MANHATTAN;
+                    com.sun.electric.tool.drc.Quick.checkDesignRules(errLog, lay, null, null, null, null, dp, GeometryHandler.GHMode.ALGO_SWEEP, false);
+                    errLog.termLogging(true);
+                    System.out.println(">>> DRC Result: " + errLog.getNumErrors() + " errors, " + errLog.getNumWarnings() + " warnings <<<");
+
+                    for (Iterator<ErrorLogger.MessageLog> it = errLog.getLogs(); it.hasNext(); ) {
+                        ErrorLogger.MessageLog ml = it.next();
+                        System.out.println("DRC: " + ml.getMessageString());
+                    }
+
+                    System.out.println("=== 4. Running NCC LVS on SRAM_256_Macro ===");
+                    NccOptions opts = new NccOptions();
+                    opts.checkSizes = false;
+                    NccResults res = Ncc.compare(sch, null, lay, null, opts);
+                    System.out.println(">>> NCC Result: " + res + " <<<");
+                    System.out.println("  Match: " + res.match());
+                    System.out.println("  Exports Match: " + res.exportMatch());
+                    System.out.println("  Topology Match: " + res.topologyMatch());
+
+                    // Metrics
+                    Rectangle2D bounds = lay.getBounds();
+                    System.out.println("=== Macro Metrics ===");
+                    System.out.println("Bounding Box: " + bounds);
+                    System.out.println("Width:  " + bounds.getWidth() + " lambda");
+                    System.out.println("Height: " + bounds.getHeight() + " lambda");
+                    System.out.println("Area:   " + (bounds.getWidth() * bounds.getHeight()) + " lambda^2 (" +
+                        String.format("%.2f", (bounds.getWidth() * bounds.getHeight()) / 1e6) + " M lambda^2)");
+
+                    // ==========================================
+                    // 5. Save Library & SPICE Export
+                    // ==========================================
+                    if (errLog.getNumErrors() == 0 && res.match()) {
+                        System.out.println("=== 5. Saving SRAM.jelib ===");
+                        Output.writeLibrary(lib, FileType.JELIB, false, false, false, 0);
+                        System.out.println("Library save status: SUCCESS");
+
+                        System.out.println("=== 6. Exporting SPICE: SRAM_256_Macro.spi ===");
+                        Spice.SpicePreferences sp = 
+                            (Spice.SpicePreferences) Output.getOutputPreferences(FileType.SPICE, sch, true, null);
+                        sp.engine = SimulationTool.SpiceEngine.SPICE_ENGINE_NG;
+                        sp.level = "3";
+                        sp.doOutput(sch, null, "SRAM_256_Macro.spi");
+                        File spiFile = new File("SRAM_256_Macro.spi");
+                        System.out.println("SPICE deck exported successfully (" + spiFile.length() + " bytes).");
+                    } else {
+                        System.err.println("Verification FAILED! Library will not be overwritten.");
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return true;
+            }
+        };
+        j.startJob();
+        Thread.sleep(8000);
+    }
+}

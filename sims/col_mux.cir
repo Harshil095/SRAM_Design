@@ -1,0 +1,35 @@
+* CMOS Transmission Gate (Pass Gate) for Column Mux
+* Ports: IN OUT SEL SEL_B VDD GND
+
+.subckt tgate IN OUT SEL SEL_B VDD GND
+* NMOS passes 0 well (gate: SEL)
+Mn IN SEL OUT GND CMOSN W=0.72u L=0.18u
+* PMOS passes 1 well (gate: SEL_B)
+Mp IN SEL_B OUT VDD CMOSP W=1.08u L=0.18u
+.ends tgate
+
+* 16-to-1 Column Mux (Differential: switches BL and BLB)
+* Connects one of 16 column bitline pairs (BL[0..15], BLB[0..15])
+* to global bitline pair (GBL, GBLB) based on 1-of-16 select lines (COL_SEL[0..15])
+.subckt col_mux_16to1
++ BL0 BLB0 BL1 BLB1 BL2 BLB2 BL3 BLB3
++ BL4 BLB4 BL5 BLB5 BL6 BLB6 BL7 BLB7
++ BL8 BLB8 BL9 BLB9 BL10 BLB10 BL11 BLB11
++ BL12 BLB12 BL13 BLB13 BL14 BLB14 BL15 BLB15
++ CS0 CS0_B CS1 CS1_B CS2 CS2_B CS3 CS3_B
++ CS4 CS4_B CS5 CS5_B CS6 CS6_B CS7 CS7_B
++ CS8 CS8_B CS9 CS9_B CS10 CS10_B CS11 CS11_B
++ CS12 CS12_B CS13 CS13_B CS14 CS14_B CS15 CS15_B
++ GBL GBLB VDD GND
+
+* 16 Transmission Gate pairs:
+* Pair 0
+Xt0_bl  BL0  GBL  CS0  CS0_B  VDD GND tgate
+Xt0_blb BLB0 GBLB CS0  CS0_B  VDD GND tgate
+
+* Pair 1
+Xt1_bl  BL1  GBL  CS1  CS1_B  VDD GND tgate
+Xt1_blb BLB1 GBLB CS1  CS1_B  VDD GND tgate
+
+* (Pairs 2 through 15 follow identically)
+.ends col_mux_16to1

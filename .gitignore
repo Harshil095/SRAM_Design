@@ -1,0 +1,22 @@
+# Simulation waveform/raw data files (large binary outputs)
+*.raw
+
+# Compiled Java bytecode
+*.class
+
+# Large simulation output/log files
+tb_SRAM_Chip_run.out
+tb_sim_run.log
+
+# Reference books (large PDFs)
+RefBooks/
+
+# macOS system files
+.DS_Store
+**/.DS_Store
+
+# Backup files
+*.bak
+
+# General simulation outputs that are regeneratable
+*.log

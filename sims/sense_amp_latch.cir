@@ -1,0 +1,27 @@
+* Standard Latch-Type Voltage Sense Amplifier (Cross-coupled inverters + Tail)
+* Inputs: BL, BLB, SAE, VDD, GND
+* Outputs: SO, SOB
+
+.subckt sense_amp BL BLB SAE SO SOB VDD GND
+* Cross-coupled Inverters:
+* Inv1: Output SO, input SOB
+Mpu1 SO  SOB VDD VDD CMOSP W=0.72u L=0.18u
+Mpd1 SO  SOB N1  GND CMOSN W=0.72u L=0.18u
+
+* Inv2: Output SOB, input SO
+Mpu2 SOB SO  VDD VDD CMOSP W=0.72u L=0.18u
+Mpd2 SOB SO  N1  GND CMOSN W=0.72u L=0.18u
+
+* Tail switch
+Mtail N1 SAE GND GND CMOSN W=1.08u L=0.18u
+
+* Coupling pass-gates from Bitlines to internal nodes SO, SOB:
+* When SAE=0, bitlines precharge SO and SOB to VDD
+* When SAE=1, pass-gates can decouple or bitline differential seeds the latch:
+Mpass1 SO  sae_b BL  VDD CMOSP W=0.54u L=0.18u
+Mpass2 SOB sae_b BLB VDD CMOSP W=0.54u L=0.18u
+
+* Invert SAE to get SAE_B
+Mpsae sae_b sae vdd vdd CMOSP W=0.54u L=0.18u
+Mnsae sae_b sae gnd gnd CMOSN W=0.28u L=0.18u
+.ends sense_amp

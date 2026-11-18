@@ -1,0 +1,31 @@
+*** SPICE deck for cell 6T{sch} from library SRAM
+*** Created on Fri Oct 23, 2026 02:37:12
+*** Last revised on Tue Oct 27, 2026 12:51:49
+*** Written on Wed Oct 28, 2026 10:26:20 by Electric VLSI Design System, version 9.08
+*** Layout tech: mocmos, foundry MOSIS
+*** UC SPICE *** , MIN_RESIST 4.0, MIN_CAPAC 0.1FF
+
+.global gnd vdd
+
+*** TOP LEVEL CELL: 6T{sch}
+Mnmos@0 net@4 net@9 gnd gnd cmosn L=0.18U W=0.54U
+Mnmos@1 net@9 net@4 gnd gnd cmosn L=0.18U W=0.54U
+Mnmos@2 BL WL net@9 gnd cmosn L=0.18U W=0.36U
+Mnmos@3 net@4 WL BLB gnd cmosn L=0.18U W=0.36U
+Mpmos@0 vdd net@4 net@9 vdd cmosp L=0.18U W=0.27U
+Mpmos@1 vdd net@9 net@4 vdd cmosp L=0.18U W=0.27U
+
+* Spice Code nodes in cell cell '6T{sch}'
+.include ./tsmc018.lib
+Vsup vdd 0 1.8
+Cbl bl 0 200f
+Cblb blb 0 200f
+.model swm sw(vt=0.9 vh=0.1 ron=200 roff=1e12)
+Sbl dbl bl en 0 swm
+Sblb dblb blb en 0 swm
+Ven en 0 PWL(0 1.8 10n 1.8 10.1n 0 14.9n 0 15n 1.8 27n 1.8 27.1n 0 31.9n 0 32n 1.8 38n 1.8)
+Vdbl dbl 0 PWL(0 0 6.5n 0 7n 1.8 38n 1.8)
+Vdblb dblb 0 PWL(0 1.8 18n 1.8 18.5n 0 23.5n 0 24n 1.8 38n 1.8)
+Vwl wl 0 PWL(0 0 2n 0 2.1n 1.8 6n 1.8 6.1n 0 11n 0 11.1n 1.8 14n 1.8 14.1n 0 19n 0 19.1n 1.8 23n 1.8 23.1n 0 28n 0 28.1n 1.8 31n 1.8 31.1n 0 38n 0)
+.tran 10p 38n
+.END

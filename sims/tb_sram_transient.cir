@@ -1,0 +1,101 @@
+* Testbench: 6T SRAM Cell Transient Operations (Hold, Read, Write-0, Write-1)
+.include "../tsmc018.lib"
+.include "sram_6t.cir"
+
+* Power Supplies
+Vdd vdd 0 DC 1.8
+* (gnd is global 0)
+Xcell wl bl blb vdd 0 q qb sram_6t WPD=0.54u WPG=0.36u WPU=0.28u L=0.18u
+
+* Bitline model with realistic wire capacitance (Cbl = 200fF for ~16 cells + wire)
+Cbl  bl  0 200f
+Cblb blb 0 200f
+
+* Signals:
+* Initial condition: Cell stores Q=0, QB=1.8V
+.ic v(q)=0 v(qb)=1.8 v(bl)=1.8 v(blb)=1.8
+
+* 1. Wordline driver:
+* Hold: 0 - 2ns
+* Read-0: WL pulses high at 2ns to 4ns (pulse width 2ns)
+* Write-1: WL pulses high at 6ns to 8ns
+* Read-1: WL pulses high at 10ns to 12ns
+* Write-0: WL pulses high at 14ns to 16ns
+Vwl wl 0 PWL(
++ 0ns   0V
++ 1.9ns 0V
++ 2.0ns 1.8V
++ 4.0ns 1.8V
++ 4.1ns 0V
++ 5.9ns 0V
++ 6.0ns 1.8V
++ 8.0ns 1.8V
++ 8.1ns 0V
++ 9.9ns 0V
++ 10.0ns 1.8V
++ 12.0ns 1.8V
++ 12.1ns 0V
++ 13.9ns 0V
++ 14.0ns 1.8V
++ 16.0ns 1.8V
++ 16.1ns 0V
++ 18.0ns 0V)
+
+* 2. Bitline controls:
+* Precharge switches (PMOS pull-ups to VDD)
+Mpre1 bl  pre_b vdd vdd CMOSP W=1.0u L=0.18u
+Mpre2 blb pre_b vdd vdd CMOSP W=1.0u L=0.18u
+Meq   bl  pre_b blb vdd CMOSP W=0.5u L=0.18u
+
+* Precharge active (LOW) before read/write, deactivated (HIGH) during read/write
+Vpre pre_b 0 PWL(
++ 0ns   0V
++ 1.8ns 0V
++ 1.9ns 1.8V
++ 4.1ns 1.8V
++ 4.2ns 0V
++ 5.8ns 0V
++ 5.9ns 1.8V
++ 8.1ns 1.8V
++ 8.2ns 0V
++ 9.8ns 0V
++ 9.9ns 1.8V
++ 12.1ns 1.8V
++ 12.2ns 0V
++ 13.8ns 0V
++ 13.9ns 1.8V
++ 16.1ns 1.8V
++ 16.2ns 0V
++ 18.0ns 0V)
+
+* Write drivers: NMOS pull-down to GND for BL and BLB
+Mwr_bl  bl  wr_bl_en  0 0 CMOSN W=2.0u L=0.18u
+Mwr_blb blb wr_blb_en 0 0 CMOSN W=2.0u L=0.18u
+
+* During Write-1 (6ns to 8ns): wr_blb_en = 1.8V (BLB pulled to 0, BL remains high)
+Vwr_blb wr_blb_en 0 PWL(
++ 0ns   0V
++ 5.9ns 0V
++ 6.0ns 1.8V
++ 8.0ns 1.8V
++ 8.1ns 0V
++ 18.0ns 0V)
+
+* During Write-0 (14ns to 16ns): wr_bl_en = 1.8V (BL pulled to 0, BLB remains high)
+Vwr_bl wr_bl_en 0 PWL(
++ 0ns   0V
++ 13.9ns 0V
++ 14.0ns 1.8V
++ 16.0ns 1.8V
++ 16.1ns 0V
++ 18.0ns 0V)
+
+* Simulation Command
+.control
+tran 0.01ns 18ns
+set wr_vecnames
+wrdata tb_transient_results.txt v(wl) v(bl) v(blb) v(q) v(qb)
+print v(q) v(qb)
+quit
+.endc
+.end

@@ -1,0 +1,80 @@
+* Sense amplifier simulation with exact user schematic
+.include "../tsmc018.lib"
+
+
+* Inverter subcircuit:
+.subckt inverter in out vdd gnd
+Mpinv out in vdd vdd CMOSP W=0.72u L=0.18u
+Mninv out in gnd gnd CMOSN W=0.36u L=0.18u
+.ends inverter
+
+* User Sense Amplifier:
+.subckt user_sa bl blb se so sob vdd gnd
+* Current mirror load:
+Mpmos0 n_left n_left vdd vdd CMOSP W=0.72u L=0.18u
+Mpmos1 so     n_left vdd vdd CMOSP W=0.72u L=0.18u
+
+* Differential input pair:
+Mnmos0 n_left bl  n_tail gnd CMOSN W=0.72u L=0.18u
+Mnmos1 so     blb n_tail gnd CMOSN W=0.72u L=0.18u
+
+* Tail NMOS:
+Mnmos2 n_tail se  gnd    gnd CMOSN W=1.08u L=0.18u
+
+* Output buffer inverter:
+Xinv so sob vdd gnd inverter
+.ends user_sa
+
+* Testbench
+Vdd vdd 0 DC 1.8
+
+Xsa bl bl_b se so sob vdd 0 user_sa
+
+* Output load capacitors:
+Cso  so  0 20f
+Csob sob 0 20f
+
+* Case 1: Read-0: BL dips to 1.65V, BL_b stays at 1.8V
+* Case 2: Read-1: BL stays at 1.8V, BL_b dips to 1.65V
+Vbl bl 0 PWL(
++ 0n  1.8
++ 10n 1.8
++ 15n 1.65
++ 35n 1.65
++ 40n 1.8
++ 50n 1.8
++ 55n 1.8
++ 75n 1.8
++ 80n 1.8)
+
+Vblb bl_b 0 PWL(
++ 0n  1.8
++ 10n 1.8
++ 15n 1.8
++ 35n 1.8
++ 40n 1.8
++ 50n 1.8
++ 55n 1.65
++ 75n 1.65
++ 80n 1.8)
+
+* Sense Enable (SE)
+Vse se 0 PWL(
++ 0n  0
++ 10n 0
++ 12n 1.8
++ 35n 1.8
++ 38n 0
++ 50n 0
++ 52n 1.8
++ 75n 1.8
++ 78n 0
++ 80n 0)
+
+.tran 0.1n 80n
+.control
+run
+wrdata sa_user_out.txt v(se) v(bl) v(bl_b) v(so) v(sob)
+quit
+.endc
+.end
